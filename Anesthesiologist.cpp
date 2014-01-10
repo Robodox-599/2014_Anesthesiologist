@@ -10,14 +10,14 @@
 class Anesthesiologist: public IterativeRobot
 {
 	AnesthesiologistDrive *drive;
-	AnesthesiologistManipulator *manipulator;
+	//AnesthesiologistManipulator *manipulator;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
 
 public:	
 	Anesthesiologist()
 	{
-		manipulator = new AnesthesiologistManipulator();
+		//manipulator = new AnesthesiologistManipulator();
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 1); //TODO: dummy numbers
@@ -101,3 +101,5 @@ public:
 		//oi->dashboard->PutNumber();
 	}
 };	
+
+START_ROBOT_CLASS(Anesthesiologist);

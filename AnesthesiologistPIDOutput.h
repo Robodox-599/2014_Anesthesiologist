@@ -8,11 +8,5 @@ class AnesthesiologistPIDOutput : public PIDOutput
 public:
 	AnesthesiologistPIDOutput();
 	virtual ~AnesthesiologistPIDOutput();
-
-	void PIDWrite(float output);
-		
-	double readOutput();
-	
-	double result;
 };
 #endif

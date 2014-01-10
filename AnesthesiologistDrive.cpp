@@ -105,8 +105,8 @@ void AnesthesiologistDrive::setLeftMotors(double velocity)
 
 void AnesthesiologistDrive::setRightMotors(double velocity)
 {
-	frontRightMotor->Set(-velocity, SYNC_STATE_OFF);
-	rearRightMotor->Set(-velocity, SYNC_STATE_OFF);
+	frontRightMotor->Set(velocity, SYNC_STATE_OFF);
+	rearRightMotor->Set(velocity, SYNC_STATE_OFF);
 }
 
 void AnesthesiologistDrive::drive()
