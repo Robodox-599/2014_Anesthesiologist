@@ -7,12 +7,17 @@ class AnesthesiologistManipulator
 {
 public:
 	AnesthesiologistManipulator();
+	AnesthesiologistManipulator(UINT8 intakeRollerVictorChannel);//, UINT8 intakeArmVictorChannel);
 	~AnesthesiologistManipulator();
 	
-	void kick(bool readyToKick);
+	void intakeBall(bool intake);
+	
 	
 private:
-	DoubleSolenoid *kicker;
+	Victor *intakeRoller;
+	DigitalInput *ballCradleSwitch;
+	//Victor *intakeArm;
+	
 	
 };
 #endif

@@ -10,17 +10,17 @@
 class Anesthesiologist: public IterativeRobot
 {
 	AnesthesiologistDrive *drive;
-	//AnesthesiologistManipulator *manipulator;
+	AnesthesiologistManipulator *manipulator;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
 
 public:	
 	Anesthesiologist()
 	{
-		//manipulator = new AnesthesiologistManipulator();
+		manipulator = new AnesthesiologistManipulator();
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
-		comp599 = new Compressor(1, 1, 1, 1); //TODO: dummy numbers
+		comp599 = new Compressor(1, 1, 1, 1); 
 		
 		oi->dashboard->init();
 		comp599->Start();
@@ -98,7 +98,8 @@ public:
 	
 	void smartDashboardPrint()
 	{
-		//oi->dashboard->PutNumber();
+		//oi->dashboard->PutNumber("Linear Velocity: ", drive->getLinVelocity());
+		//oi->dashboard->PutNumber("Turn Speed: ", drive->getTurnSpeed());
 	}
 };	
 
