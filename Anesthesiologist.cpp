@@ -3,7 +3,6 @@
 #include "AnesthesiologistDrive.h"
 #include "AnesthesiologistManipulator.h"
 #include "AnesthesiologistPIDOutput.h"
-#include "AnesthesiologistKicker.h"
 #include "AnesthesiologistOperatorInterface.h"
 #include "AnesthesiologistMacros.h"
 
@@ -46,6 +45,7 @@ public:
 		drive->setLinVelocity(0);
 		drive->setTurnSpeed(0, false);
 		drive->drive();
+		manipulator->setVelocity(0);
 	}
 	
 	void TestInit()
@@ -86,6 +86,10 @@ public:
 		drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(1));
 		drive->drive();
 		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
+		
+		manipulator->setVelocity((oi->getManipJoystick()->GetThrottle()+1)/2);
+		manipulator->intakeBall(oi->getManipJoystickButton(2));
+		
 		if(oi->getDriveJoystickButton(6))
 		{
 			comp599->Start();
@@ -98,8 +102,9 @@ public:
 	
 	void smartDashboardPrint()
 	{
-		//oi->dashboard->PutNumber("Linear Velocity: ", drive->getLinVelocity());
-		//oi->dashboard->PutNumber("Turn Speed: ", drive->getTurnSpeed());
+		oi->dashboard->PutNumber("Drive Linear Velocity: ", drive->getLinVelocity());
+		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
+		oi->dashboard->PutNumber("Roller Velocity: ", drive->getLinVelocity());	
 	}
 };	
 

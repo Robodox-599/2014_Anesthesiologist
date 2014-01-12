@@ -8,34 +8,48 @@ AnesthesiologistManipulator::AnesthesiologistManipulator()
 AnesthesiologistManipulator::AnesthesiologistManipulator(UINT8 intakeRollerVictorChannel)//, UINT8 intakeArmVictorChannel)
 {
 	intakeRoller = new Victor(intakeRollerVictorChannel);
-	ballCradleSwitch = new DigitalInput(1, BALL_CRADLE_SWITCH_CHANNEL);
+	intakeSwitch = new DigitalInput(1, BALL_CRADLE_SWITCH_CHANNEL);
 	//intakeArm = new Victor(intakeArmVictorChannel);
 }
 
 AnesthesiologistManipulator::~AnesthesiologistManipulator()
 {
 	delete intakeRoller;
-	delete ballCradleSwitch;
+	delete intakeSwitch;
 	//delete intakeArm;
 	
 	intakeRoller = NULL;
-	ballCradleSwitch = NULL;
+	intakeSwitch = NULL;
 	//intakeArm = NULL;
 }
 
 void AnesthesiologistManipulator::intakeBall(bool intake)
 {
-	if(intake && ballCradleSwitch->Get() == 1)//TODO: test for 0 or 1
+	bool lastSwitchHit = false;
+	
+	if(intake && !lastSwitchHit && intakeSwitch->Get() == 1)//TODO: test for 0 or 1
 	{
-		while (ballCradleSwitch->Get() == 1)
-		{
-			intakeRoller->Set(1.0);
-		}
 		intakeRoller->Set(0);
 	}
 	else
 	{
-		intakeRoller->Set(0);
+		setRoller();
 	}
+	lastSwitchHit = intakeSwitch->Get();	
+}
+
+void AnesthesiologistManipulator::setRoller()
+{
+	intakeRoller->Set(targetVelocity * REDUCTION); 
+}
+
+void AnesthesiologistManipulator::setVelocity(double input)
+{
+	targetVelocity = input;
+}
+
+double AnesthesiologistManipulator::getVelocity()
+{
+	return targetVelocity;
 }
 

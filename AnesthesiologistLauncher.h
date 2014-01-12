@@ -9,11 +9,13 @@ public:
 	AnesthesiologistLauncher();
 	AnesthesiologistLauncher(UINT8 launcherVictorChannel, UINT8 launcherSolenoid);
 	~AnesthesiologistLauncher();
-		
-	void launchBall(bool launch);
+	
+	bool checkIfCocked();
+	void launchBall();
 	
 private:
 	Victor *launcherMotor;
 	Solenoid *launcherPiston;
+
 };
 #endif

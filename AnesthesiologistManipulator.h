@@ -12,12 +12,16 @@ public:
 	
 	void intakeBall(bool intake);
 	
+	void setRoller();
+	
+	void setVelocity(double input);
+	double getVelocity();
 	
 private:
 	Victor *intakeRoller;
-	DigitalInput *ballCradleSwitch;
+	DigitalInput *intakeSwitch;
 	//Victor *intakeArm;
-	
+	double targetVelocity;
 	
 };
 #endif

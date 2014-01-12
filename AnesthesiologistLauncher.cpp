@@ -20,15 +20,12 @@ AnesthesiologistLauncher::~AnesthesiologistLauncher()
 	launcherPiston = NULL;
 }
 
-void AnesthesiologistLauncher::launchBall(bool launch)
+bool AnesthesiologistLauncher::checkIfCocked()
 {
-	if(launch && launcherPiston->Get() == 0) // This'll possibly create a logical error, since if you pass launch==true but the piston is already up, it'll flip positions
-	{
-		launcherPiston->Set(1);
-	} 
-	else
-	{
-		launcherPiston->Set(0);
-	}
+	
+}
+
+void AnesthesiologistLauncher::launchBall()
+{
 	
 }
