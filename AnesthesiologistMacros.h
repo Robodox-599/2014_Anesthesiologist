@@ -18,8 +18,12 @@
 
 	//Manipulators
 #define INTAKE_ROLLER_VICTOR_CHANNEL			(1)//TODO: dummy number
-#define BALL_CRADLE_SWITCH_CHANNEL				(2)//TODO: dummy number
-//#define INTAKE_ARM_VICTOR_CHANNEL				(3)//TODO: dummy number
+#define INTAKE_SWITCH_CHANNEL					(2)//TODO: dummy number
+#define INTAKE_ARM_VICTOR_CHANNEL				(3)//TODO: dummy number
+
+	//Encoders
+#define ARM_ENCODER_CHANNEL_A					(1)//TODO: dummy number
+#define ARM_ENCODER_CHANNEL_B					(2)//TODO: dummy number
 
 	//Misc
 #define SYNC_STATE_OFF          		        (0)

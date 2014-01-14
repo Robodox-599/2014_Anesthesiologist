@@ -2,25 +2,29 @@
 
 AnesthesiologistManipulator::AnesthesiologistManipulator()
 {
-	AnesthesiologistManipulator(INTAKE_ROLLER_VICTOR_CHANNEL);//, INTAKE_ARM_VICTOR_CHANNEL);
+	AnesthesiologistManipulator(INTAKE_ROLLER_VICTOR_CHANNEL, 
+								INTAKE_ARM_VICTOR_CHANNEL);
 }
 
-AnesthesiologistManipulator::AnesthesiologistManipulator(UINT8 intakeRollerVictorChannel)//, UINT8 intakeArmVictorChannel)
+AnesthesiologistManipulator::AnesthesiologistManipulator(UINT8 intakeRollerVictorChannel,
+														 UINT8 intakeArmVictorChannel)
 {
 	intakeRoller = new Victor(intakeRollerVictorChannel);
-	intakeSwitch = new DigitalInput(1, BALL_CRADLE_SWITCH_CHANNEL);
-	//intakeArm = new Victor(intakeArmVictorChannel);
+	intakeSwitch = new DigitalInput(1, INTAKE_SWITCH_CHANNEL);
+	timer = new RobodoxTimer();
+	intakeArm = new Victor(intakeArmVictorChannel);
+	armEncoder = new Encoder(ARM_ENCODER_CHANNEL_A, ARM_ENCODER_CHANNEL_B, true, Encoder::k1X);
 }
 
 AnesthesiologistManipulator::~AnesthesiologistManipulator()
 {
 	delete intakeRoller;
 	delete intakeSwitch;
-	//delete intakeArm;
+	delete intakeArm;
 	
 	intakeRoller = NULL;
 	intakeSwitch = NULL;
-	//intakeArm = NULL;
+	intakeArm = NULL;
 }
 
 void AnesthesiologistManipulator::intakeBall(bool intake)
@@ -30,6 +34,7 @@ void AnesthesiologistManipulator::intakeBall(bool intake)
 	if(intake && !lastSwitchHit && intakeSwitch->Get() == 1)//TODO: test for 0 or 1
 	{
 		intakeRoller->Set(0);
+		timer->wait(1000.0);
 	}
 	else
 	{
@@ -51,5 +56,20 @@ void AnesthesiologistManipulator::setVelocity(double input)
 double AnesthesiologistManipulator::getVelocity()
 {
 	return targetVelocity;
+}
+
+void AnesthesiologistManipulator::moveArmEncoder(double target, double speed)
+{
+	//TODO: write encoder code
+}
+
+void AnesthesiologistManipulator::setEncoder(double target, double speed)
+{
+	
+}
+
+double AnesthesiologistManipulator::getEncoder()
+{
+	return armEncoder->Get();
 }
 

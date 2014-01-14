@@ -21,6 +21,8 @@ public:
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 1); 
 		
+		manipulator->timer->Start();
+		
 		oi->dashboard->init();
 		comp599->Start();
 	}
@@ -70,6 +72,7 @@ public:
 		
 		while(IsOperatorControl())
 		{
+			oi->dsLCD->PrintfLine(DriverStationLCD::kUser_Line1, "Time: %f" , manipulator->timer->Get());
 			 teleDrive();
 			 smartDashboardPrint();
 		}
@@ -104,7 +107,9 @@ public:
 	{
 		oi->dashboard->PutNumber("Drive Linear Velocity: ", drive->getLinVelocity());
 		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
-		oi->dashboard->PutNumber("Roller Velocity: ", drive->getLinVelocity());	
+		oi->dashboard->PutNumber("Roller Velocity: ", drive->getLinVelocity());
+		oi->dashboard->PutNumber("timer test: ", manipulator->timer->Get());
+		
 	}
 };	
 
