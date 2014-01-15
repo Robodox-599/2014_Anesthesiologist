@@ -1,0 +1,11 @@
+#include "AlchemistKicker.h"
+
+AlchemistKicker::AlchemistKicker()
+{
+	
+}
+
+AlchemistKicker::~AlchemistKicker()
+{
+	
+}

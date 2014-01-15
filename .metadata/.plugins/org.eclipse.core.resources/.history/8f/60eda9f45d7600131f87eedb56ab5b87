@@ -1,0 +1,46 @@
+#ifndef ALCHEMIST_DRIVE_H
+#define ALCHEMIST_DRIVE_H
+#include "WPILib.h"
+#include "AlchemistMacros.h"
+
+class AlchemistDrive
+{
+public:
+	AlchemistDrive();
+	~AlchemistDrive();
+	
+	bool shift(UINT8 highButton, UINT8 lowButton);
+	
+	void drive();
+	
+	void setLinVelocity(double linVal);
+	double getLinVelocity();
+	
+	void setTurnSpeed(double turn, bool turboButton);		
+	double getTurnSpeed();	
+	
+	double reduceTurn(double reduceBy);
+	
+	void setLeftMotors(double velocity);
+	void setRightMotors(double velocity);
+	
+	void moveLeftEncoder(double target, double speed);
+	void moveRightEncoder(double target, double speed);
+
+	DoubleSolenoid *shifter;
+	
+private:
+	Talon *frontLeftMotor;
+	Talon *rearLeftMotor;
+	Talon *frontRightMotor;
+	Talon *rearRightMotor;
+	
+	//AlchemistOperatorInterface *oi;
+	
+	double linearVelocity; 
+	double turnSpeed; 
+	
+	double leftCmd;
+	double rightCmd;
+};
+#endif

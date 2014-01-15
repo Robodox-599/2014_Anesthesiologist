@@ -1,0 +1,12 @@
+#include "AlchemistDrive.h"
+
+AlchemistDrive::AlchemistDrive()
+{
+	
+}
+
+AlchemistDrive::~AlchemistDrive()
+{
+	
+}
+

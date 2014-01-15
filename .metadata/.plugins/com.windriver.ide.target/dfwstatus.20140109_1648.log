@@ -1,0 +1,29 @@
+DFW status and trace log : Thu Jan 09 16:38:58 2014
+
+16:38:58.752 ERROR: no id specified
+  SevError(2) : programcontext.cpp : 5450
+16:38:58.792 ERROR: target definition defaultTarget has not been created
+  Protocol Component : SevError(2) : targetdefinitionmanager.cpp : 5122
+DFW status and trace log : Thu Jan 09 16:39:24 2014
+
+16:39:24.448 ERROR: Socket Error. API: recv, SessionId: 904, ReturnCode:  [SystemErrorCode=10053]: SocketHandler::Read
+  Protocol Component : SevError(2) : sockethandler.cpp : 102
+16:39:24.448 ERROR: Socket Error. API: recv, SessionId: 904, ReturnCode:  [SystemErrorCode=10053]
+  Protocol Component : SevError(2) : sockethandler.cpp : 102
+16:39:24.448 ERROR: target definition defaultTarget has not been created
+  Protocol Component : SevError(2) : targetdefinitionmanager.cpp : 5122
+16:39:25.448 ERROR: Socket Error. API: recv, SessionId: 924, ReturnCode:  [SystemErrorCode=10053]: SocketHandler::Read
+  Protocol Component : SevError(2) : sockethandler.cpp : 102
+16:39:25.448 ERROR: Socket Error. API: recv, SessionId: 924, ReturnCode:  [SystemErrorCode=10053]
+  Protocol Component : SevError(2) : sockethandler.cpp : 102
+16:39:25.448 ERROR: target definition defaultTarget has not been created
+  Protocol Component : SevError(2) : targetdefinitionmanager.cpp : 5122
+16:48:35.447 ERROR: Socket Error. API: recv, SessionId: 820, ReturnCode:  [SystemErrorCode=10054]: SocketHandler::Read
+  Protocol Component : SevError(2) : sockethandler.cpp : 102
+16:48:35.447 ERROR: Socket Error. API: recv, SessionId: 820, ReturnCode:  [SystemErrorCode=10054]
+  Protocol Component : SevError(2) : sockethandler.cpp : 102
+16:48:35.447 ERROR: target definition defaultTarget has not been created
+  Protocol Component : SevError(2) : targetdefinitionmanager.cpp : 5122
+16:48:35.447 Operation succeeded: ShutdownServer
+  Reason: ERRNone  Severity: ERRSuccessful16:48:35.447 ERROR: target definition defaultTarget has not been created
+  Protocol Component : SevError(2) : targetdefinitionmanager.cpp : 5122

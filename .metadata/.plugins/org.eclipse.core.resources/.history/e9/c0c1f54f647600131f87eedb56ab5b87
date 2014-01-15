@@ -1,0 +1,23 @@
+#include "AlchemistOperatorInterface.h"
+
+AlchemistOperatorInterface::AlchemistOperatorInterface()
+{
+	joyDrive = new Joystick(1);
+	joyManip = new Joystick(2);
+	dsSimple = DriverStation::GetInstance();
+	ds = &dsSimple->GetEnhancedIO();
+	dsLCD = DriverStationLCD::GetInstance();	
+	dashboard->init();
+}
+
+
+AlchemistOperatorInterface::~AlchemistOperatorInterface()
+{
+	delete dsLCD;
+	delete joyDrive;
+	delete joyManip;
+	
+	dsLCD = NULL;
+	joyDrive = NULL;
+	joyManip = NULL;	
+}

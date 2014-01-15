@@ -1,0 +1,12 @@
+#include "WPILib.h"
+
+#include "AlchemistDrive.h"
+#include "AlchemistManipulator.h"
+#include "AlchemistMacros.h"
+
+class Medic: public IterativeRobot
+{
+	AlchemistDrive drive;
+	AlchemistManipulator manipulator;
+	Compressor comp599;
+};

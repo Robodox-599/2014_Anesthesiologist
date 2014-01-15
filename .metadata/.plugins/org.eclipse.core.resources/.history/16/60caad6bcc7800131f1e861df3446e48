@@ -1,0 +1,11 @@
+#include "AlchemistManipulator.h"
+
+AlchemistManipulator::AlchemistManipulator()
+{
+	
+}
+
+AlchemistManipulator::~AlchemistManipulator()
+{
+	
+}

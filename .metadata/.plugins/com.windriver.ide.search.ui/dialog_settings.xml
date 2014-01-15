@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="com.windriver.ide.search.ui.internal.text.RetrieverPage">
+		<item value="false" key="consider-derived"/>
+		<item value="false" key="case-sensitive"/>
+		<item value="leftCmd" key="search-string"/>
+		<item value="true" key="whole-word"/>
+		<item value="" key="filter-pattern"/>
+		<item value="600" key="splitter.w1"/>
+		<item value="false" key="case-sensitive-file-patterns"/>
+		<item value="*.c,*.cpp,*.cxx,*.h,*.hpp,*.hxx" key="file-patterns"/>
+		<item value="false" key="use-filter-pattern"/>
+		<item value="400" key="splitter.w2"/>
+		<item value="true" key="filter-elsewhere"/>
+		<item value="false" key="flat-layout"/>
+		<item value="false" key="regular-expression"/>
+		<item value="false" key="filter-action"/>
+		<item value="true" key="whitespace-tolerant"/>
+		<item value="true" key="filter-prep"/>
+		<item value="true" key="use-location-filter"/>
+		<item value="" key="replacement-string"/>
+		<item value="true" key="filter-include"/>
+		<item value="true" key="filter-string"/>
+		<item value="false" key="filter-invert"/>
+		<item value="false" key="filter-regexp"/>
+		<item value="true" key="filter-comment"/>
+		<list key="file-patterns.combo">
+			<item value="*.c,*.cpp,*.cxx,*.h,*.hpp,*.hxx"/>
+			<item value="*.java,*.mf,*.properties,*.xml"/>
+		</list>
+		<list key="filter-pattern.combo">
+		</list>
+		<list key="search-string.combo">
+			<item value="leftCmd"/>
+			<item value="turnSpeed"/>
+			<item value="frontLeftMotor"/>
+		</list>
+		<list key="replacement-string.combo">
+		</list>
+		<list key="scope-history">
+			<item value="Workspace"/>
+			<item value="Window working set"/>
+			<item value="Selected resources"/>
+			<item value="Project SimpleTemplate"/>
+		</list>
+		<section name="scope-history-Project SimpleTemplate">
+			<item value="com.windriver.ide.search.ui.internal.scope.SelectedResourcesScopeDescription" key="scope-descriptor-class"/>
+			<list key="resources">
+				<item value="/SimpleTemplate"/>
+			</list>
+		</section>
+		<section name="search-scope">
+			<item value="com.windriver.ide.search.ui.internal.scope.WorkspaceScopeDescription" key="scope-descriptor-class"/>
+		</section>
+	</section>
+</section>

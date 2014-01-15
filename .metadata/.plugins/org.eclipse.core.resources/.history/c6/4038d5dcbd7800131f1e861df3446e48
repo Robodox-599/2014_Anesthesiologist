@@ -1,0 +1,14 @@
+#ifndef ALCHEMIST_PID_H
+#define ALCHEMIST_PID_H
+#include "WPILib.h"
+#include "AlchemistMacros.h"
+
+class AlchemistPID
+{
+public:
+	AlchemistPID();
+	~AlchemistPID();
+private:
+	
+};
+#endif

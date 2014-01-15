@@ -1,0 +1,11 @@
+#include "AlchemistPIDOutput.h"
+
+AlchemistKicker::AlchemistPIDOutput()
+{
+	
+}
+
+AlchemistKicker::~AlchemistPIDOutput()
+{
+	
+}

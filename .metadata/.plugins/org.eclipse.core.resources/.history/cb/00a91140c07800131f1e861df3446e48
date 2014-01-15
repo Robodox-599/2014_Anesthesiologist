@@ -1,0 +1,21 @@
+#include "AlchemistPIDOutput.h"
+
+AlchemistKicker::AlchemistPIDOutput()
+{
+	
+}
+
+AlchemistKicker::~AlchemistPIDOutput()
+{
+	
+}
+
+void MedicPIDOutput::PIDWrite(float output)
+{
+	result = output;
+}
+
+double MedicPIDOutput::readOutput()
+{
+	return result;
+}

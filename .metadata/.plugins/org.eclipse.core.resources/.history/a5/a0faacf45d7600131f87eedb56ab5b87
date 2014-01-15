@@ -1,0 +1,31 @@
+#include "AlchemistDrive.h"
+
+AlchemistDrive::AlchemistDrive()
+{
+	linearVelocity = 0;
+	turnSpeed = 0;
+	
+	shifter = new DoubleSolenoid(PNEUMATICS_24V_SLOT, SHIFTER_SOLENOID_CHANNEL_A, SHIFTER_SOLENOID_CHANNEL_B);   
+	shifter->Set(DoubleSolenoid::kReverse);
+	
+	frontLeftMotor = new Talon(1, DRIVE_FRONT_LEFT_MOTOR_CHANNEL);   
+	rearLeftMotor = new Talon(1, DRIVE_REAR_LEFT_MOTOR_CHANNEL);   
+	frontRightMotor = new Talon(1, DRIVE_FRONT_RIGHT_MOTOR_CHANNEL); 
+	rearRightMotor = new Talon(1, DRIVE_REAR_RIGHT_MOTOR_CHANNEL);
+}
+
+AlchemistDrive::~AlchemistDrive()
+{
+	delete shifter;
+	delete frontLeftMotor;
+	delete rearLeftMotor;
+	delete frontRightMotor;
+	delete rearRightMotor;
+	
+	shifter = NULL;
+	frontLeftMotor = NULL;
+	rearLeftMotor = NULL;
+	frontRightMotor = NULL;
+	rearRightMotor = NULL;
+}
+

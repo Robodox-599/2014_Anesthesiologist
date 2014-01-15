@@ -1,0 +1,15 @@
+#ifndef ALCHEMIST_MANIPULATOR_H
+#define ALCHEMIST_MANIPULATOR_H
+#include "WPILib.h"
+#include "AlchemistMacros.h"
+
+class AlchemistManipulator
+{
+public:
+	AlchemistManipulator();
+	~AlchemistManipulator();
+	
+private:
+	
+};
+#endif

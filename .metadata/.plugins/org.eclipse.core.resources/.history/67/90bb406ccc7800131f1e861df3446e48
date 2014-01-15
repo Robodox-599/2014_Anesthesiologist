@@ -1,0 +1,21 @@
+#include "AlchemistPIDOutput.h"
+
+AlchemistPIDOutput::AlchemistPIDOutput()
+{
+	
+}
+
+AlchemistPIDOutput::~AlchemistPIDOutput()
+{
+	
+}
+
+void AlchemistPIDOutput::PIDWrite(float output)
+{
+	result = output;
+}
+
+double AlchemistPIDOutput::readOutput()
+{
+	return result;
+}
