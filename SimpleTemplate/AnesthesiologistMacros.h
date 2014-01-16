@@ -24,12 +24,16 @@
 	//Encoders
 #define ARM_ENCODER_CHANNEL_A					(1)//TODO: dummy number
 #define ARM_ENCODER_CHANNEL_B					(2)//TODO: dummy number
+#define LEFT_DRIVE_ENCODER_CHANNEL_A			(3)//TODO: dummy number
+#define LEFT_DRIVE_ENCODER_CHANNEL_B			(4)//TODO: dummy number
+#define RIGHT_DRIVE_ENCODER_CHANNEL_A			(5)//TODO: dummy number
+#define RIGHT_DRIVE_ENCODER_CHANNEL_B			(6)//TODO: dummy number
 
 	//Misc
 #define SYNC_STATE_OFF          		        (0)
 #define REDUCTION							    (.75)
 #define DEADZONE								(.1)
-#define TICKS_DEADZONE								(10)
+#define TICKS_DEADZONE							(10)
 
 
 #endif

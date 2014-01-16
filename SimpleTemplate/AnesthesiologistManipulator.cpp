@@ -15,7 +15,6 @@ AnesthesiologistManipulator::AnesthesiologistManipulator(UINT8 intakeRollerVicto
 	armEncoder = new Encoder(ARM_ENCODER_CHANNEL_A, ARM_ENCODER_CHANNEL_B, true, Encoder::k1X);
 	timer = new RobodoxTimer();
 	
-	isAtTarget = false;
 	currentTicks = 0;
 }
 
@@ -62,29 +61,21 @@ double AnesthesiologistManipulator::getVelocity()
 }
 
 void AnesthesiologistManipulator::moveArmEncoder(double target, double speed)
-{
-	currentTicks = 0;
-	isAtTarget = false;
-	
-	while(!isAtTarget)
+{	
+	currentTicks = armEncoder->Get();
+		
+	if(currentTicks < target - TICKS_DEADZONE)
 	{
-		currentTicks = armEncoder->Get();
-			
-		if(currentTicks < target - TICKS_DEADZONE)
-		{
-			intakeArm->Set(speed);
-			isAtTarget = false;
-		}
-		else if(currentTicks > target + TICKS_DEADZONE)
-		{
-			intakeArm->Set(-speed);
-			isAtTarget = false;
-		}
-		else
-		{
-			intakeArm->Set(0);
-			isAtTarget = true;
-		}
+		intakeArm->Set(speed);
+	}
+	else if(currentTicks > target + TICKS_DEADZONE)
+	{
+		intakeArm->Set(-speed);
+	}
+	else
+	{
+		intakeArm->Set(0);
+		currentTicks = 0;
 	}
 }
 
