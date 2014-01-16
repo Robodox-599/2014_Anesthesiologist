@@ -19,15 +19,10 @@ public:
 	double getVelocity();
 	
 	void moveArmEncoder(double target, double speed);
-	void setArm(double velocity);
 	double getEncoder();
 	
 	bool isAtTarget;
-	
-	double initTicks;
-	double currentTicks; 
-	double deltaTicks;
-	double offset;
+	double currentTicks;
 	
 	RobodoxTimer *timer;
 	Encoder *armEncoder;

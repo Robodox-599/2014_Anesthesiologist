@@ -108,8 +108,8 @@ public:
 		oi->dashboard->PutNumber("Drive Linear Velocity: ", drive->getLinVelocity());
 		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
 		oi->dashboard->PutNumber("Roller Velocity: ", drive->getLinVelocity());
+		oi->dashboard->PutNumber("Arm Encoder Raw Value: ", manipulator->armEncoder->Get());
 		oi->dashboard->PutNumber("timer test: ", manipulator->timer->Get());
-		
 	}
 };	
 
