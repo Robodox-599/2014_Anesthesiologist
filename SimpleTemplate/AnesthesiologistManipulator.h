@@ -14,22 +14,20 @@ public:
 	
 	void intakeBall(bool intake);
 	
-	void setRoller();	
+	//void setRoller();	
 	void setVelocity(double input);
 	double getVelocity();
 	
 	void moveArmEncoder(double target, double speed);
-	double getEncoder();
 	
-	bool isAtTarget;
 	double currentTicks;
 	
-	RobodoxTimer *timer;
+	//RobodoxTimer *timer;
 	Encoder *armEncoder;
 	
 private:
-	Victor *intakeRoller;
-	DigitalInput *intakeSwitch;
+	//Victor *intakeRoller;
+	//DigitalInput *intakeSwitch;
 	Victor *intakeArm;
 	double targetVelocity;
 	

@@ -118,11 +118,13 @@ void AnesthesiologistDrive::setEncodersLinear(double target, double speed)
 	{
 		leftDriveEncoder->Reset();
 		rightDriveEncoder->Reset();
+		isAtLinearTarget = true;
 	}
 	else
 	{
 		isAtLeftTarget = false;
 		isAtRightTarget = false;	
+		isAtLinearTarget = false;
 	}
 	
 	currentTicksLeft = leftDriveEncoder->Get();
@@ -158,9 +160,77 @@ void AnesthesiologistDrive::setEncodersLinear(double target, double speed)
 	
 }
 
+void AnesthesiologistDrive::setEncoderLeft(double target, double speed)
+{
+	if(isAtLeftTarget)
+	{
+		leftDriveEncoder->Reset();
+	}
+	else
+	{
+		isAtLeftTarget = false;
+	}
+	
+	currentTicksLeft = leftDriveEncoder->Get();
+	
+	if (currentTicksLeft < target - TICKS_DEADZONE)
+	{
+		setLeftMotors(speed);
+	}
+	else if (currentTicksLeft > target + TICKS_DEADZONE)
+	{
+		setLeftMotors(-speed);
+	}
+	else
+	{
+		setLeftMotors(0);
+		isAtLeftTarget = true;
+	}
+	
+}
+
+void AnesthesiologistDrive::setEncoderRight(double target, double speed)
+{
+	if(isAtRightTarget)
+	{
+		rightDriveEncoder->Reset();
+	}
+	else
+	{
+		isAtRightTarget = false;	
+	}
+	
+	currentTicksRight = rightDriveEncoder->Get();
+	
+	if (currentTicksRight < target - TICKS_DEADZONE)
+	{
+		setRightMotors(speed);
+	}
+	else if (currentTicksRight > target + TICKS_DEADZONE)
+	{
+		setRightMotors(-speed);
+	}
+	else
+	{
+		setRightMotors(0);
+		isAtRightTarget = true;
+	}
+	
+}
+
 void AnesthesiologistDrive::autoLinear(double target, double speed)
 {
 	setEncodersLinear(target, speed);
+}
+
+void AnesthesiologistDrive::autoLeft(double target, double speed)
+{
+	setEncoderLeft(target, speed);
+}
+
+void AnesthesiologistDrive::autoRight(double target, double speed)
+{
+	setEncoderRight(target, speed);
 }
 
 void AnesthesiologistDrive::drive()

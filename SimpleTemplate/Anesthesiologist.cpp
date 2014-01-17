@@ -6,6 +6,8 @@
 #include "AnesthesiologistOperatorInterface.h"
 #include "AnesthesiologistMacros.h"
 
+int step = 0;
+
 class Anesthesiologist: public IterativeRobot
 {
 	AnesthesiologistDrive *drive;
@@ -21,7 +23,7 @@ public:
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 1); 
 		
-		manipulator->timer->Start();
+		//manipulator->timer->Start();
 		
 		oi->dashboard->init();
 		comp599->Start();
@@ -34,12 +36,18 @@ public:
 	
 	void DisabledInit()
 	{
-	
+		drive->leftDriveEncoder->Start();
+		drive->rightDriveEncoder->Start();
+		//manipulator->armEncoder->Start();
 	}
 	
 	void AutonomousInit()
 	{
-	
+		step = 0;
+		drive->leftDriveEncoder->Reset();
+		drive->rightDriveEncoder->Reset();
+		//manipulator->armEncoder->Reset();
+		drive->isAtLinearTarget = false;
 	}
 	
 	void TeleopInit()
@@ -57,13 +65,54 @@ public:
 	
 	void DisabledPeriodic()
 	{
+		step = 0;
+		drive->leftDriveEncoder->Reset();
+		drive->rightDriveEncoder->Reset();
+		//manipulator->armEncoder->Reset();
+		drive->isAtLinearTarget = false;
 		smartDashboardPrint();
 	}
 	
 	void AutonomousPeriodic()
 	{
-	
-	
+		smartDashboardPrint();
+		
+		/*if(step == 0)
+		{
+			drive->autoLeft(20, .25);
+			step++;
+		}*/
+		if(step == 0)
+		{
+			drive->autoRight(-20, .25);
+			step++;
+		}
+		
+		/*auto test
+		if(step == 0)
+		{
+			drive->autoLinear(25, .50);
+			manipulator->timer->wait(1000);
+			step++;
+		}
+		if(step == 1)
+		{
+			drive->autoLinear(25, -.50);
+			manipulator->timer->wait(1000);
+			step++;
+		}
+		if(step == 2)
+		{
+			drive->autoLinear(-25, .50);
+			manipulator->timer->wait(1000);
+			step++;
+		}
+		if(step == 3)
+		{
+			drive->autoLinear(-25, -.50);
+			manipulator->timer->wait(1000);
+			step++;
+		}*/
 	}
 	
 	void TeleopPeriodic()
@@ -72,7 +121,8 @@ public:
 		
 		while(IsOperatorControl())
 		{
-			oi->dsLCD->PrintfLine(DriverStationLCD::kUser_Line1, "Time: %f" , manipulator->timer->Get());
+			 oi->dsLCD->PrintfLine(DriverStationLCD::kUser_Line1, "EncoderL: %f" , drive->leftDriveEncoder->Get());
+			 oi->dsLCD->PrintfLine(DriverStationLCD::kUser_Line2, "EncoderR: %f" , drive->rightDriveEncoder->Get());
 			 teleDrive();
 			 smartDashboardPrint();
 		}
@@ -108,8 +158,10 @@ public:
 		oi->dashboard->PutNumber("Drive Linear Velocity: ", drive->getLinVelocity());
 		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
 		oi->dashboard->PutNumber("Roller Velocity: ", drive->getLinVelocity());
-		oi->dashboard->PutNumber("Arm Encoder Raw Value: ", manipulator->armEncoder->Get());
-		oi->dashboard->PutNumber("timer test: ", manipulator->timer->Get());
+		//oi->dashboard->PutNumber("Arm Encoder Raw Value: ", manipulator->armEncoder->Get());
+		oi->dashboard->PutNumber("Left Encoder Raw Value: ", drive->leftDriveEncoder->Get());
+		oi->dashboard->PutNumber("Right Encoder Raw Value: ", drive->rightDriveEncoder->Get());
+		//oi->dashboard->PutNumber("Timer: ", manipulator->timer->Get());
 	}
 };	
 

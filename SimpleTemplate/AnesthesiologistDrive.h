@@ -26,6 +26,13 @@ public:
 	void setRightMotors(double velocity);
 	
 	void setEncodersLinear(double target, double speed);
+	void autoLinear(double target, double speed);
+	
+	//encoder testing purposes
+	void setEncoderLeft(double target, double speed);
+	void setEncoderRight(double target, double speed);
+	void autoLeft(double target, double speed);
+	void autoRight(double target, double speed);
 	
 	DoubleSolenoid *shifter;
 	
@@ -33,6 +40,7 @@ public:
 	Encoder *rightDriveEncoder;
 	bool isAtLeftTarget;
 	bool isAtRightTarget;
+	bool isAtLinearTarget;
 	double currentTicksLeft;
 	double currentTicksRight;
 	

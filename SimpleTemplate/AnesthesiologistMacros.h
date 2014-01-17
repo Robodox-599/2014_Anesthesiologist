@@ -17,17 +17,17 @@
 #define LAUNCHER_SOLENOID_CHANNEL				(3)//TODO: dummy number
 
 	//Manipulators
-#define INTAKE_ROLLER_VICTOR_CHANNEL			(1)//TODO: dummy number
-#define INTAKE_SWITCH_CHANNEL					(2)//TODO: dummy number
-#define INTAKE_ARM_VICTOR_CHANNEL				(3)//TODO: dummy number
+#define INTAKE_ROLLER_VICTOR_CHANNEL			(6)//TODO: dummy number
+#define INTAKE_SWITCH_CHANNEL					(7)//TODO: dummy number
+#define INTAKE_ARM_VICTOR_CHANNEL				(8)//TODO: dummy number
 
 	//Encoders
 #define ARM_ENCODER_CHANNEL_A					(1)//TODO: dummy number
 #define ARM_ENCODER_CHANNEL_B					(2)//TODO: dummy number
-#define LEFT_DRIVE_ENCODER_CHANNEL_A			(3)//TODO: dummy number
-#define LEFT_DRIVE_ENCODER_CHANNEL_B			(4)//TODO: dummy number
-#define RIGHT_DRIVE_ENCODER_CHANNEL_A			(5)//TODO: dummy number
-#define RIGHT_DRIVE_ENCODER_CHANNEL_B			(6)//TODO: dummy number
+#define LEFT_DRIVE_ENCODER_CHANNEL_A			(4)//TODO: dummy number
+#define LEFT_DRIVE_ENCODER_CHANNEL_B			(5)//TODO: dummy number
+#define RIGHT_DRIVE_ENCODER_CHANNEL_A			(6)//TODO: dummy number
+#define RIGHT_DRIVE_ENCODER_CHANNEL_B			(7)//TODO: dummy number
 
 	//Misc
 #define SYNC_STATE_OFF          		        (0)
