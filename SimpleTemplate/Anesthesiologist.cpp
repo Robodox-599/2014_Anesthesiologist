@@ -1,10 +1,38 @@
 #include "WPILib.h"
 
+//Vision includes
+#include "Vision/RGBImage.h"
+#include "Vision/BinaryImage.h"
+#include "Math.h"
+
 #include "AnesthesiologistDrive.h"
 #include "AnesthesiologistManipulator.h"
 #include "AnesthesiologistPIDOutput.h"
 #include "AnesthesiologistOperatorInterface.h"
 #include "AnesthesiologistMacros.h"
+
+//Vision defines
+//Camera constants used for distance calculation
+#define Y_IMAGE_RES 480		//X Image resolution in pixels, should be 120, 240 or 480
+#define VIEW_ANGLE 49		//Axis M1013
+
+#define PI 3.141592653
+
+//Score limits used for target identification
+#define RECTANGULARITY_LIMIT 40
+#define ASPECT_RATIO_LIMIT 55
+
+//Score limits used for hot target determination
+#define TAPE_WIDTH_LIMIT 50
+#define VERTICAL_SCORE_LIMIT 50
+#define LR_SCORE_LIMIT 50
+
+//Minimum area of particles to be considered
+#define AREA_MINIMUM 150
+
+//Maximum number of particles to process
+#define MAX_PARTICLES 8
+
 
 int step = 0;
 
@@ -14,6 +42,29 @@ class Anesthesiologist: public IterativeRobot
 	AnesthesiologistManipulator *manipulator;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
+	Encoder *leftDriveEncoder;
+	//Encoder *rightDriveEncoder;
+	
+	//Vision(accent)
+	//AxisCamera &camera;
+	struct itemScores
+	{
+		double rectangularity;
+		double aspectRatioVertical;
+		double aspectRatioHorizontal;
+	};
+	
+	struct reportOnTarget
+	{
+		int verticalIndex;
+		int horizontalIndex;
+		bool isHot;
+		double totalScore;
+		double leftScore;
+		double rightScore;
+		double tapeWidthScore;
+		double verticalScore;
+	};
 
 public:	
 	Anesthesiologist()
@@ -22,11 +73,15 @@ public:
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 1); 
+		leftDriveEncoder = new Encoder(1, LEFT_DRIVE_ENCODER_CHANNEL_A, 1, LEFT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
+		//rightDriveEncoder = new Encoder(1, RIGHT_DRIVE_ENCODER_CHANNEL_A, 1, RIGHT_DRIVE_ENCODER_CHANNEL_B, false, Encoder::k1X);
 		
 		//manipulator->timer->Start();
-		
+		leftDriveEncoder->Start();
+		//rightDriveEncoder->Start();
 		oi->dashboard->init();
 		comp599->Start();
+		//camera = AxisCamera::GetInstance();
 	}
 	
 	void RobotInit()
@@ -36,18 +91,17 @@ public:
 	
 	void DisabledInit()
 	{
-		drive->leftDriveEncoder->Start();
-		drive->rightDriveEncoder->Start();
 		//manipulator->armEncoder->Start();
+		leftDriveEncoder->Start();
+		//rightDriveEncoder->Start();
 	}
 	
 	void AutonomousInit()
 	{
 		step = 0;
-		drive->leftDriveEncoder->Reset();
-		drive->rightDriveEncoder->Reset();
 		//manipulator->armEncoder->Reset();
-		drive->isAtLinearTarget = false;
+		leftDriveEncoder->Reset();
+		//rightDriveEncoder->Reset();
 	}
 	
 	void TeleopInit()
@@ -55,7 +109,9 @@ public:
 		drive->setLinVelocity(0);
 		drive->setTurnSpeed(0, false);
 		drive->drive();
-		manipulator->setVelocity(0);
+		//manipulator->setVelocity(0);
+		leftDriveEncoder->Start();
+		//rightDriveEncoder->Start();
 	}
 	
 	void TestInit()
@@ -66,65 +122,29 @@ public:
 	void DisabledPeriodic()
 	{
 		step = 0;
-		drive->leftDriveEncoder->Reset();
-		drive->rightDriveEncoder->Reset();
 		//manipulator->armEncoder->Reset();
 		drive->isAtLinearTarget = false;
+		leftDriveEncoder->Reset();
+		//rightDriveEncoder->Reset();
 		smartDashboardPrint();
 	}
 	
 	void AutonomousPeriodic()
 	{
 		smartDashboardPrint();
-		
-		/*if(step == 0)
-		{
-			drive->autoLeft(20, .25);
-			step++;
-		}*/
-		if(step == 0)
-		{
-			drive->autoRight(-20, .25);
-			step++;
-		}
-		
-		/*auto test
-		if(step == 0)
-		{
-			drive->autoLinear(25, .50);
-			manipulator->timer->wait(1000);
-			step++;
-		}
-		if(step == 1)
-		{
-			drive->autoLinear(25, -.50);
-			manipulator->timer->wait(1000);
-			step++;
-		}
-		if(step == 2)
-		{
-			drive->autoLinear(-25, .50);
-			manipulator->timer->wait(1000);
-			step++;
-		}
-		if(step == 3)
-		{
-			drive->autoLinear(-25, -.50);
-			manipulator->timer->wait(1000);
-			step++;
-		}*/
 	}
 	
 	void TeleopPeriodic()
 	{
 		comp599->Start();
+		leftDriveEncoder->Start();
+		//rightDriveEncoder->Start();
+		//manipulator->timer->Start();
 		
 		while(IsOperatorControl())
 		{
-			 oi->dsLCD->PrintfLine(DriverStationLCD::kUser_Line1, "EncoderL: %f" , drive->leftDriveEncoder->Get());
-			 oi->dsLCD->PrintfLine(DriverStationLCD::kUser_Line2, "EncoderR: %f" , drive->rightDriveEncoder->Get());
-			 teleDrive();
-			 smartDashboardPrint();
+			teleDrive();
+			smartDashboardPrint();
 		}
 	}
 	
@@ -135,13 +155,15 @@ public:
 	
 	void teleDrive()
 	{
+		leftDriveEncoder->Start();
+		//rightDriveEncoder->Start();
 		drive->setLinVelocity(-oi->getDriveJoystick()->GetY(Joystick::kRightHand));
 		drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(1));
 		drive->drive();
 		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
 		
-		manipulator->setVelocity((oi->getManipJoystick()->GetThrottle()+1)/2);
-		manipulator->intakeBall(oi->getManipJoystickButton(2));
+		//manipulator->setVelocity((oi->getManipJoystick()->GetThrottle()+1)/2);
+		//manipulator->intakeBall(oi->getManipJoystickButton(2));
 		
 		if(oi->getDriveJoystickButton(6))
 		{
@@ -157,12 +179,214 @@ public:
 	{
 		oi->dashboard->PutNumber("Drive Linear Velocity: ", drive->getLinVelocity());
 		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
-		oi->dashboard->PutNumber("Roller Velocity: ", drive->getLinVelocity());
 		//oi->dashboard->PutNumber("Arm Encoder Raw Value: ", manipulator->armEncoder->Get());
-		oi->dashboard->PutNumber("Left Encoder Raw Value: ", drive->leftDriveEncoder->Get());
-		oi->dashboard->PutNumber("Right Encoder Raw Value: ", drive->rightDriveEncoder->Get());
+		oi->dashboard->PutNumber("encoder raw value: ", leftDriveEncoder->Get());
+		//oi->dashboard->PutNumber("Left Encoder Raw Value: ", leftDriveEncoder->Get());
+		//oi->dashboard->PutNumber("Right Encoder Raw Value: ", rightDriveEncoder->Get());
 		//oi->dashboard->PutNumber("Timer: ", manipulator->timer->Get());
 	}
+	/*
+	void track()
+	{
+		itemScores *scores;
+		reportOnTarget target;
+		int verticalTarget[MAX_PARTICLES];//will contain potential targets
+		int horizontalTarget[MAX_PARTICLES];
+		int verticalTargetCount;//num of potential targets
+		int horizontalTargetCount;//num of potential targets
+		Threshold threshold(105, 137, 230, 255, 133, 183);	//HSV threshold criteria, ranges are in that order ie. Hue is 60-100
+		ParticleFilterCriteria2 criteria[] = {{IMAQ_MT_AREA, AREA_MINIMUM, 65535, false, false}};
+		ColorImage *image; //image to analyze
+		
+		//image = camera.GetImage();
+		BinaryImage *thresholdedImage = image->ThresholdHSV(threshold);
+		BinaryImage *filteredImage = thresholdedImage->ParticleFilter(criteria, 1);
+		vector<ParticleAnalysisReport> *reports = filteredImage->GetOrderedParticleAnalysisReports();//dat report
+		
+		verticalTargetCount = 0;
+		horizontalTargetCount = 0;
+		
+		if(reports->size() > 0)
+		{
+			//dat forloop
+			for(UINT8 count = 0; count < MAX_PARTICLES && count < reports->size(); count++)
+			{
+				ParticleAnalysisReport *report = &(reports->at(count));
+				
+				scores[count].rectangularity = scoreRectangularity(report);
+				scores[count].aspectRatioVertical = scoreAspectRatio(filteredImage, report, true);
+				scores[count].aspectRatioHorizontal = scoreAspectRatio(filteredImage, report, false);
+			
+				if(scoreCompare(scores[count], false))
+				{
+					horizontalTarget[horizontalTargetCount++] = count;
+				}
+				else if(scoreCompare(scores[count], true))
+				{
+					verticalTarget[verticalTargetCount++] = count;
+				}
+				else
+				{
+					//lay down, try not to cry, cry a lot
+				}
+			}
+			
+			target.totalScore = 0;
+			target.leftScore = 0;
+			target.rightScore = 0;
+			target.tapeWidthScore = 0;
+			target.verticalScore = 0;
+			target.verticalIndex = verticalTarget[0];
+			
+			for(int i = 0; i < verticalTargetCount; i++) //dat forloop again
+			{
+				ParticleAnalysisReport *verticalReport = &report->at(verticalTarget[i]);
+				
+				for (int j = 0; j < horizontalTargetCount; j++) //dat nested forloop thooooooo
+				{
+					ParticleAnalysisReport *horizontalReport = &report->at(horizontalTarget[j]);
+					double horizontalWidth; 
+					double horizontalHeight;
+					double verticalWidth; 
+					double leftScore; 
+					double rightScore;
+					double tapeWidthScore; 
+					double verticalScore; 
+					double total;
+					
+					imaqMeasureParticle(filteredImage->GetImaqImage(), horizontalReport->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_LONG_SIDE, &horizontalWidth);
+					imaqMeasureParticle(filteredImage->GetImaqImage(), verticalReport->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE, &verticalWidth);
+					imaqMeasureParticle(filteredImage->GetImaqImage(), horizontalReport->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE, &horizontalHeight); //measures rectangular sides
+					
+					leftScore = ratioToScore(1.2*(verticalReport->boundingRect.left - horizontalReport->center_mass_x)/horizontalWidth);				
+					rightScore = ratioToScore(1.2*(horizontalReport->center_mass_x - verticalReport->boundingRect.left - verticalReport->boundingRect.width)/horizontalWidth);
+					tapeWidthScore = ratioToScore(verticalWidth/horizontalHeight);
+					verticalScore = ratioToScore(1-(verticalReport->boundingRect.top - horizontalReport->center_mass_y)/(4*horizontalHeight));
+					
+					if(leftScore > rightScore)
+					{
+						total = leftScore;
+					}
+					else
+					{
+						total = rightScore;
+					}
+					total += tapeWidthScore + verticalScore;
+					
+					if(total > target.totalScore)
+					{
+						target.horizontalIndex = horizontalTarget[j];
+						target.verticalIndex = verticalTarget[i];
+						target.totalScore = total;
+						target.leftScore = leftScore;
+						target.rightScore = rightScore;
+						target.tapeWidthScore = tapeWidthScore;
+						target.verticalScore = verticalScore;
+					}
+				}
+				target.isHot = hotOrNot(target);
+			}
+			
+			if(verticalTargetCount > 0)
+			{
+				ParticleAnalysisReport *distanceReport = &(reports->at(target.verticalIndex));
+				//double distance = computeDistance(filteredImage, distanceReport);
+			}
+		}
+		
+		delete filteredImage;
+		delete thresholdedImage;
+		delete image;
+		delete scores;
+		delete reports;	
+	}
+	
+	double computeDistance (BinaryImage *image, ParticleAnalysisReport *report) 
+	{
+		double rectLong;
+		double height;
+		int targetHeight;
+		
+		imaqMeasureParticle(image->GetImaqImage(), report->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_LONG_SIDE, &rectLong);
+		height = min(report->boundingRect.height, rectLong);
+		targetHeight = 32;
+		
+		return Y_IMAGE_RES * targetHeight / (height * 12 * 2 * tan(VIEW_ANGLE*PI/(180*2)));
+	}
+	
+	double scoreAspectRatio(BinaryImage *image, ParticleAnalysisReport *report, bool vertical)
+	{
+		double rectLong, rectShort, idealAspectRatio, aspectRatio;
+		
+		if(vertical)
+		{
+			idealAspectRatio = (4.0/32);
+		}
+		else
+		{
+			idealAspectRatio = (23.5/4);
+		}
+		
+		imaqMeasureParticle(image->GetImaqImage(), report->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_LONG_SIDE, &rectLong);
+		imaqMeasureParticle(image->GetImaqImage(), report->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE, &rectShort);
+		
+		if(report->boundingRect.width > report->boundingRect.height) //calculate aspect ratio
+		{
+			aspectRatio = ratioToScore(((rectLong/rectShort)/idealAspectRatio));
+		} 
+		else
+		{
+			aspectRatio = ratioToScore(((rectShort/rectLong)/idealAspectRatio));
+		}
+		
+		return aspectRatio; //range 0-100
+	}
+	
+	bool scoreCompare(itemScores scores, bool vertical)
+	{
+		bool isTarget = true;
+	
+		isTarget &= scores.rectangularity > RECTANGULARITY_LIMIT;
+		if(vertical)
+		{
+			isTarget &= scores.aspectRatioVertical > ASPECT_RATIO_LIMIT;
+		}
+		else 
+		{
+			isTarget &= scores.aspectRatioHorizontal > ASPECT_RATIO_LIMIT;
+		}
+	
+		return isTarget;
+	}
+	
+	double scoreRectangularity(ParticleAnalysisReport *report)
+	{
+		if(report->boundingRect.width*report->boundingRect.height !=0)
+		{
+			return 100*report->particleArea/(report->boundingRect.width*report->boundingRect.height);
+		}
+		else 
+		{
+			return 0;
+		}	
+	}	
+	
+	double ratioToScore(double ratio)
+	{
+		return (max(0, min(100*(1-fabs(1-ratio)), 100)));
+	}
+	
+	bool hotOrNot(reportOnTarget target)
+	{
+		bool isHot = true;
+		
+		isHot &= target.tapeWidthScore >= TAPE_WIDTH_LIMIT;
+		isHot &= target.verticalScore >= VERTICAL_SCORE_LIMIT;
+		isHot &= (target.leftScore > LR_SCORE_LIMIT) | (target.rightScore > LR_SCORE_LIMIT);
+		
+		return isHot;
+	}
+	*/
 };	
 
 START_ROBOT_CLASS(Anesthesiologist);

@@ -36,13 +36,15 @@ public:
 	
 	DoubleSolenoid *shifter;
 	
-	Encoder *leftDriveEncoder;
-	Encoder *rightDriveEncoder;
+	//Encoder *leftDriveEncoder;
+	//Encoder *rightDriveEncoder;
 	bool isAtLeftTarget;
 	bool isAtRightTarget;
 	bool isAtLinearTarget;
 	double currentTicksLeft;
 	double currentTicksRight;
+	
+	//bool encoderTest;
 	
 private:
 	Talon *frontLeftMotor;

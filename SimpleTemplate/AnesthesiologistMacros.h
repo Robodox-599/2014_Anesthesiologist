@@ -34,6 +34,7 @@
 #define REDUCTION							    (.75)
 #define DEADZONE								(.1)
 #define TICKS_DEADZONE							(10)
+#define INCHES_PER_TICK                			(0.075398)   // circumference of wheel / total 
 
 
 #endif

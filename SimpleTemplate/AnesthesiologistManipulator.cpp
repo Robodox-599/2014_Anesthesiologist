@@ -28,23 +28,23 @@ AnesthesiologistManipulator::~AnesthesiologistManipulator()
 	//intakeSwitch = NULL;
 	intakeArm = NULL;
 }
-
+/*
 void AnesthesiologistManipulator::intakeBall(bool intake)
 {
 	bool lastSwitchHit = false;
 	
-	if(intake && !lastSwitchHit)// && intakeSwitch->Get() == 1)//TODO: test for 0 or 1
+	if(intake && !lastSwitchHit && intakeSwitch->Get() == 1)//TODO: test for 0 or 1
 	{
-		//intakeRoller->Set(0);
-		//timer->wait(1000.0);
+		intakeRoller->Set(0);
+		timer->wait(1000.0);
 	}
 	else
 	{
-		//setRoller();
+		setRoller();
 	}
-	//lastSwitchHit = intakeSwitch->Get();	
+	lastSwitchHit = intakeSwitch->Get();	
 }
-/*
+
 void AnesthesiologistManipulator::setRoller()
 {
 	intakeRoller->Set(targetVelocity * REDUCTION); 
