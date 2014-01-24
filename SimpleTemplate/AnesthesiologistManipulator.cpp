@@ -11,22 +11,22 @@ AnesthesiologistManipulator::AnesthesiologistManipulator(UINT8 intakeRollerVicto
 {
 	//intakeRoller = new Victor(intakeRollerVictorChannel);
 	//intakeSwitch = new DigitalInput(1, INTAKE_SWITCH_CHANNEL);
-	intakeArm = new Victor(intakeArmVictorChannel);
-	armEncoder = new Encoder(ARM_ENCODER_CHANNEL_A, ARM_ENCODER_CHANNEL_B, true, Encoder::k1X);
+	//intakeArm = new Victor(intakeArmVictorChannel);
+	//armEncoder = new Encoder(ARM_ENCODER_CHANNEL_A, ARM_ENCODER_CHANNEL_B, true, Encoder::k1X);
 	//timer = new RobodoxTimer();
 	
-	currentTicks = 0;
+	//currentTicks = 0;
 }
 
 AnesthesiologistManipulator::~AnesthesiologistManipulator()
 {
 	//delete intakeRoller;
 	//delete intakeSwitch;
-	delete intakeArm;
+	//delete intakeArm;
 	
 	//intakeRoller = NULL;
 	//intakeSwitch = NULL;
-	intakeArm = NULL;
+	//intakeArm = NULL;
 }
 /*
 void AnesthesiologistManipulator::intakeBall(bool intake)
@@ -49,7 +49,7 @@ void AnesthesiologistManipulator::setRoller()
 {
 	intakeRoller->Set(targetVelocity * REDUCTION); 
 }
-*/
+
 void AnesthesiologistManipulator::setVelocity(double input)
 {
 	targetVelocity = input;
@@ -79,4 +79,4 @@ void AnesthesiologistManipulator::moveArmEncoder(double target, double speed)
 	}
 }
 
-
+*/

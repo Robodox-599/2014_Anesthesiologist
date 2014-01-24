@@ -1,52 +1,58 @@
 #include "WPILib.h"
 
 //Vision includes
-#include "Vision/RGBImage.h"
-#include "Vision/BinaryImage.h"
-#include "Math.h"
+//#include "Vision/RGBImage.h"
+//#include "Vision/BinaryImage.h"
+//#include "Math.h"
 
 #include "AnesthesiologistDrive.h"
-#include "AnesthesiologistManipulator.h"
+//#include "AnesthesiologistManipulator.h"
 #include "AnesthesiologistPIDOutput.h"
 #include "AnesthesiologistOperatorInterface.h"
 #include "AnesthesiologistMacros.h"
 
 //Vision defines
 //Camera constants used for distance calculation
-#define Y_IMAGE_RES 480		//X Image resolution in pixels, should be 120, 240 or 480
-#define VIEW_ANGLE 49		//Axis M1013
+#define Y_IMAGE_RES 			(480)	//X Image resolution in pixels, should be 120, 240 or 480
+#define VIEW_ANGLE 				(49)	//Axis M1013
 
-#define PI 3.141592653
+#define PI 						(3.141592653)
 
 //Score limits used for target identification
-#define RECTANGULARITY_LIMIT 40
-#define ASPECT_RATIO_LIMIT 55
+#define RECTANGULARITY_LIMIT 	(40)
+#define ASPECT_RATIO_LIMIT 		(55)
 
 //Score limits used for hot target determination
-#define TAPE_WIDTH_LIMIT 50
-#define VERTICAL_SCORE_LIMIT 50
-#define LR_SCORE_LIMIT 50
-
+#define TAPE_WIDTH_LIMIT 		(50)
+#define VERTICAL_SCORE_LIMIT 	(50)
+#define LR_SCORE_LIMIT 			(50)
+	
 //Minimum area of particles to be considered
-#define AREA_MINIMUM 150
+#define AREA_MINIMUM 			(150)
 
 //Maximum number of particles to process
-#define MAX_PARTICLES 8
+#define MAX_PARTICLES 			(8)
 
 
 int step = 0;
 
+bool isWait = false;
+bool bInit = true;
+bool bLatch = false;
+double initTime = 0;
+double currentTime = 0;
+
 class Anesthesiologist: public IterativeRobot
 {
 	AnesthesiologistDrive *drive;
-	AnesthesiologistManipulator *manipulator;
+	//AnesthesiologistManipulator *manipulator;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
-	Encoder *leftDriveEncoder;
+	//Encoder *leftDriveEncoder;
+	Timer *timer;
 	//Encoder *rightDriveEncoder;
-	
-	//Vision(accent)
 	//AxisCamera &camera;
+/*	
 	struct itemScores
 	{
 		double rectangularity;
@@ -65,23 +71,27 @@ class Anesthesiologist: public IterativeRobot
 		double tapeWidthScore;
 		double verticalScore;
 	};
-
+*/
 public:	
 	Anesthesiologist()
 	{
-		manipulator = new AnesthesiologistManipulator();
+		//manipulator = new AnesthesiologistManipulator();
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 1); 
-		leftDriveEncoder = new Encoder(1, LEFT_DRIVE_ENCODER_CHANNEL_A, 1, LEFT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
+		//leftDriveEncoder = new Encoder(1, LEFT_DRIVE_ENCODER_CHANNEL_A, 1, LEFT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
 		//rightDriveEncoder = new Encoder(1, RIGHT_DRIVE_ENCODER_CHANNEL_A, 1, RIGHT_DRIVE_ENCODER_CHANNEL_B, false, Encoder::k1X);
 		
 		//manipulator->timer->Start();
-		leftDriveEncoder->Start();
+		//leftDriveEncoder->Start();
 		//rightDriveEncoder->Start();
 		oi->dashboard->init();
 		comp599->Start();
+		//Vision(accent)
 		//camera = AxisCamera::GetInstance();
+		//isWait = false;
+		//bInit = true;
+		//bLatch = false;
 	}
 	
 	void RobotInit()
@@ -92,7 +102,7 @@ public:
 	void DisabledInit()
 	{
 		//manipulator->armEncoder->Start();
-		leftDriveEncoder->Start();
+		//leftDriveEncoder->Start();
 		//rightDriveEncoder->Start();
 	}
 	
@@ -100,7 +110,7 @@ public:
 	{
 		step = 0;
 		//manipulator->armEncoder->Reset();
-		leftDriveEncoder->Reset();
+		//leftDriveEncoder->Reset();
 		//rightDriveEncoder->Reset();
 	}
 	
@@ -110,7 +120,7 @@ public:
 		drive->setTurnSpeed(0, false);
 		drive->drive();
 		//manipulator->setVelocity(0);
-		leftDriveEncoder->Start();
+		//leftDriveEncoder->Start();
 		//rightDriveEncoder->Start();
 	}
 	
@@ -123,24 +133,25 @@ public:
 	{
 		step = 0;
 		//manipulator->armEncoder->Reset();
-		drive->isAtLinearTarget = false;
-		leftDriveEncoder->Reset();
+		//drive->isAtLinearTarget = false;
+		//leftDriveEncoder->Reset();
 		//rightDriveEncoder->Reset();
 		smartDashboardPrint();
 	}
 	
 	void AutonomousPeriodic()
 	{
+		//timer->Start();
 		smartDashboardPrint();
 	}
 	
 	void TeleopPeriodic()
 	{
 		comp599->Start();
-		leftDriveEncoder->Start();
+		//leftDriveEncoder->Start();
 		//rightDriveEncoder->Start();
 		//manipulator->timer->Start();
-		
+		timer->Start();
 		while(IsOperatorControl())
 		{
 			teleDrive();
@@ -155,11 +166,14 @@ public:
 	
 	void teleDrive()
 	{
-		leftDriveEncoder->Start();
+		//leftDriveEncoder->Start();
 		//rightDriveEncoder->Start();
-		drive->setLinVelocity(-oi->getDriveJoystick()->GetY(Joystick::kRightHand));
-		drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(1));
-		drive->drive();
+		if(!isWait)
+		{
+			drive->setLinVelocity(-oi->getDriveJoystick()->GetY(Joystick::kRightHand));
+			drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(1));
+			drive->drive();
+		}
 		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
 		
 		//manipulator->setVelocity((oi->getManipJoystick()->GetThrottle()+1)/2);
@@ -173,18 +187,54 @@ public:
 		{
 			comp599->Stop();
 		}
+		
+		//timer wait test
+		if(oi->getDriveJoystickButton(10))
+		{
+			bLatch = true;
+		}
+		if(bLatch)
+		{
+			wait(10.0);
+		}
 	}
 	
 	void smartDashboardPrint()
 	{
-		oi->dashboard->PutNumber("Drive Linear Velocity: ", drive->getLinVelocity());
+		oi->dashboard->PutNumber("Drive Linear Speed: ", drive->getLinVelocity());
 		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
 		//oi->dashboard->PutNumber("Arm Encoder Raw Value: ", manipulator->armEncoder->Get());
-		oi->dashboard->PutNumber("encoder raw value: ", leftDriveEncoder->Get());
+		//oi->dashboard->PutNumber("encoder raw value: ", leftDriveEncoder->Get());
 		//oi->dashboard->PutNumber("Left Encoder Raw Value: ", leftDriveEncoder->Get());
 		//oi->dashboard->PutNumber("Right Encoder Raw Value: ", rightDriveEncoder->Get());
 		//oi->dashboard->PutNumber("Timer: ", manipulator->timer->Get());
+		oi->dashboard->PutNumber("Timer: ", timer->Get());
+		oi->dashboard->PutBoolean("Wait?: ", isWait);
+		oi->dashboard->PutBoolean("BLATCH BLATCH BLATCH!?: ", bLatch);
 	}
+	
+	void wait(double secToWait)
+	{
+		currentTime = timer->Get();
+		if(bInit)
+		{
+			initTime = currentTime;
+			bInit = false;
+			isWait = true;
+		}
+		if(currentTime < secToWait+initTime)
+		{
+			isWait = true;
+		}
+		else
+		{
+			isWait = false;
+			bInit = true;
+			bLatch = false;
+		}
+		currentTime = timer->Get();
+	}
+	
 	/*
 	void track()
 	{
@@ -208,10 +258,11 @@ public:
 		
 		if(reports->size() > 0)
 		{
+			ParticleAnalysisReport *report;
 			//dat forloop
 			for(UINT8 count = 0; count < MAX_PARTICLES && count < reports->size(); count++)
 			{
-				ParticleAnalysisReport *report = &(reports->at(count));
+				report = &(reports->at(count));
 				
 				scores[count].rectangularity = scoreRectangularity(report);
 				scores[count].aspectRatioVertical = scoreAspectRatio(filteredImage, report, true);
@@ -240,11 +291,11 @@ public:
 			
 			for(int i = 0; i < verticalTargetCount; i++) //dat forloop again
 			{
-				ParticleAnalysisReport *verticalReport = &report->at(verticalTarget[i]);
+				ParticleAnalysisReport *verticalReport = reports->at(verticalTarget[i]);
 				
 				for (int j = 0; j < horizontalTargetCount; j++) //dat nested forloop thooooooo
 				{
-					ParticleAnalysisReport *horizontalReport = &report->at(horizontalTarget[j]);
+					ParticleAnalysisReport *horizontalReport = reports->at(horizontalTarget[j]);
 					double horizontalWidth; 
 					double horizontalHeight;
 					double verticalWidth; 
@@ -285,12 +336,6 @@ public:
 					}
 				}
 				target.isHot = hotOrNot(target);
-			}
-			
-			if(verticalTargetCount > 0)
-			{
-				ParticleAnalysisReport *distanceReport = &(reports->at(target.verticalIndex));
-				//double distance = computeDistance(filteredImage, distanceReport);
 			}
 		}
 		
