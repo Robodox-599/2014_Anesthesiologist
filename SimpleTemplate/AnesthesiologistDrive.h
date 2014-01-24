@@ -20,30 +20,26 @@ public:
 	void setTurnSpeed(double turn, bool turboButton);		
 	double getTurnSpeed();	
 	
-	double reduceTurn(double reduceBy);
+	double reduceTurn(double reduceBy);	
 	
-	
-	
-	void setEncodersLinear(double target, double speed);
-	void autoLinear(double target, double speed);
+//	void setEncodersLinear(double target, double speed);
+//	void autoLinear(double target, double speed);
 	
 	//encoder testing purposes
-	void setEncoderLeft(double target, double speed);
-	void setEncoderRight(double target, double speed);
-	void autoLeft(double target, double speed);
-	void autoRight(double target, double speed);
+//	void setEncoderLeft(double target, double speed);
+//	void setEncoderRight(double target, double speed);
+//	void autoLeft(double target, double speed);
+//	void autoRight(double target, double speed);
 	
 	DoubleSolenoid *shifter;
 	
-	//Encoder *leftDriveEncoder;
-	//Encoder *rightDriveEncoder;
-	bool isAtLeftTarget;
-	bool isAtRightTarget;
-	bool isAtLinearTarget;
-	double currentTicksLeft;
-	double currentTicksRight;
-	
-	//bool encoderTest;
+//	Encoder *leftDriveEncoder;
+//	Encoder *rightDriveEncoder;
+//	bool isAtLeftTarget;
+//	bool isAtRightTarget;
+//	bool isAtLinearTarget;
+//	double currentTicksLeft;
+//	double currentTicksRight;
 	
 private:
 	Talon *frontLeftMotor;
