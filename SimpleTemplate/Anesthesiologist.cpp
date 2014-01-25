@@ -441,7 +441,6 @@ public:
 					double horizontalWidth; 
 					double horizontalHeight;
 					double verticalWidth; 
-					double total;
 					
 					imaqMeasureParticle(filteredImage->GetImaqImage(), horizontalReport->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_LONG_SIDE, &horizontalWidth);
 					imaqMeasureParticle(filteredImage->GetImaqImage(), verticalReport->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE, &verticalWidth);
@@ -452,15 +451,15 @@ public:
 					double tapeWidthScore = ratioToScore(verticalWidth/horizontalHeight);
 					double verticalScore = ratioToScore(1-(verticalReport->boundingRect.top - horizontalReport->center_mass_y)/(4*horizontalHeight));
 					
+					double total = tapeWidthScore + verticalScore;
 					if(leftScore > rightScore)
 					{
-						total = leftScore;
+						total += leftScore;
 					}
 					else
 					{
-						total = rightScore;
+						total += rightScore;
 					}
-					total += tapeWidthScore + verticalScore;
 					
 					if(total > target.totalScore)
 					{
