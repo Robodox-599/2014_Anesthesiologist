@@ -380,26 +380,21 @@ public:
 	
 	void track()
 	{
-		AxisCamera &camera = AxisCamera::GetInstance();
-		ColorImage *image; //image to analyze
-		itemScores scores[MAX_PARTICLES];
-		image = camera.GetImage();
-		
-		reportOnTarget target;
-		int verticalTarget[MAX_PARTICLES];//will contain potential targets
-		int horizontalTarget[MAX_PARTICLES];
-		int verticalTargetCount;//num of potential targets
-		int horizontalTargetCount;//num of potential targets
 		Threshold threshold(105, 137, 230, 255, 133, 183);	//HSV threshold criteria, ranges are in that order ie. Hue is 60-100
 		ParticleFilterCriteria2 criteria[] = {{IMAQ_MT_AREA, AREA_MINIMUM, 65535, false, false}};
 		
-		
+		AxisCamera &camera = AxisCamera::GetInstance();
+		ColorImage *image = camera.GetImage();
 		BinaryImage *thresholdedImage = image->ThresholdHSV(threshold);
 		BinaryImage *filteredImage = thresholdedImage->ParticleFilter(criteria, 1);
+
+		itemScores scores[MAX_PARTICLES];
+		reportOnTarget target;
+		int verticalTarget[MAX_PARTICLES];//will contain potential targets
+		int horizontalTarget[MAX_PARTICLES];
+		int verticalTargetCount = 0; //num of potential targets
+		int horizontalTargetCount = 0; //num of potential targets
 		vector<ParticleAnalysisReport> *reports = filteredImage->GetOrderedParticleAnalysisReports();//dat report
-		
-		verticalTargetCount = 0;
-		horizontalTargetCount = 0;
 		
 		if(reports->size() > 0)
 		{
