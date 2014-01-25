@@ -1,7 +1,7 @@
  \
  SimpleTemplate_partialImage/Debug/Objects/SimpleTemplate/AnesthesiologistPIDOutput.o:  \
- F:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistPIDOutput.cpp \
-  F:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistPIDOutput.h \
+ C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistPIDOutput.cpp \
+  C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistPIDOutput.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h \
   C:/WindRiver/vxworks-6.3/target/h/string.h \
   C:/WindRiver/vxworks-6.3/target/h/types/vxANSI.h \
@@ -390,9 +390,9 @@
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/HSLImage.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/ColorImage.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPIErrors.h \
-  F:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistMacros.h
+  C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistMacros.h
 
-F:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistPIDOutput.h:
+C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistPIDOutput.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h:
 
@@ -1170,4 +1170,4 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/ColorImage.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/WPIErrors.h:
 
-F:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistMacros.h:
+C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistMacros.h:

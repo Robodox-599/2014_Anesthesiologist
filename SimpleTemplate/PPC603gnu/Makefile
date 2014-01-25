@@ -31,7 +31,7 @@ else
 MODE_DIR := NonDebug
 endif
 OBJ_DIR := .
-WS_ROOT_DIR := F:/Robotics/2014_Anesthesiologist
+WS_ROOT_DIR := C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist
 PRJ_ROOT_DIR := $(WS_ROOT_DIR)/SimpleTemplate
 
 
@@ -170,7 +170,7 @@ SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistD
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
-SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistKicker.o : $(PRJ_ROOT_DIR)/AnesthesiologistKicker.cpp $(FORCE_FILE_BUILD)
+SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistLauncher.o : $(PRJ_ROOT_DIR)/AnesthesiologistLauncher.cpp $(FORCE_FILE_BUILD)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
@@ -186,12 +186,17 @@ SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistP
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
+SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/RobodoxTimer.o : $(PRJ_ROOT_DIR)/RobodoxTimer.cpp $(FORCE_FILE_BUILD)
+	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP -mlongcall $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
+
+
 OBJECTS_SimpleTemplate_partialImage = SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/Anesthesiologist.o \
 	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistDrive.o \
-	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistKicker.o \
+	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistLauncher.o \
 	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistManipulator.o \
 	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistOperatorInterface.o \
-	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistPIDOutput.o
+	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistPIDOutput.o \
+	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/RobodoxTimer.o
 
 SimpleTemplate_partialImage/$(MODE_DIR)/SimpleTemplate_partialImage.o : $(OBJECTS_SimpleTemplate_partialImage)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc -r -nostdlib -Wl,-X  -o "$@" $(OBJECTS_SimpleTemplate_partialImage) $(LIBPATH) $(LIBS) $(ADDED_LIBPATH) $(ADDED_LIBS)  && if [ "$(EXPAND_DBG)" = "1" ]; then plink "$@";fi
@@ -205,8 +210,9 @@ SimpleTemplate_partialImage/$(MODE_DIR)/SimpleTemplate_partialImage_clean :
 
 force : 
 
-DEP_FILES := SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/Anesthesiologist.d SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistDrive.d SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistKicker.d \
-	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistManipulator.d SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistOperatorInterface.d SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistPIDOutput.d
+DEP_FILES := SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/Anesthesiologist.d SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistDrive.d SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistLauncher.d \
+	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistManipulator.d SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistOperatorInterface.d SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/AnesthesiologistPIDOutput.d \
+	 SimpleTemplate_partialImage/$(MODE_DIR)/Objects/SimpleTemplate/RobodoxTimer.d
 -include $(DEP_FILES)
 
 

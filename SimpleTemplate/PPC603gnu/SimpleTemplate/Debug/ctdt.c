@@ -7,17 +7,19 @@
 /*       -fdollars-in-identifiers flag.                   */
 
 
-void _GLOBAL__I__Z20FRC_userClassFactoryv();
+void _GLOBAL__I__ZN12RobodoxTimerC2Ev();
 
 void _GLOBAL__I__ZN21AnesthesiologistDriveC2EP33AnesthesiologistOperatorInterface();
 
-void _GLOBAL__I__ZN22AnesthesiologistKickerC2Ev();
+void _GLOBAL__I__ZN24AnesthesiologistLauncherC2Ev();
 
 void _GLOBAL__I__ZN25AnesthesiologistPIDOutputC2Ev();
 
 void _GLOBAL__I__ZN27AnesthesiologistManipulatorC2Ev();
 
 void _GLOBAL__I__ZN33AnesthesiologistOperatorInterfaceC2Ev();
+
+void _GLOBAL__I_step();
 
 void _GLOBAL__I__ZN12PrintCommandC2EPKc();
 
@@ -72,12 +74,13 @@ void _GLOBAL__I__ZN11StringArray19STRING_ARRAY_RAW_IDE();
 extern void (*_ctors[])();
 void (*_ctors[])() =
     {
-    _GLOBAL__I__Z20FRC_userClassFactoryv,
+    _GLOBAL__I__ZN12RobodoxTimerC2Ev,
     _GLOBAL__I__ZN21AnesthesiologistDriveC2EP33AnesthesiologistOperatorInterface,
-    _GLOBAL__I__ZN22AnesthesiologistKickerC2Ev,
+    _GLOBAL__I__ZN24AnesthesiologistLauncherC2Ev,
     _GLOBAL__I__ZN25AnesthesiologistPIDOutputC2Ev,
     _GLOBAL__I__ZN27AnesthesiologistManipulatorC2Ev,
     _GLOBAL__I__ZN33AnesthesiologistOperatorInterfaceC2Ev,
+    _GLOBAL__I_step,
     _GLOBAL__I__ZN12PrintCommandC2EPKc,
     _GLOBAL__I__ZN9Scheduler9_instanceE,
     _GLOBAL__I__ZN11WaitCommandC2Ed,
@@ -106,17 +109,19 @@ void (*_ctors[])() =
     0
     };
 
-void _GLOBAL__D__Z20FRC_userClassFactoryv();
+void _GLOBAL__D__ZN12RobodoxTimerC2Ev();
 
 void _GLOBAL__D__ZN21AnesthesiologistDriveC2EP33AnesthesiologistOperatorInterface();
 
-void _GLOBAL__D__ZN22AnesthesiologistKickerC2Ev();
+void _GLOBAL__D__ZN24AnesthesiologistLauncherC2Ev();
 
 void _GLOBAL__D__ZN25AnesthesiologistPIDOutputC2Ev();
 
 void _GLOBAL__D__ZN27AnesthesiologistManipulatorC2Ev();
 
 void _GLOBAL__D__ZN33AnesthesiologistOperatorInterfaceC2Ev();
+
+void _GLOBAL__D_step();
 
 void _GLOBAL__D__ZN9Scheduler9_instanceE();
 
@@ -161,12 +166,13 @@ void _GLOBAL__D__ZN11StringArray19STRING_ARRAY_RAW_IDE();
 extern void (*_dtors[])();
 void (*_dtors[])() =
     {
-    _GLOBAL__D__Z20FRC_userClassFactoryv,
+    _GLOBAL__D__ZN12RobodoxTimerC2Ev,
     _GLOBAL__D__ZN21AnesthesiologistDriveC2EP33AnesthesiologistOperatorInterface,
-    _GLOBAL__D__ZN22AnesthesiologistKickerC2Ev,
+    _GLOBAL__D__ZN24AnesthesiologistLauncherC2Ev,
     _GLOBAL__D__ZN25AnesthesiologistPIDOutputC2Ev,
     _GLOBAL__D__ZN27AnesthesiologistManipulatorC2Ev,
     _GLOBAL__D__ZN33AnesthesiologistOperatorInterfaceC2Ev,
+    _GLOBAL__D_step,
     _GLOBAL__D__ZN9Scheduler9_instanceE,
     _GLOBAL__D_wpi_error_s_ModuleIndexOutOfRange,
     _GLOBAL__D__ZN17MotorSafetyHelper12m_headHelperE,

@@ -1,2 +1,2 @@
 compilerInspection.o:  \
- C:/2014_Anesthesiologist/.metadata/.plugins/com.windriver.ide.core/compilerInspection.cpp
+ C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/.metadata/.plugins/com.windriver.ide.core/compilerInspection.cpp

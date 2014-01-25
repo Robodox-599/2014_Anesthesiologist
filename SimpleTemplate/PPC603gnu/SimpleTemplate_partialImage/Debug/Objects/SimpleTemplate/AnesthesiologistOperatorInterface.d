@@ -1,7 +1,7 @@
  \
  SimpleTemplate_partialImage/Debug/Objects/SimpleTemplate/AnesthesiologistOperatorInterface.o:  \
- F:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistOperatorInterface.cpp \
-  F:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistOperatorInterface.h \
+ C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistOperatorInterface.cpp \
+  C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistOperatorInterface.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h \
   C:/WindRiver/vxworks-6.3/target/h/string.h \
   C:/WindRiver/vxworks-6.3/target/h/types/vxANSI.h \
@@ -390,13 +390,13 @@
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/HSLImage.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/ColorImage.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/WPIErrors.h \
-  F:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistMacros.h \
+  C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistMacros.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/SmartDashboard.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/NamedSendable.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/Sendable.h \
   C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/SendableChooser.h
 
-F:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistOperatorInterface.h:
+C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistOperatorInterface.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/WPILib.h:
 
@@ -1174,7 +1174,7 @@ C:/WindRiver/vxworks-6.3/target/h/WPILib/Vision/ColorImage.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/WPIErrors.h:
 
-F:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistMacros.h:
+C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistMacros.h:
 
 C:/WindRiver/vxworks-6.3/target/h/WPILib/SmartDashboard/SmartDashboard.h:
 
