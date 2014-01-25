@@ -415,11 +415,13 @@ public:
 			
 				if(scoreCompare(scores[count], false))
 				{
-					horizontalTarget[horizontalTargetCount++] = count;
+					horizontalTarget[horizontalTargetCount] = count;
+					horizontalTargetCount += 1;
 				}
 				else if(scoreCompare(scores[count], true))
 				{
-					verticalTarget[verticalTargetCount++] = count;
+					verticalTarget[verticalTargetCount] = count;
+					verticalTargetCount += 1;
 				}
 				else
 				{
