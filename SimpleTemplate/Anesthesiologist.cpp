@@ -55,8 +55,8 @@ class Anesthesiologist: public IterativeRobot
 	//AnesthesiologistManipulator *manipulator;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
-	Encoder *leftDriveEncoder;
-	Encoder *rightDriveEncoder;
+	//Encoder *leftDriveEncoder;
+	//Encoder *rightDriveEncoder;
 	Timer *timer;
 	
 	struct itemScores
@@ -85,12 +85,12 @@ public:
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 1); 
-		leftDriveEncoder = new Encoder(1, LEFT_DRIVE_ENCODER_CHANNEL_A, 1, LEFT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
-		rightDriveEncoder = new Encoder(1, RIGHT_DRIVE_ENCODER_CHANNEL_A, 1, RIGHT_DRIVE_ENCODER_CHANNEL_B, false, Encoder::k1X);
+		//leftDriveEncoder = new Encoder(1, LEFT_DRIVE_ENCODER_CHANNEL_A, 1, LEFT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
+		//rightDriveEncoder = new Encoder(1, RIGHT_DRIVE_ENCODER_CHANNEL_A, 1, RIGHT_DRIVE_ENCODER_CHANNEL_B, false, Encoder::k1X);
 		
 		//manipulator->timer->Start();
-		leftDriveEncoder->Start();
-		rightDriveEncoder->Start();
+		//leftDriveEncoder->Start();
+		//rightDriveEncoder->Start();
 		oi->dashboard->init();
 		comp599->Start();
 	}
@@ -103,26 +103,27 @@ public:
 	void DisabledInit()
 	{
 		//manipulator->armEncoder->Start();
-		leftDriveEncoder->Start();
-		rightDriveEncoder->Start();
+		//leftDriveEncoder->Start();
+		//rightDriveEncoder->Start();
 	}
 	
 	void AutonomousInit()
 	{
 		step = 0;
 		//manipulator->armEncoder->Reset();
-		leftDriveEncoder->Reset();
-		rightDriveEncoder->Reset();
+		//leftDriveEncoder->Reset();
+		//rightDriveEncoder->Reset();
 	}
 	
 	void TeleopInit()
 	{
+		step = 0;
 		drive->setLinVelocity(0);
 		drive->setTurnSpeed(0, false);
 		drive->drive();
 		//manipulator->setVelocity(0);
-		leftDriveEncoder->Start();
-		rightDriveEncoder->Start();
+		//leftDriveEncoder->Start();
+		//rightDriveEncoder->Start();
 	}
 	
 	void TestInit()
@@ -135,8 +136,8 @@ public:
 		step = 0;
 		//manipulator->armEncoder->Reset();
 		isAtLinearTarget = false;
-		leftDriveEncoder->Reset();
-		rightDriveEncoder->Reset();
+		//leftDriveEncoder->Reset();
+		//rightDriveEncoder->Reset();
 		smartDashboardPrint();
 	}
 	
@@ -148,14 +149,19 @@ public:
 	
 	void TeleopPeriodic()
 	{
+		step = 1;
 		comp599->Start();
 		timer->Start();
-		leftDriveEncoder->Start();
-		rightDriveEncoder->Start();
+		//leftDriveEncoder->Start();
+		//rightDriveEncoder->Start();
 		//manipulator->timer->Start();
 		
 		while(IsOperatorControl())
 		{
+			if(step == 1)
+			{
+				step = 2;
+			}
 			teleDrive();
 			smartDashboardPrint();
 		}
@@ -182,9 +188,18 @@ public:
 		if(oi->getDriveJoystickButton(6))
 		{
 			comp599->Start();
+			
+			if(step == 2)
+			{
+				step = 3;
+			}
 		}
 		else if(oi->getDriveJoystickButton(7))
 		{
+			if(step == 2)
+			{
+				step = 3;
+			}
 			comp599->Stop();
 		}
 		
@@ -199,132 +214,132 @@ public:
 		}
 	}
 	
-	void setEncodersLinear(double target, double speed)
-	{		
-		if(bEncoderInit)
-		{
-			leftDriveEncoder->Reset();
-			rightDriveEncoder->Reset();
-			bEncoderInit = false;
-		}
-		if(isAtLeftTarget && isAtRightTarget)
-		{
-			
-			isAtLinearTarget = true;
-			bEncoderInit = true;
-		}
-		else
-		{
-			isAtLeftTarget = false;
-			isAtRightTarget = false;	
-			isAtLinearTarget = false;
-		}
-		
-		currentTicksLeft = leftDriveEncoder->Get();
-		currentTicksRight = rightDriveEncoder->Get();
-		
-		if (currentTicksLeft < (target / INCHES_PER_TICK) - TICKS_DEADZONE)
-		{
-			//setLeftMotors(speed);
-		}
-		else if (currentTicksLeft > (target / INCHES_PER_TICK) + TICKS_DEADZONE)
-		{
-			//setLeftMotors(-speed);
-		}
-		else
-		{
-			//setLeftMotors(0);
-			isAtLeftTarget = true;
-		}
-		
-		if (currentTicksRight < (target / INCHES_PER_TICK) - TICKS_DEADZONE)
-		{
-			//setRightMotors(speed);
-		}
-		else if (currentTicksRight > (target / INCHES_PER_TICK) + TICKS_DEADZONE)
-		{
-			//setRightMotors(-speed);
-		}
-		else
-		{
-			//setRightMotors(0);
-			isAtRightTarget = true;
-		}
-		
-	}
-	
-	void setEncoderLeft(double target, double speed)
-	{
-		if(isAtLeftTarget)
-		{
-			leftDriveEncoder->Reset();
-		}
-		else
-		{
-			isAtLeftTarget = false;
-		}
-		
-		currentTicksLeft = leftDriveEncoder->Get();
-		
-		if (currentTicksLeft < target - TICKS_DEADZONE)
-		{
-			//setLeftMotors(speed);
-		}
-		else if (currentTicksLeft > target + TICKS_DEADZONE)
-		{
-			//setLeftMotors(-speed);
-		}
-		else
-		{
-			//setLeftMotors(0);
-			isAtLeftTarget = true;
-		}
-		
-	}
-	
-	void setEncoderRight(double target, double speed)
-	{
-		if(isAtRightTarget)
-		{
-			rightDriveEncoder->Reset(); 
-		}
-		else
-		{
-			isAtRightTarget = false;	
-		}
-		
-		currentTicksRight = rightDriveEncoder->Get();
-		
-		if (currentTicksRight < target - TICKS_DEADZONE)
-		{
-			//setRightMotors(speed);
-		}
-		else if (currentTicksRight > target + TICKS_DEADZONE)
-		{
-			//setRightMotors(-speed);
-		}
-		else
-		{
-			//setRightMotors(0);
-			isAtRightTarget = true;
-		}
-		
-	}
-	
-	void autoLinear(double target, double speed)
-	{
-		setEncodersLinear(target, speed);
-	}
-	
-	void autoLeft(double target, double speed)
-	{
-		setEncoderLeft(target, speed);
-	}
-	
-	void autoRight(double target, double speed)
-	{
-		setEncoderRight(target, speed);
-	}
+//	void setEncodersLinear(double target, double speed)
+//	{		
+//		if(bEncoderInit)
+//		{
+//			leftDriveEncoder->Reset();
+//			rightDriveEncoder->Reset();
+//			bEncoderInit = false;
+//		}
+//		if(isAtLeftTarget && isAtRightTarget)
+//		{
+//			
+//			isAtLinearTarget = true;
+//			bEncoderInit = true;
+//		}
+//		else
+//		{
+//			isAtLeftTarget = false;
+//			isAtRightTarget = false;	
+//			isAtLinearTarget = false;
+//		}
+//		
+//		currentTicksLeft = leftDriveEncoder->Get();
+//		currentTicksRight = rightDriveEncoder->Get();
+//		
+//		if (currentTicksLeft < (target / INCHES_PER_TICK) - TICKS_DEADZONE)
+//		{
+//			//setLeftMotors(speed);
+//		}
+//		else if (currentTicksLeft > (target / INCHES_PER_TICK) + TICKS_DEADZONE)
+//		{
+//			//setLeftMotors(-speed);
+//		}
+//		else
+//		{
+//			//setLeftMotors(0);
+//			isAtLeftTarget = true;
+//		}
+//		
+//		if (currentTicksRight < (target / INCHES_PER_TICK) - TICKS_DEADZONE)
+//		{
+//			//setRightMotors(speed);
+//		}
+//		else if (currentTicksRight > (target / INCHES_PER_TICK) + TICKS_DEADZONE)
+//		{
+//			//setRightMotors(-speed);
+//		}
+//		else
+//		{
+//			//setRightMotors(0);
+//			isAtRightTarget = true;
+//		}
+//		
+//	}
+//	
+//	void setEncoderLeft(double target, double speed)
+//	{
+//		if(isAtLeftTarget)
+//		{
+//			leftDriveEncoder->Reset();
+//		}
+//		else
+//		{
+//			isAtLeftTarget = false;
+//		}
+//		
+//		currentTicksLeft = leftDriveEncoder->Get();
+//		
+//		if (currentTicksLeft < target - TICKS_DEADZONE)
+//		{
+//			//setLeftMotors(speed);
+//		}
+//		else if (currentTicksLeft > target + TICKS_DEADZONE)
+//		{
+//			//setLeftMotors(-speed);
+//		}
+//		else
+//		{
+//			//setLeftMotors(0);
+//			isAtLeftTarget = true;
+//		}
+//		
+//	}
+//	
+//	void setEncoderRight(double target, double speed)
+//	{
+//		if(isAtRightTarget)
+//		{
+//			rightDriveEncoder->Reset(); 
+//		}
+//		else
+//		{
+//			isAtRightTarget = false;	
+//		}
+//		
+//		currentTicksRight = rightDriveEncoder->Get();
+//		
+//		if (currentTicksRight < target - TICKS_DEADZONE)
+//		{
+//			//setRightMotors(speed);
+//		}
+//		else if (currentTicksRight > target + TICKS_DEADZONE)
+//		{
+//			//setRightMotors(-speed);
+//		}
+//		else
+//		{
+//			//setRightMotors(0);
+//			isAtRightTarget = true;
+//		}
+//		
+//	}
+//	
+//	void autoLinear(double target, double speed)
+//	{
+//		setEncodersLinear(target, speed);
+//	}
+//	
+//	void autoLeft(double target, double speed)
+//	{
+//		setEncoderLeft(target, speed);
+//	}
+//	
+//	void autoRight(double target, double speed)
+//	{
+//		setEncoderRight(target, speed);
+//	}
 	
 	void smartDashboardPrint()
 	{
@@ -332,11 +347,12 @@ public:
 		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
 		//oi->dashboard->PutNumber("Arm Encoder Raw Value: ", manipulator->armEncoder->Get());
 		//oi->dashboard->PutNumber("encoder raw value: ", leftDriveEncoder->Get());
-		oi->dashboard->PutNumber("Left Encoder Raw Value: ", leftDriveEncoder->Get());
-		oi->dashboard->PutNumber("Right Encoder Raw Value: ", rightDriveEncoder->Get());
+		//oi->dashboard->PutNumber("Left Encoder Raw Value: ", leftDriveEncoder->Get());
+		//oi->dashboard->PutNumber("Right Encoder Raw Value: ", rightDriveEncoder->Get());
 		oi->dashboard->PutNumber("Timer: ", timer->Get());
-		//oi->dashboard->PutBoolean("Wait?: ", isWait);
-		//oi->dashboard->PutBoolean("BLATCH BLATCH BLATCH!?: ", bLatch);
+		oi->dashboard->PutBoolean("Wait?: ", isWait);
+		oi->dashboard->PutBoolean("BLATCH BLATCH BLATCH!?: ", bLatch);
+		oi->dashboard->PutNumber("Step: ", step);
 	}
 	
 	void wait(double secToWait)
@@ -365,8 +381,10 @@ public:
 	void track()
 	{
 		AxisCamera &camera = AxisCamera::GetInstance();
+		ColorImage *image; //image to analyze
+		itemScores scores[MAX_PARTICLES];
+		image = camera.GetImage();
 		
-		itemScores *scores;
 		reportOnTarget target;
 		int verticalTarget[MAX_PARTICLES];//will contain potential targets
 		int horizontalTarget[MAX_PARTICLES];
@@ -374,9 +392,8 @@ public:
 		int horizontalTargetCount;//num of potential targets
 		Threshold threshold(105, 137, 230, 255, 133, 183);	//HSV threshold criteria, ranges are in that order ie. Hue is 60-100
 		ParticleFilterCriteria2 criteria[] = {{IMAQ_MT_AREA, AREA_MINIMUM, 65535, false, false}};
-		ColorImage *image; //image to analyze
 		
-		image = camera.GetImage();
+		
 		BinaryImage *thresholdedImage = image->ThresholdHSV(threshold);
 		BinaryImage *filteredImage = thresholdedImage->ParticleFilter(criteria, 1);
 		vector<ParticleAnalysisReport> *reports = filteredImage->GetOrderedParticleAnalysisReports();//dat report
@@ -470,7 +487,6 @@ public:
 		delete filteredImage;
 		delete thresholdedImage;
 		delete image;
-		delete scores;
 		delete reports;	
 	}
 	
