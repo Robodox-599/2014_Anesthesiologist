@@ -2,34 +2,46 @@
 
 AnesthesiologistLauncher::AnesthesiologistLauncher()
 {
-	AnesthesiologistLauncher(LAUNCHER_MOTOR_VICTOR_CHANNEL, LAUNCHER_SOLENOID_CHANNEL);	
+	AnesthesiologistLauncher(LAUNCHER_MOTOR_VICTOR_CHANNEL);//, LAUNCHER_SOLENOID_CHANNEL);	
 }
 
 AnesthesiologistLauncher::AnesthesiologistLauncher(UINT8 launcherVictorChannel, UINT8 launcherSolenoid)
 {
 	launcherMotor = new Victor(launcherVictorChannel);	
-	launcherPiston = new Solenoid(launcherSolenoid);
+	//launcherPiston = new Solenoid(launcherSolenoid);
 }
 
 AnesthesiologistLauncher::~AnesthesiologistLauncher()
 {
 	delete launcherMotor;
-	delete launcherPiston;
+	//delete launcherPiston;
 
 	launcherMotor = NULL;
-	launcherPiston = NULL;
+	//launcherPiston = NULL;
 }
 
 void AnesthesiologistLauncher::launchBall(bool launch)
 {
-	if(launch && launcherPiston->Get() == 0) //This'll possibly create a logical error, since if you pass launch==true but the piston is already up, it'll flip positions
+	if(launch)
 	{
-		launcherPiston->Set(1);
+		launcherMotor->Set(1, SYNC_STATE_OFF);
 	} 
 	else
 	{
-		launcherPiston->Set(0);
+		launcherMotor->Set(0, SYNC_STATE_OFF);
 	}
-
 }
+
+//void AnesthesiologistLauncher::launchBall(bool launch)
+//{
+//	if(launch && launcherPiston->Get() == 0) //This'll possibly create a logical error, since if you pass launch==true but the piston is already up, it'll flip positions
+//	{
+//		launcherPiston->Set(1);
+//	} 
+//	else
+//	{
+//		launcherPiston->Set(0);
+//	}
+//
+//}
 

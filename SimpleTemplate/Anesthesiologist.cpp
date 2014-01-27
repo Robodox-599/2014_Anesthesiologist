@@ -352,7 +352,8 @@ public:
 		oi->dashboard->PutNumber("Timer: ", timer->Get());
 		oi->dashboard->PutBoolean("Wait?: ", isWait);
 		oi->dashboard->PutBoolean("BLATCH BLATCH BLATCH!?: ", bLatch);
-		oi->dashboard->PutNumber("Step: ", step);
+		oi->dashboard->PutBoolean("Is Comp Enabled?: ", comp599->Enabled());
+		
 	}
 	
 	void wait(double secToWait)
