@@ -380,26 +380,21 @@ public:
 	
 	void track()
 	{
-		AxisCamera &camera = AxisCamera::GetInstance();
-		ColorImage *image; //image to analyze
-		itemScores scores[MAX_PARTICLES];
-		image = camera.GetImage();
-		
-		reportOnTarget target;
-		int verticalTarget[MAX_PARTICLES];//will contain potential targets
-		int horizontalTarget[MAX_PARTICLES];
-		int verticalTargetCount;//num of potential targets
-		int horizontalTargetCount;//num of potential targets
 		Threshold threshold(105, 137, 230, 255, 133, 183);	//HSV threshold criteria, ranges are in that order ie. Hue is 60-100
 		ParticleFilterCriteria2 criteria[] = {{IMAQ_MT_AREA, AREA_MINIMUM, 65535, false, false}};
 		
-		
+		AxisCamera &camera = AxisCamera::GetInstance();
+		ColorImage *image = camera.GetImage();
 		BinaryImage *thresholdedImage = image->ThresholdHSV(threshold);
 		BinaryImage *filteredImage = thresholdedImage->ParticleFilter(criteria, 1);
+
+		itemScores scores[MAX_PARTICLES];
+		reportOnTarget target;
+		int verticalTarget[MAX_PARTICLES];//will contain potential targets
+		int horizontalTarget[MAX_PARTICLES];
+		int verticalTargetCount = 0; //num of potential targets
+		int horizontalTargetCount = 0; //num of potential targets
 		vector<ParticleAnalysisReport> *reports = filteredImage->GetOrderedParticleAnalysisReports();//dat report
-		
-		verticalTargetCount = 0;
-		horizontalTargetCount = 0;
 		
 		if(reports->size() > 0)
 		{
@@ -415,11 +410,13 @@ public:
 			
 				if(scoreCompare(scores[count], false))
 				{
-					horizontalTarget[horizontalTargetCount++] = count;
+					horizontalTarget[horizontalTargetCount] = count;
+					horizontalTargetCount += 1;
 				}
 				else if(scoreCompare(scores[count], true))
 				{
-					verticalTarget[verticalTargetCount++] = count;
+					verticalTarget[verticalTargetCount] = count;
+					verticalTargetCount += 1;
 				}
 				else
 				{
@@ -444,30 +441,25 @@ public:
 					double horizontalWidth; 
 					double horizontalHeight;
 					double verticalWidth; 
-					double leftScore; 
-					double rightScore;
-					double tapeWidthScore; 
-					double verticalScore; 
-					double total;
 					
 					imaqMeasureParticle(filteredImage->GetImaqImage(), horizontalReport->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_LONG_SIDE, &horizontalWidth);
 					imaqMeasureParticle(filteredImage->GetImaqImage(), verticalReport->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE, &verticalWidth);
 					imaqMeasureParticle(filteredImage->GetImaqImage(), horizontalReport->particleIndex, 0, IMAQ_MT_EQUIVALENT_RECT_SHORT_SIDE, &horizontalHeight); //measures rectangular sides
 					
-					leftScore = ratioToScore(1.2*(verticalReport->boundingRect.left - horizontalReport->center_mass_x)/horizontalWidth);				
-					rightScore = ratioToScore(1.2*(horizontalReport->center_mass_x - verticalReport->boundingRect.left - verticalReport->boundingRect.width)/horizontalWidth);
-					tapeWidthScore = ratioToScore(verticalWidth/horizontalHeight);
-					verticalScore = ratioToScore(1-(verticalReport->boundingRect.top - horizontalReport->center_mass_y)/(4*horizontalHeight));
+					double leftScore = ratioToScore(1.2*(verticalReport->boundingRect.left - horizontalReport->center_mass_x)/horizontalWidth);
+					double rightScore = ratioToScore(1.2*(horizontalReport->center_mass_x - verticalReport->boundingRect.left - verticalReport->boundingRect.width)/horizontalWidth);
+					double tapeWidthScore = ratioToScore(verticalWidth/horizontalHeight);
+					double verticalScore = ratioToScore(1-(verticalReport->boundingRect.top - horizontalReport->center_mass_y)/(4*horizontalHeight));
 					
+					double total = tapeWidthScore + verticalScore;
 					if(leftScore > rightScore)
 					{
-						total = leftScore;
+						total += leftScore;
 					}
 					else
 					{
-						total = rightScore;
+						total += rightScore;
 					}
-					total += tapeWidthScore + verticalScore;
 					
 					if(total > target.totalScore)
 					{
