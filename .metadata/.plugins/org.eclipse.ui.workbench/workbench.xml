@@ -43,6 +43,7 @@
 <part id="11"/>
 <part id="12"/>
 <part id="13"/>
+<part id="14"/>
 </presentation>
 </folder>
 </info>
@@ -67,9 +68,9 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SimpleTemplate/AnesthesiologistManipulator.cpp"/>
 <editorState selectionHorizontalPixel="0" selectionLength="16" selectionOffset="145" selectionTopPixel="0"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="Anesthesiologist.cpp" partName="Anesthesiologist.cpp" path="C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/Anesthesiologist.cpp" title="Anesthesiologist.cpp" tooltip="SimpleTemplate/Anesthesiologist.cpp" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.cdt.ui.editor.CEditor" name="Anesthesiologist.cpp" partName="Anesthesiologist.cpp" path="C:/Users/Teacher/Documents/GitHub/2014_Anesthesiologist/SimpleTemplate/Anesthesiologist.cpp" title="Anesthesiologist.cpp" tooltip="SimpleTemplate/Anesthesiologist.cpp" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SimpleTemplate/Anesthesiologist.cpp"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="2540" selectionTopPixel="2826"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="AnesthesiologistOperatorInterface.h" partName="AnesthesiologistOperatorInterface.h" path="F:/Robotics/2014_Alchemist/SimpleTemplate/AnesthesiologistOperatorInterface.h" title="AnesthesiologistOperatorInterface.h" tooltip="SimpleTemplate/AnesthesiologistOperatorInterface.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SimpleTemplate/AnesthesiologistOperatorInterface.h"/>
@@ -102,6 +103,10 @@
 <editor id="org.eclipse.cdt.ui.editor.CEditor" name="AnesthesiologistPIDOutput.h" partName="AnesthesiologistPIDOutput.h" path="G:/Robotics/2014_Anesthesiologist/SimpleTemplate/AnesthesiologistPIDOutput.h" title="AnesthesiologistPIDOutput.h" tooltip="SimpleTemplate/AnesthesiologistPIDOutput.h" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/SimpleTemplate/AnesthesiologistPIDOutput.h"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="76" selectionTopPixel="0"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="Ultrasonic.h" partName="Ultrasonic.h" title="Ultrasonic.h" tooltip="C:\WindRiver\vxworks-6.3\target\h\WPILib\Ultrasonic.h" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" path="C:\WindRiver\vxworks-6.3\target\h\WPILib\Ultrasonic.h" project="SimpleTemplate"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1862" selectionTopPixel="611"/>
 </editor>
 </editors>
 <views>
@@ -201,13 +206,13 @@
 <hide_menu_item_id id="org.eclipse.debug.ui.commands.ProfileLast"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.move.element"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.self.encapsulate.field"/>
-<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.search.write.access.in.project"/>
 <hide_menu_item_id id="org.eclipse.ui.navigate.addToWorkingSet"/>
+<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.search.write.access.in.project"/>
 <hide_menu_item_id id="org.eclipse.ltk.ui.refactor.apply.refactoring.script"/>
 <hide_menu_item_id id="org.eclipse.jdt.debug.ui.commands.AllReferences"/>
 <hide_menu_item_id id="org.eclipse.ui.file.revert"/>
-<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.open.super.implementation"/>
 <hide_menu_item_id id="org.eclipse.ui.cheatsheets.actions.CheatSheetHelpMenuAction"/>
+<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.open.super.implementation"/>
 <hide_menu_item_id id="org.eclipse.ui.window.closeAllPerspectives"/>
 <hide_menu_item_id id="org.eclipse.wst.sse.ui.structure.select.previous"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.generate.hashcode.equals"/>
@@ -241,27 +246,27 @@
 <hide_menu_item_id id="org.eclipse.jdt.ui.generate.javadoc"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.introduce.parameter"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.open.type.hierarchy"/>
-<hide_menu_item_id id="org.eclipse.team.cvs.ui.updateSwitch"/>
 <hide_menu_item_id id="org.eclipse.debug.ui.commands.ToggleMethodBreakpoint"/>
+<hide_menu_item_id id="org.eclipse.team.cvs.ui.updateSwitch"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.infer.type.arguments"/>
 <hide_menu_item_id id="org.eclipse.wst.sse.ui.format.active.elements"/>
 <hide_menu_item_id id="org.eclipse.jdt.debug.ui.commands.StepIntoSelection"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.push.down"/>
-<hide_menu_item_id id="org.eclipse.debug.ui.actions.BreakpointTypesContribution"/>
 <hide_menu_item_id id="org.eclipse.ui.window.newEditor"/>
+<hide_menu_item_id id="org.eclipse.debug.ui.actions.BreakpointTypesContribution"/>
 <hide_menu_item_id id="com.windriver.ide.debug.ui.menu.dropToFrameAction"/>
-<hide_menu_item_id id="org.eclipse.ui.edit.text.shiftRight"/>
 <hide_menu_item_id id="org.eclipse.ui.navigate.selectWorkingSets"/>
-<hide_menu_item_id id="org.eclipse.debug.ui.commands.StepOver"/>
+<hide_menu_item_id id="org.eclipse.ui.edit.text.shiftRight"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.extract.method"/>
+<hide_menu_item_id id="org.eclipse.debug.ui.commands.StepOver"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.search.occurrences.in.file.quickMenu"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.find.broken.nls.keys"/>
 <hide_menu_item_id id="org.eclipse.ui.file.saveAll"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.extract.class"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.introduce.indirection"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.navigate.gotopackage"/>
-<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.search.write.access.in.workspace"/>
 <hide_menu_item_id id="org.eclipse.jdt.junit.gotoTest"/>
+<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.search.write.access.in.workspace"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.quick.format"/>
 <hide_menu_item_id id="com.windriver.ide.debug.ui.menu.setBreakpointAtFrameFunctionAction"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.navigate.gototype"/>
@@ -272,16 +277,16 @@
 <hide_menu_item_id id="org.eclipse.cdt.dsf.test.fileBrowser"/>
 <hide_menu_item_id id="org.eclipse.cdt.debug.ui.internal.actions.RestartActionDelegate"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.add.block.comment"/>
-<hide_menu_item_id id="org.eclipse.debug.ui.commands.Resume"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.navigate.open.type"/>
+<hide_menu_item_id id="org.eclipse.debug.ui.commands.Resume"/>
 <hide_menu_item_id id="com.windriver.ide.wrlinux.ui.quiltAction"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.add.unimplemented.constructors"/>
 <hide_menu_item_id id="com.windriver.ide.debug.ui.menu.addDataBreakpointAction"/>
-<hide_menu_item_id id="org.eclipse.jdt.debug.ui.commands.ForceReturn"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.open.external.javadoc"/>
+<hide_menu_item_id id="org.eclipse.jdt.debug.ui.commands.ForceReturn"/>
 <hide_menu_item_id id="org.eclipse.wst.sse.ui.goto.matching.bracket"/>
-<hide_menu_item_id id="org.eclipse.debug.internal.ui.actions.ProfileWithConfigurationAction"/>
 <hide_menu_item_id id="org.eclipse.cdt.ui.edit.text.rename.element"/>
+<hide_menu_item_id id="org.eclipse.debug.internal.ui.actions.ProfileWithConfigurationAction"/>
 <hide_menu_item_id id="org.eclipse.team.cvs.ui.update"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.search.declarations.in.working.set"/>
 <hide_menu_item_id id="com.windriver.ide.debug.ui.menu.runToFrameAddressAction"/>
@@ -380,16 +385,16 @@
 <hide_menu_item_id id="com.windriver.ide.ui.internal.actions.register2eclipseaction"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.extract.constant"/>
 <hide_menu_item_id id="org.eclipse.wst.sse.ui.remove.block.comment"/>
-<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.search.implementors.in.working.set"/>
 <hide_menu_item_id id="org.eclipse.wst.sse.ui.cleanup.document"/>
-<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.search.declarations.in.workspace"/>
+<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.search.implementors.in.working.set"/>
 <hide_menu_item_id id="org.eclipse.wst.xml.ui.nextSibling"/>
+<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.search.declarations.in.workspace"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.open.call.hierarchy"/>
 <hide_menu_item_id id="org.eclipse.cdt.debug.ui.actions.ResumeAtLine"/>
-<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.organize.imports"/>
 <hide_menu_item_id id="org.eclipse.ui.edit.text.shiftLeft"/>
-<hide_menu_item_id id="org.eclipse.ui.update.manageConfiguration"/>
+<hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.organize.imports"/>
 <hide_menu_item_id id="org.eclipse.search.ui.openSearchDialog"/>
+<hide_menu_item_id id="org.eclipse.ui.update.manageConfiguration"/>
 <hide_menu_item_id id="org.eclipse.debug.ui.commands.RemoveAllBreakpoints"/>
 <hide_menu_item_id id="org.eclipse.jdt.ui.edit.text.java.format"/>
 <hide_menu_item_id id="org.eclipse.wst.sse.ui.structure.select.next"/>
@@ -401,14 +406,14 @@
 <hide_toolbar_item_id id="org.eclipse.ui.externaltools.ExternalToolMenuDelegateToolbar"/>
 <hide_toolbar_item_id id="com.windriver.ide.ui.SetEmacsKeysAction"/>
 <hide_toolbar_item_id id="org.eclipse.team.ui.synchronizeAll"/>
-<hide_toolbar_item_id id="org.eclipse.cdt.dsf.debug.ui.refreshAll"/>
 <hide_toolbar_item_id id="com.windriver.ide.search.performOpenTextSearch"/>
-<hide_toolbar_item_id id="org.eclipse.ui.navigate.selectWorkingSets"/>
+<hide_toolbar_item_id id="org.eclipse.cdt.dsf.debug.ui.refreshAll"/>
 <hide_toolbar_item_id id="com.windriver.ide.staticanalysis.ui.openElementInCallHierarchy"/>
-<hide_toolbar_item_id id="org.eclipse.jdt.ui.edit.text.java.toggleBreadcrumb"/>
+<hide_toolbar_item_id id="org.eclipse.ui.navigate.selectWorkingSets"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.navigate.open.type"/>
-<hide_toolbar_item_id id="com.windriver.ide.vxworks55.action.launch_tornado"/>
+<hide_toolbar_item_id id="org.eclipse.jdt.ui.edit.text.java.toggleBreadcrumb"/>
 <hide_toolbar_item_id id="org.eclipse.cdt.ui.actions.NewFolderDropDown"/>
+<hide_toolbar_item_id id="com.windriver.ide.vxworks55.action.launch_tornado"/>
 <hide_toolbar_item_id id="com.windriver.ide.wrlinux.ui.quiltAction"/>
 <hide_toolbar_item_id id="org.eclipse.cdt.ui.actions.NewTypeDropDown"/>
 <hide_toolbar_item_id id="org.eclipse.ui.navigate.addToWorkingSet"/>
@@ -426,8 +431,8 @@
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.NewTypeDropDown"/>
 <hide_toolbar_item_id id="org.eclipse.team.cvs.ui.checkout"/>
-<hide_toolbar_item_id id="com.windriver.scopetools.memscope.WRMemoryToolbarAction"/>
 <hide_toolbar_item_id id="org.eclipse.debug.internal.ui.actions.ProfileDropDownAction"/>
+<hide_toolbar_item_id id="com.windriver.scopetools.memscope.WRMemoryToolbarAction"/>
 <view id="org.eclipse.ui.navigator.ProjectExplorer"/>
 <view id="org.eclipse.rse.ui.view.systemView"/>
 <view id="org.eclipse.ui.views.TaskList"/>
@@ -504,7 +509,6 @@
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SimpleTemplate/Alchemist.cpp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SimpleTemplate/AlchemistKicker.h"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SimpleTemplate/AlchemistPIDOutput.cpp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SimpleTemplate/AlchemistPIDOutput.h"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SimpleTemplate/AlchemistOperatorInterface.cpp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SimpleTemplate/AlchemistDrive.h"/>
@@ -535,156 +539,157 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SimpleTemplate/AnesthesiologistDrive.cpp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SimpleTemplate/AnesthesiologistOperatorInterface.cpp"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/SimpleTemplate/Anesthesiologist.cpp"/>
+<editor factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="C:\WindRiver\vxworks-6.3\target\h\WPILib\Ultrasonic.h" project="SimpleTemplate"/>
 </editors>
-<item historyLabel="AlchemistPIDOutput.cpp" index="2">
-<position/>
-</item>
-<item historyLabel="AlchemistPIDOutput.h" index="3">
-<position/>
-</item>
 <item historyLabel="Alchemist.cpp" index="0">
 <position/>
 </item>
-<item historyLabel="AlchemistDrive.h" index="5">
+<item historyLabel="AlchemistDrive.h" index="4">
 <position/>
 </item>
 <item historyLabel="AlchemistKicker.h" index="1">
 <position/>
 </item>
-<item historyLabel="AlchemistMacros.h" index="6">
+<item historyLabel="AlchemistMacros.h" index="5">
 <position/>
 </item>
-<item historyLabel="AlchemistManipulator.h" index="7">
+<item historyLabel="AlchemistManipulator.h" index="6">
 <position/>
 </item>
-<item historyLabel="AlchemistOperatorInterface.cpp" index="4">
+<item historyLabel="AlchemistOperatorInterface.cpp" index="3">
 <position/>
 </item>
-<item historyLabel="AlchemistOperatorInterface.h" index="8">
+<item historyLabel="AlchemistOperatorInterface.h" index="7">
 <position/>
 </item>
-<item historyLabel="AlchemistPIDOutput.h" index="3">
+<item historyLabel="AlchemistPIDOutput.h" index="2">
 <position/>
 </item>
 <item historyLabel="Alchemist.cpp" index="0">
 <position/>
 </item>
-<item historyLabel="Anesthesiologist.cpp" index="9">
+<item historyLabel="Anesthesiologist.cpp" index="8">
 <position info="not_deleted" x="303" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistDrive.cpp" index="10">
+<item historyLabel="AnesthesiologistDrive.cpp" index="9">
 <position info="not_deleted" x="2488" y="16"/>
 </item>
-<item historyLabel="AnesthesiologistDrive.h" index="11">
+<item historyLabel="AnesthesiologistDrive.h" index="10">
 <position info="not_deleted" x="59" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistKicker.cpp" index="12">
+<item historyLabel="AnesthesiologistKicker.cpp" index="11">
 <position info="not_deleted" x="125" y="16"/>
 </item>
-<item historyLabel="AnesthesiologistKicker.h" index="13">
+<item historyLabel="AnesthesiologistKicker.h" index="12">
 <position info="not_deleted" x="60" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistMacros.h" index="14">
+<item historyLabel="AnesthesiologistMacros.h" index="13">
 <position info="not_deleted" x="25" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistManipulator.cpp" index="15">
+<item historyLabel="AnesthesiologistManipulator.cpp" index="14">
 <position info="not_deleted" x="145" y="16"/>
 </item>
-<item historyLabel="AnesthesiologistManipulator.h" index="16">
+<item historyLabel="AnesthesiologistManipulator.h" index="15">
 <position info="not_deleted" x="25" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistOperatorInterface.cpp" index="17">
+<item historyLabel="AnesthesiologistOperatorInterface.cpp" index="16">
 <position info="not_deleted" x="1096" y="16"/>
 </item>
-<item historyLabel="AnesthesiologistOperatorInterface.h" index="18">
+<item historyLabel="AnesthesiologistOperatorInterface.h" index="17">
 <position info="not_deleted" x="25" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistPIDOutput.cpp" index="19">
+<item historyLabel="AnesthesiologistPIDOutput.cpp" index="18">
 <position info="not_deleted" x="267" y="16"/>
 </item>
-<item historyLabel="AnesthesiologistPIDOutput.h" index="20">
+<item historyLabel="AnesthesiologistPIDOutput.h" index="19">
 <position info="not_deleted" x="331" y="0"/>
 </item>
-<item historyLabel="Anesthesiologist.cpp" index="21">
+<item historyLabel="Anesthesiologist.cpp" index="20">
 <position info="not_deleted" x="453" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistKicker.cpp" index="22">
+<item historyLabel="AnesthesiologistKicker.cpp" index="21">
 <position info="not_deleted" x="125" y="16"/>
 </item>
-<item historyLabel="AnesthesiologistPIDOutput.cpp" index="23">
+<item historyLabel="AnesthesiologistPIDOutput.cpp" index="22">
 <position/>
 </item>
-<item historyLabel="AnesthesiologistPIDOutput.h" index="20">
+<item historyLabel="AnesthesiologistPIDOutput.h" index="19">
 <position/>
 </item>
-<item historyLabel="AnesthesiologistMacros.h" index="24">
+<item historyLabel="AnesthesiologistMacros.h" index="23">
 <position info="not_deleted" x="25" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistDrive.cpp" index="25">
+<item historyLabel="AnesthesiologistDrive.cpp" index="24">
 <position info="not_deleted" x="2488" y="16"/>
 </item>
-<item historyLabel="AnesthesiologistDrive.h" index="26">
+<item historyLabel="AnesthesiologistDrive.h" index="25">
 <position info="not_deleted" x="59" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistDrive.cpp" index="25">
+<item historyLabel="AnesthesiologistDrive.cpp" index="24">
 <position info="not_deleted" x="2292" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistMacros.h" index="24">
+<item historyLabel="AnesthesiologistMacros.h" index="23">
 <position info="not_deleted" x="25" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistDrive.h" index="26">
+<item historyLabel="AnesthesiologistDrive.h" index="25">
 <position info="not_deleted" x="59" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistDrive.cpp" index="25">
+<item historyLabel="AnesthesiologistDrive.cpp" index="24">
 <position info="not_deleted" x="2311" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistPIDOutput.h" index="20">
+<item historyLabel="AnesthesiologistPIDOutput.h" index="19">
 <position info="not_deleted" x="76" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistDrive.cpp" index="25">
+<item historyLabel="AnesthesiologistDrive.cpp" index="24">
 <position info="not_deleted" x="2311" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistMacros.h" index="24">
+<item historyLabel="AnesthesiologistMacros.h" index="23">
 <position info="not_deleted" x="25" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistPIDOutput.cpp" index="27">
+<item historyLabel="AnesthesiologistPIDOutput.cpp" index="26">
 <position info="not_deleted" x="177" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistMacros.h" index="24">
+<item historyLabel="AnesthesiologistMacros.h" index="23">
 <position info="not_deleted" x="588" y="0"/>
 </item>
-<item historyLabel="Anesthesiologist.cpp" index="28">
+<item historyLabel="Anesthesiologist.cpp" index="27">
 <position info="not_deleted" x="1824" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistPIDOutput.cpp" index="27">
+<item historyLabel="AnesthesiologistPIDOutput.cpp" index="26">
 <position info="not_deleted" x="177" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistMacros.h" index="24">
+<item historyLabel="AnesthesiologistMacros.h" index="23">
 <position info="not_deleted" x="588" y="0"/>
 </item>
-<item historyLabel="Anesthesiologist.cpp" index="28">
+<item historyLabel="Anesthesiologist.cpp" index="27">
 <position info="not_deleted" x="1824" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistPIDOutput.h" index="29">
+<item historyLabel="AnesthesiologistPIDOutput.h" index="28">
 <position info="not_deleted" x="76" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistMacros.h" index="24">
+<item historyLabel="AnesthesiologistMacros.h" index="23">
 <position info="not_deleted" x="588" y="0"/>
 </item>
-<item historyLabel="Anesthesiologist.cpp" index="28">
+<item historyLabel="Anesthesiologist.cpp" index="27">
 <position info="not_deleted" x="261" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistPIDOutput.h" index="29">
+<item historyLabel="AnesthesiologistPIDOutput.h" index="28">
 <position info="not_deleted" x="76" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistDrive.cpp" index="30">
+<item historyLabel="AnesthesiologistDrive.cpp" index="29">
 <position info="not_deleted" x="2311" y="0"/>
 </item>
-<item historyLabel="AnesthesiologistOperatorInterface.cpp" index="31">
+<item historyLabel="AnesthesiologistOperatorInterface.cpp" index="30">
 <position info="not_deleted" x="1096" y="16"/>
 </item>
-<item active="true" historyLabel="Anesthesiologist.cpp" index="32">
+<item historyLabel="Anesthesiologist.cpp" index="31">
 <position info="not_deleted" x="261" y="0"/>
+</item>
+<item historyLabel="Anesthesiologist.cpp" index="31">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item active="true" historyLabel="Ultrasonic.h" index="32">
+<position info="not_deleted" x="0" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -704,6 +709,9 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="Ultrasonic.h" tooltip="C:\WindRiver\vxworks-6.3\target\h\WPILib\Ultrasonic.h">
+<persistable path="C:\WindRiver\vxworks-6.3\target\h\WPILib\Ultrasonic.h" project="SimpleTemplate"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="AlchemistPIDOutput.h" tooltip="SimpleTemplate/AlchemistPIDOutput.h">
 <persistable path="/SimpleTemplate/AlchemistPIDOutput.h"/>
 </file>
