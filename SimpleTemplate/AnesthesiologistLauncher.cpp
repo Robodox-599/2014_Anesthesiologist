@@ -5,10 +5,13 @@ AnesthesiologistLauncher::AnesthesiologistLauncher()
 	AnesthesiologistLauncher(LAUNCHER_MOTOR_VICTOR_CHANNEL);//, LAUNCHER_SOLENOID_CHANNEL);	
 }
 
-AnesthesiologistLauncher::AnesthesiologistLauncher(UINT8 launcherVictorChannel, UINT8 launcherSolenoid)
+AnesthesiologistLauncher::AnesthesiologistLauncher(UINT8 launcherVictorChannel)//, UINT8 launcherSolenoid)
 {
 	launcherMotor = new Victor(launcherVictorChannel);	
 	//launcherPiston = new Solenoid(launcherSolenoid);
+	launcherSwitch = new DigitalInput(1, LAUNCHER_SWITCH_CHANNEL);
+
+	isCocked = false;
 }
 
 AnesthesiologistLauncher::~AnesthesiologistLauncher()
@@ -21,14 +24,21 @@ AnesthesiologistLauncher::~AnesthesiologistLauncher()
 }
 
 void AnesthesiologistLauncher::launchBall(bool launch)
-{
-	if(launch)
-	{
-		launcherMotor->Set(1, SYNC_STATE_OFF);
-	} 
-	else
+{	
+	if(launcherSwitch->Get() == 1)
 	{
 		launcherMotor->Set(0, SYNC_STATE_OFF);
+		isCocked = true;
+	}
+	else
+	{
+		launcherMotor->Set(.5, SYNC_STATE_OFF);
+		isCocked = false;
+	}
+	
+	if(launch && isCocked)
+	{
+		launcherMotor->Set(1, SYNC_STATE_OFF);
 	}
 }
 

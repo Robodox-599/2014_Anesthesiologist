@@ -11,6 +11,10 @@
 #define DRIVE_REAR_RIGHT_MOTOR_CHANNEL          (4)//TODO: dummy number
 #define LAUNCHER_MOTOR_VICTOR_CHANNEL           (5)//TODO: dummy number
 
+	//Sensor Channels
+#define INTAKE_SWITCH_CHANNEL					(1)//TODO: dummy number
+#define LAUNCHER_SWITCH_CHANNEL					(2)//TODO: dummy number
+
 	//Pneumatics
 #define SHIFTER_SOLENOID_CHANNEL_A				(1)//TODO: dummy number
 #define SHIFTER_SOLENOID_CHANNEL_B				(2)//TODO: dummy number
@@ -18,7 +22,6 @@
 
 	//Manipulators
 #define INTAKE_ROLLER_VICTOR_CHANNEL			(6)//TODO: dummy number
-#define INTAKE_SWITCH_CHANNEL					(7)//TODO: dummy number
 #define INTAKE_ARM_VICTOR_CHANNEL				(8)//TODO: dummy number
 
 	//Encoders

@@ -15,6 +15,9 @@ public:
 private:
 	Victor *launcherMotor;
 	//Solenoid *launcherPiston;
+	DigitalInput *launcherSwitch;
+	
+	bool isCocked;
 
 };
 #endif
