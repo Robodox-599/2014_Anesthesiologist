@@ -1,12 +1,1 @@
-# Thanks, http://wiki.prhsrobotics.com/index.php?title=Using_WindRiver_with_Git
-#Ignore object files
-*.[oa]
-
-#Ignore any project files
-.cproject
-.project
-.wrmakefile
-.wrproject
-
-#Ignore any output files
 PPC603gnu/
