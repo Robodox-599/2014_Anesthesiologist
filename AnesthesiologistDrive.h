@@ -22,6 +22,9 @@ public:
 	
 	double reduceTurn(double reduceBy);	
 	
+	void setLeftMotors(double velocity);
+	void setRightMotors(double velocity);
+		
 //	void setEncodersLinear(double target, double speed);
 //	void autoLinear(double target, double speed);
 	
@@ -46,9 +49,6 @@ private:
 	Talon *rearLeftMotor;
 	Talon *frontRightMotor;
 	Talon *rearRightMotor;
-	
-	void setLeftMotors(double velocity);
-	void setRightMotors(double velocity);
 	
 	AnesthesiologistOperatorInterface *oi;
 	
