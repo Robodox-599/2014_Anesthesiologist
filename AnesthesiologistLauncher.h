@@ -18,6 +18,8 @@ private:
 	Victor *launcherMotor;
 	//Solenoid *launcherPiston;
 	DigitalInput *launcherSwitch;
+	
+	bool isLastLaunch;
 
 };
 #endif

@@ -12,6 +12,7 @@ AnesthesiologistLauncher::AnesthesiologistLauncher(UINT8 launcherVictorChannel)/
 	launcherSwitch = new DigitalInput(1, LAUNCHER_SWITCH_CHANNEL);
 
 	isCocked = false;
+	isLastLaunch = false;
 }
 
 AnesthesiologistLauncher::~AnesthesiologistLauncher()
@@ -36,10 +37,20 @@ void AnesthesiologistLauncher::launchBall(bool launch)
 		isCocked = false;
 	}
 	
-	if(launch && isCocked)
+	if(isCocked)
 	{
-		launcherMotor->Set(1, SYNC_STATE_OFF);
+		if(launch && !isLastLaunch)
+		{
+			launcherMotor->Set(1, SYNC_STATE_OFF);
+			isLastLaunch = true;
+		}
+		else if(!launch && isLastLaunch)
+		{
+			isLastLaunch = false;
+			launcherMotor->Set(0, SYNC_STATE_OFF);
+		}
 	}
+	
 }
 
 //void AnesthesiologistLauncher::launchBall(bool launch)
