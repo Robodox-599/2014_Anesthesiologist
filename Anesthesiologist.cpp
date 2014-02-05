@@ -6,6 +6,7 @@
 
 #include "AnesthesiologistDrive.h"
 //#include "AnesthesiologistManipulator.h"
+#include "AnesthesiologistLauncher.h"
 #include "AnesthesiologistPIDOutput.h"
 #include "AnesthesiologistOperatorInterface.h"
 #include "AnesthesiologistMacros.h"
@@ -51,6 +52,7 @@ double currentTicksRight = 0;
 class Anesthesiologist: public IterativeRobot
 {
 	AnesthesiologistDrive *drive;
+	AnesthesiologistLauncher *launcher;
 	//AnesthesiologistManipulator *manipulator;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
@@ -80,12 +82,13 @@ class Anesthesiologist: public IterativeRobot
 public:	
 	Anesthesiologist()
 	{
+		launcher = new AnesthesiologistLauncher();
 		//manipulator = new AnesthesiologistManipulator();
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 1); 
 		leftDriveEncoder = new Encoder(LEFT_DRIVE_ENCODER_CHANNEL_A, LEFT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
-		rightDriveEncoder = new Encoder(RIGHT_DRIVE_ENCODER_CHANNEL_A, RIGHT_DRIVE_ENCODER_CHANNEL_B, false, Encoder::k1X);
+		rightDriveEncoder = new Encoder(RIGHT_DRIVE_ENCODER_CHANNEL_A, RIGHT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
 		
 		//manipulator->timer->Start();
 		leftDriveEncoder->Start();
@@ -341,6 +344,7 @@ public:
 //		oi->dashboard->PutBoolean("Wait?: ", isWait);
 //		oi->dashboard->PutBoolean("BLATCH BLATCH BLATCH!?: ", bLatch);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
+		oi->dashboard->PutBoolean(" Is Cocked", launcher->isCocked);
 		oi->dashboard->PutNumber("Step doe", step);
 		
 	}

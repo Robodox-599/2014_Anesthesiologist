@@ -12,12 +12,12 @@ public:
 	
 	void launchBall(bool launch);
 	
+	bool isCocked;
+	
 private:
 	Victor *launcherMotor;
 	//Solenoid *launcherPiston;
 	DigitalInput *launcherSwitch;
-	
-	bool isCocked;
 
 };
 #endif
