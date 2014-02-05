@@ -184,18 +184,25 @@ public:
 		//manipulator->setVelocity((oi->getManipJoystick()->GetThrottle()+1)/2);
 		//manipulator->intakeBall(oi->getManipJoystickButton(2));
 		
+			//compressor
 		if(oi->getDriveJoystickButton(6))
 		{
 			comp599->Start();
-			step=3;
+			//step=3;
 		}
 		else if(oi->getDriveJoystickButton(7))
 		{
 			comp599->Stop();
-			step = 4;
+			//step = 4;
 		} 
 		
-		//timer wait test
+			//launcher
+		if(oi->getDriveJoystickButton(2))
+		{
+			launcher->launchBall(oi->getDriveJoystickButton(1));
+		}
+		
+			//timer wait
 //		if(oi->getDriveJoystickButton(10))
 //		{
 //			bLatch = true;
