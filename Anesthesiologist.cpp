@@ -6,7 +6,7 @@
 
 #include "AnesthesiologistDrive.h"
 //#include "AnesthesiologistManipulator.h"
-#include "AnesthesiologistLauncher.h"
+//#include "AnesthesiologistLauncher.h"
 #include "AnesthesiologistPIDOutput.h"
 #include "AnesthesiologistOperatorInterface.h"
 #include "AnesthesiologistMacros.h"
@@ -52,7 +52,7 @@ double currentTicksRight = 0;
 class Anesthesiologist: public IterativeRobot
 {
 	AnesthesiologistDrive *drive;
-	AnesthesiologistLauncher *launcher;
+	//AnesthesiologistLauncher *launcher;
 	//AnesthesiologistManipulator *manipulator;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
@@ -60,35 +60,36 @@ class Anesthesiologist: public IterativeRobot
 	Encoder *rightDriveEncoder;
 	Timer *timer;
 	
-//	struct itemScores
-//	{
-//		double rectangularity;
-//		double aspectRatioVertical;
-//		double aspectRatioHorizontal;
-//	};
-//	
-//	struct reportOnTarget
-//	{
-//		int verticalIndex;
-//		int horizontalIndex;
-//		bool isHot;
-//		double totalScore;
-//		double leftScore;
-//		double rightScore;
-//		double tapeWidthScore;
-//		double verticalScore;
-//	};
+	struct itemScores
+	{
+		double rectangularity;
+		double aspectRatioVertical;
+		double aspectRatioHorizontal;
+	};
+	
+	struct reportOnTarget
+	{
+		int verticalIndex;
+		int horizontalIndex;
+		bool isHot;
+		double totalScore;
+		double leftScore;
+		double rightScore;
+		double tapeWidthScore;
+		double verticalScore;
+	};
 
 public:	
 	Anesthesiologist()
 	{
-		launcher = new AnesthesiologistLauncher();
+		//launcher = new AnesthesiologistLauncher();
 		//manipulator = new AnesthesiologistManipulator();
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 1); 
 		leftDriveEncoder = new Encoder(LEFT_DRIVE_ENCODER_CHANNEL_A, LEFT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
 		rightDriveEncoder = new Encoder(RIGHT_DRIVE_ENCODER_CHANNEL_A, RIGHT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
+		timer = new Timer();
 		
 		//manipulator->timer->Start();
 		leftDriveEncoder->Start();
@@ -146,7 +147,7 @@ public:
 	
 	void AutonomousPeriodic()
 	{
-		//timer->Start();
+		timer->Start();
 		smartDashboardPrint();
 	}
 	
@@ -154,7 +155,7 @@ public:
 	{
 		step = 1;
 		//comp599->Start();
-		//timer->Start();
+		timer->Start();
 		leftDriveEncoder->Start();
 		rightDriveEncoder->Start();
 		//manipulator->timer->Start();
@@ -188,84 +189,84 @@ public:
 		if(oi->getDriveJoystickButton(6))
 		{
 			comp599->Start();
-			//step=3;
+			step=3;
 		}
 		else if(oi->getDriveJoystickButton(7))
 		{
 			comp599->Stop();
-			//step = 4;
+			step = 4;
 		} 
 		
 			//launcher
 		if(oi->getDriveJoystickButton(2))
 		{
-			launcher->launchBall(oi->getDriveJoystickButton(1));
+			//launcher->launchBall(oi->getDriveJoystickButton(1));
 		}
 		
 			//timer wait
-//		if(oi->getDriveJoystickButton(10))
-//		{
-//			bLatch = true;
-//		}
-//		if(bLatch)
-//		{
-//			wait(10.0);
-//		}
+		if(oi->getDriveJoystickButton(10))
+		{
+			bLatch = true;
+		}
+		if(bLatch)
+		{
+			wait(10.0);
+		}
 
 	}
 
-//	void setEncodersLinear(double target, double speed)
-//	{		
-//		if(bEncoderInit)
-//		{
-//			leftDriveEncoder->Reset();
-//			rightDriveEncoder->Reset();
-//			bEncoderInit = false;
-//		}
-//		if(isAtLeftTarget && isAtRightTarget)
-//		{
-//			isAtLinearTarget = true;
-//			bEncoderInit = true;
-//		}
-//		else
-//		{
-//			isAtLeftTarget = false;
-//			isAtRightTarget = false;
-//			isAtLinearTarget = false;
-//		}
-//		
-//		currentTicksLeft = leftDriveEncoder->Get();
-//		currentTicksRight = rightDriveEncoder->Get();
-//		
-//		if (currentTicksLeft < (target / INCHES_PER_TICK) - TICKS_DEADZONE)
-//		{
-//			drive->setLeftMotors(speed);
-//		}
-//		else if (currentTicksLeft > (target / INCHES_PER_TICK) + TICKS_DEADZONE)
-//		{
-//			drive->setLeftMotors(-speed);
-//		}
-//		else
-//		{
-//			drive->setLeftMotors(0);
-//			isAtLeftTarget = true;
-//		}
-//		
-//		if (currentTicksRight < (target / INCHES_PER_TICK) - TICKS_DEADZONE)
-//		{
-//			drive->setRightMotors(speed);
-//		}
-//		else if (currentTicksRight > (target / INCHES_PER_TICK) + TICKS_DEADZONE)
-//		{
-//			drive->setRightMotors(-speed);
-//		}
-//		else
-//		{
-//			drive->setRightMotors(0);
-//			isAtRightTarget = true;
-//		}
-//		
-//	}
+	void setEncodersLinear(double target, double speed)
+	{		
+		if(bEncoderInit)
+		{
+			leftDriveEncoder->Reset();
+			rightDriveEncoder->Reset();
+			bEncoderInit = false;
+		}
+		if(isAtLeftTarget && isAtRightTarget)
+		{
+			isAtLinearTarget = true;
+			bEncoderInit = true;
+		}
+		else
+		{
+			isAtLeftTarget = false;
+			isAtRightTarget = false;
+			isAtLinearTarget = false;
+		}
+		
+		currentTicksLeft = leftDriveEncoder->Get();
+		currentTicksRight = rightDriveEncoder->Get();
+		
+		if (currentTicksLeft < (target / INCHES_PER_TICK) - TICKS_DEADZONE)
+		{
+			drive->setLeftMotors(speed);
+		}
+		else if (currentTicksLeft > (target / INCHES_PER_TICK) + TICKS_DEADZONE)
+		{
+			drive->setLeftMotors(-speed);
+		}
+		else
+		{
+			drive->setLeftMotors(0);
+			isAtLeftTarget = true;
+		}
+		
+		if (currentTicksRight < (target / INCHES_PER_TICK) - TICKS_DEADZONE)
+		{
+			drive->setRightMotors(speed);
+		}
+		else if (currentTicksRight > (target / INCHES_PER_TICK) + TICKS_DEADZONE)
+		{
+			drive->setRightMotors(-speed);
+		}
+		else
+		{
+			drive->setRightMotors(0);
+			isAtRightTarget = true;
+		}
+		
+	}
 	
 	void setEncoderLeft(double target, double speed)
 	{
@@ -325,11 +326,11 @@ public:
 		
 	}
 	
-//	void autoLinear(double target, double speed)
-//	{
-//		setEncodersLinear(target, speed);
-//	}
-//	
+	void autoLinear(double target, double speed)
+	{
+		setEncodersLinear(target, speed);
+	}
+	
 	void autoLeft(double target, double speed)
 	{
 		setEncoderLeft(target, speed);
@@ -347,39 +348,38 @@ public:
 		//oi->dashboard->PutNumber("Arm Encoder Raw Value: ", manipulator->armEncoder->Get());
 		oi->dashboard->PutNumber("Left Encoder Raw Value: ", leftDriveEncoder->GetRaw());
 		oi->dashboard->PutNumber("Right Encoder Raw Value: ", rightDriveEncoder->GetRaw());
-//		oi->dashboard->PutNumber("Timer: ", timer->Get());
-//		oi->dashboard->PutBoolean("Wait?: ", isWait);
+		oi->dashboard->PutNumber("Timer: ", timer->Get());
+		oi->dashboard->PutBoolean("Wait?: ", isWait);
 //		oi->dashboard->PutBoolean("BLATCH BLATCH BLATCH!?: ", bLatch);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
-		oi->dashboard->PutBoolean(" Is Cocked", launcher->isCocked);
-		oi->dashboard->PutNumber("Step doe", step);
-		
+		//oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
+		oi->dashboard->PutNumber("Step doe", step);		
 	}
 	
-//	void wait(double secToWait)
-//	{
-//		currentTime = timer->Get();
-//		if(bTimerInit)
-//		{
-//			initTime = currentTime;
-//			bTimerInit = false;
-//			isWait = true;
-//		}
-//		if(currentTime < secToWait+initTime)
-//		{
-//			isWait = true;
-//		}
-//		else
-//		{
-//			isWait = false;
-//			bTimerInit = true;
-//			bLatch = false;
-//		}
-//		currentTime = timer->Get();
-//	}
+	void wait(double secToWait)
+	{
+		currentTime = timer->Get();
+		if(bTimerInit)
+		{
+			initTime = currentTime;
+			bTimerInit = false;
+			isWait = true;
+		}
+		if(currentTime < secToWait+initTime)
+		{
+			isWait = true;
+		}
+		else
+		{
+			isWait = false;
+			bTimerInit = true;
+			bLatch = false;
+		}
+		currentTime = timer->Get();
+	}
 	
 	
-/*	void track()
+	void track()
 	{
 		Threshold threshold(105, 137, 230, 255, 133, 183);	//HSV threshold criteria, ranges are in that order ie. Hue is 60-100
 		ParticleFilterCriteria2 criteria[] = {{IMAQ_MT_AREA, AREA_MINIMUM, 65535, false, false}};
@@ -568,7 +568,7 @@ public:
 		
 		return isHot;
 	}
-*/	
+	
 };	
 
 START_ROBOT_CLASS(Anesthesiologist);
