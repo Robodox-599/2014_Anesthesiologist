@@ -175,7 +175,9 @@ public:
 			drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(1));
 			drive->drive();
 		}
+		
 		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
+		manipulator->moveArm(oi->getDriveJoystickButton(4), oi->getDriveJoystickButton(5));
 		
 		manipulator->setVelocity((oi->getManipJoystick()->GetThrottle()+1)/2);
 		manipulator->intakeBall(oi->getManipJoystickButton(3));
