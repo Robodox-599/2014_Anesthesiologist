@@ -11,21 +11,20 @@ public:
 	~AnesthesiologistManipulator();
 	
 	void intakeBall(bool intake);
+	void moveArm(bool isIntake, bool isStored);
 	
 	void setRoller();	
 	void setVelocity(double input);
 	double getVelocity();
 	
-	void moveArmEncoder(double target, double speed);
-	
-	Encoder *armEncoder;
+	bool getArmPosition();
 	
 private:
 	Victor *intakeRoller;
 	DigitalInput *intakeSwitch;
-	Victor *intakeArm;
+	DoubleSolenoid *leftIntakeArm;
+	DoubleSolenoid *rightIntakeArm;
 	double targetVelocity;
-	double currentTicks;	
 	
 };
 #endif

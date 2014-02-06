@@ -105,7 +105,6 @@ public:
 	
 	void DisabledInit()
 	{
-		manipulator->armEncoder->Start();
 		leftDriveEncoder->Start();
 		rightDriveEncoder->Start();
 	}
@@ -113,7 +112,6 @@ public:
 	void AutonomousInit()
 	{
 		step = 0;
-		manipulator->armEncoder->Reset();
 		leftDriveEncoder->Reset();
 		rightDriveEncoder->Reset();
 	}
@@ -137,7 +135,6 @@ public:
 	void DisabledPeriodic()
 	{
 		step = 0;
-		manipulator->armEncoder->Reset();
 		isAtLinearTarget = false;
 		leftDriveEncoder->Reset();
 		rightDriveEncoder->Reset();
@@ -208,7 +205,7 @@ public:
 		}
 		if(bLatch)
 		{
-			wait(10.0);
+			wait(5.0);
 		}
 
 	}
@@ -343,12 +340,12 @@ public:
 	{
 		oi->dashboard->PutNumber("Drive Linear Speed: ", drive->getLinVelocity());
 		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
-		oi->dashboard->PutNumber("Arm Encoder Raw Value: ", manipulator->armEncoder->Get());
 		oi->dashboard->PutNumber("Left Encoder Raw Value: ", leftDriveEncoder->GetRaw());
 		oi->dashboard->PutNumber("Right Encoder Raw Value: ", rightDriveEncoder->GetRaw());
 		oi->dashboard->PutNumber("Timer: ", timer->Get());
 		oi->dashboard->PutBoolean(" Wait (Motors Disabled)", isWait);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
+		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
 		oi->dashboard->PutNumber("Step doe", step);		
 	}

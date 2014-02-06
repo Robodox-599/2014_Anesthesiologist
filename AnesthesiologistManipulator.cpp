@@ -4,21 +4,22 @@ AnesthesiologistManipulator::AnesthesiologistManipulator()
 {
 	intakeRoller = new Victor(INTAKE_ROLLER_VICTOR_CHANNEL);
 	intakeSwitch = new DigitalInput(1, INTAKE_SWITCH_CHANNEL);
-	intakeArm = new Victor(INTAKE_ARM_VICTOR_CHANNEL);
-	armEncoder = new Encoder(ARM_ENCODER_CHANNEL_A, ARM_ENCODER_CHANNEL_B, true, Encoder::k1X);
+	leftIntakeArm = new DoubleSolenoid(LEFT_INTAKE_ARM_SOLENOID_CHANNEL_A, LEFT_INTAKE_ARM_SOLENOID_CHANNEL_B);
+	rightIntakeArm = new DoubleSolenoid(RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_A, RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_B);
 	
-	currentTicks = 0;
 }
 
 AnesthesiologistManipulator::~AnesthesiologistManipulator()
 {
 	delete intakeRoller;
 	delete intakeSwitch;
-	delete intakeArm;
+	delete leftIntakeArm;
+	delete rightIntakeArm;
 	
 	intakeRoller = NULL;
 	intakeSwitch = NULL;
-	intakeArm = NULL;
+	leftIntakeArm = NULL;
+	rightIntakeArm = NULL;
 }
 
 void AnesthesiologistManipulator::intakeBall(bool intake)
@@ -37,6 +38,20 @@ void AnesthesiologistManipulator::intakeBall(bool intake)
 	lastSwitchHit = intakeSwitch->Get();	
 }
 
+void AnesthesiologistManipulator::moveArm(bool isIntake, bool isStored)
+{
+	if(isIntake)
+	{
+		leftIntakeArm->Set(DoubleSolenoid::kForward);
+		rightIntakeArm->Set(DoubleSolenoid::kForward);
+	}
+	else if(isStored)
+	{
+		leftIntakeArm->Set(DoubleSolenoid::kReverse);
+		rightIntakeArm->Set(DoubleSolenoid::kReverse);	
+	}
+}
+
 void AnesthesiologistManipulator::setRoller()
 {
 	intakeRoller->Set(targetVelocity * REDUCTION); 
@@ -52,22 +67,11 @@ double AnesthesiologistManipulator::getVelocity()
 	return targetVelocity;
 }
 
-void AnesthesiologistManipulator::moveArmEncoder(double target, double speed)
-{	
-	currentTicks = armEncoder->Get();
-		
-	if(currentTicks < target - TICKS_DEADZONE)
+bool AnesthesiologistManipulator::getArmPosition()
+{
+	if(leftIntakeArm->Get())
 	{
-		intakeArm->Set(speed);
+		return true;
 	}
-	else if(currentTicks > target + TICKS_DEADZONE)
-	{
-		intakeArm->Set(-speed);
-	}
-	else
-	{
-		intakeArm->Set(0);
-		currentTicks = 0;
-	}
+	return false;
 }
-

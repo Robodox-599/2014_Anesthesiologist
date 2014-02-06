@@ -11,7 +11,6 @@
 #define DRIVE_REAR_RIGHT_MOTOR_CHANNEL          (4)//TODO: dummy number
 #define LAUNCHER_MOTOR_VICTOR_CHANNEL           (5)//TODO: dummy number
 #define INTAKE_ROLLER_VICTOR_CHANNEL			(6)//TODO: dummy number
-#define INTAKE_ARM_VICTOR_CHANNEL				(7)//TODO: dummy number
 
 	//Sensor Channels
 #define INTAKE_SWITCH_CHANNEL					(1)//TODO: dummy number
@@ -21,14 +20,16 @@
 #define SHIFTER_SOLENOID_CHANNEL_A				(1)//TODO: dummy number
 #define SHIFTER_SOLENOID_CHANNEL_B				(2)//TODO: dummy number
 #define LAUNCHER_SOLENOID_CHANNEL				(3)//TODO: dummy number
+#define LEFT_INTAKE_ARM_SOLENOID_CHANNEL_A		(4)//TODO: dummy number
+#define LEFT_INTAKE_ARM_SOLENOID_CHANNEL_B		(5)//TODO: dummy number
+#define RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_A		(6)//TODO: dummy number
+#define RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_B		(7)//TODO: dummy number
 
 	//Encoders
 #define LEFT_DRIVE_ENCODER_CHANNEL_A			(4)//TODO: dummy number
 #define LEFT_DRIVE_ENCODER_CHANNEL_B			(5)//TODO: dummy number
 #define RIGHT_DRIVE_ENCODER_CHANNEL_A			(6)//TODO: dummy number
 #define RIGHT_DRIVE_ENCODER_CHANNEL_B			(7)//TODO: dummy number
-#define ARM_ENCODER_CHANNEL_A					(8)//TODO: dummy number
-#define ARM_ENCODER_CHANNEL_B					(9)//TODO: dummy number
 
 	//Misc
 #define SYNC_STATE_OFF          		        (0)
