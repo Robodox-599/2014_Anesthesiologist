@@ -5,13 +5,13 @@
 #include "Math.h"
 
 #include "AnesthesiologistDrive.h"
-//#include "AnesthesiologistManipulator.h"
-//#include "AnesthesiologistLauncher.h"
+#include "AnesthesiologistManipulator.h"
+#include "AnesthesiologistLauncher.h"
 #include "AnesthesiologistPIDOutput.h"
 #include "AnesthesiologistOperatorInterface.h"
 #include "AnesthesiologistMacros.h"
 
-//Vision defines 
+	//Vision defines 
 //Camera constants used for distance calculation
 #define Y_IMAGE_RES 			(480)	//X Image resolution in pixels, should be 120, 240 or 480
 #define VIEW_ANGLE 				(49)	//Axis M1013
@@ -52,8 +52,8 @@ double currentTicksRight = 0;
 class Anesthesiologist: public IterativeRobot
 {
 	AnesthesiologistDrive *drive;
-	//AnesthesiologistLauncher *launcher;
-	//AnesthesiologistManipulator *manipulator;
+	AnesthesiologistLauncher *launcher;
+	AnesthesiologistManipulator *manipulator;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
 	Encoder *leftDriveEncoder;
@@ -82,8 +82,8 @@ class Anesthesiologist: public IterativeRobot
 public:	
 	Anesthesiologist()
 	{
-		//launcher = new AnesthesiologistLauncher();
-		//manipulator = new AnesthesiologistManipulator();
+		launcher = new AnesthesiologistLauncher();
+		manipulator = new AnesthesiologistManipulator();
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 1); 
@@ -91,7 +91,6 @@ public:
 		rightDriveEncoder = new Encoder(RIGHT_DRIVE_ENCODER_CHANNEL_A, RIGHT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
 		timer = new Timer();
 		
-		//manipulator->timer->Start();
 		leftDriveEncoder->Start();
 		rightDriveEncoder->Start();
 		
@@ -106,7 +105,7 @@ public:
 	
 	void DisabledInit()
 	{
-		//manipulator->armEncoder->Start();
+		manipulator->armEncoder->Start();
 		leftDriveEncoder->Start();
 		rightDriveEncoder->Start();
 	}
@@ -114,7 +113,7 @@ public:
 	void AutonomousInit()
 	{
 		step = 0;
-		//manipulator->armEncoder->Reset();
+		manipulator->armEncoder->Reset();
 		leftDriveEncoder->Reset();
 		rightDriveEncoder->Reset();
 	}
@@ -125,7 +124,7 @@ public:
 		drive->setLinVelocity(0);
 		drive->setTurnSpeed(0, false);
 		drive->drive();
-		//manipulator->setVelocity(0);
+		manipulator->setVelocity(0);
 		leftDriveEncoder->Start();
 		rightDriveEncoder->Start();
 	}
@@ -138,7 +137,7 @@ public:
 	void DisabledPeriodic()
 	{
 		step = 0;
-		//manipulator->armEncoder->Reset();
+		manipulator->armEncoder->Reset();
 		isAtLinearTarget = false;
 		leftDriveEncoder->Reset();
 		rightDriveEncoder->Reset();
@@ -158,7 +157,6 @@ public:
 		timer->Start();
 		leftDriveEncoder->Start();
 		rightDriveEncoder->Start();
-		//manipulator->timer->Start();
 		
 		while(IsOperatorControl())
 		{
@@ -182,8 +180,8 @@ public:
 		}
 		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
 		
-		//manipulator->setVelocity((oi->getManipJoystick()->GetThrottle()+1)/2);
-		//manipulator->intakeBall(oi->getManipJoystickButton(2));
+		manipulator->setVelocity((oi->getManipJoystick()->GetThrottle()+1)/2);
+		manipulator->intakeBall(oi->getManipJoystickButton(3));
 		
 			//compressor
 		if(oi->getDriveJoystickButton(6))
@@ -200,7 +198,7 @@ public:
 			//launcher
 		if(oi->getDriveJoystickButton(2))
 		{
-			//launcher->launchBall(oi->getDriveJoystickButton(1));
+			launcher->launchBall(oi->getDriveJoystickButton(1));
 		}
 		
 			//timer wait
@@ -345,14 +343,13 @@ public:
 	{
 		oi->dashboard->PutNumber("Drive Linear Speed: ", drive->getLinVelocity());
 		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
-		//oi->dashboard->PutNumber("Arm Encoder Raw Value: ", manipulator->armEncoder->Get());
+		oi->dashboard->PutNumber("Arm Encoder Raw Value: ", manipulator->armEncoder->Get());
 		oi->dashboard->PutNumber("Left Encoder Raw Value: ", leftDriveEncoder->GetRaw());
 		oi->dashboard->PutNumber("Right Encoder Raw Value: ", rightDriveEncoder->GetRaw());
 		oi->dashboard->PutNumber("Timer: ", timer->Get());
-		oi->dashboard->PutBoolean("Wait?: ", isWait);
-//		oi->dashboard->PutBoolean("BLATCH BLATCH BLATCH!?: ", bLatch);
+		oi->dashboard->PutBoolean(" Wait (Motors Disabled)", isWait);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
-		//oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
+		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
 		oi->dashboard->PutNumber("Step doe", step);		
 	}
 	

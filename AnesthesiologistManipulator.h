@@ -8,28 +8,24 @@ class AnesthesiologistManipulator
 {
 public:
 	AnesthesiologistManipulator();
-	AnesthesiologistManipulator(UINT8 intakeRollerVictorChannel, 
-								UINT8 intakeArmVictorChannel);
 	~AnesthesiologistManipulator();
 	
-//	void intakeBall(bool intake);
+	void intakeBall(bool intake);
 	
-//	void setRoller();	
-//	void setVelocity(double input);
-//	double getVelocity();
-//	
-//	void moveArmEncoder(double target, double speed);
-//	
-//	double currentTicks;
-//	
-//	RobodoxTimer *timer;
-//	Encoder *armEncoder;
+	void setRoller();	
+	void setVelocity(double input);
+	double getVelocity();
+	
+	void moveArmEncoder(double target, double speed);
+	
+	Encoder *armEncoder;
 	
 private:
-//	Victor *intakeRoller;
-//	DigitalInput *intakeSwitch;
-//	Victor *intakeArm;
-//	double targetVelocity;
-//	
+	Victor *intakeRoller;
+	DigitalInput *intakeSwitch;
+	Victor *intakeArm;
+	double targetVelocity;
+	double currentTicks;	
+	
 };
 #endif

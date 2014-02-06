@@ -7,7 +7,6 @@ class AnesthesiologistLauncher
 {
 public:
 	AnesthesiologistLauncher();
-	AnesthesiologistLauncher(UINT8 launcherVictorChannel);//, UINT8 launcherSolenoid);
 	~AnesthesiologistLauncher();
 	
 	void launchBall(bool launch);
@@ -16,7 +15,6 @@ public:
 	
 private:
 	Victor *launcherMotor;
-	//Solenoid *launcherPiston;
 	DigitalInput *launcherSwitch;
 	
 	bool isLastLaunch;
