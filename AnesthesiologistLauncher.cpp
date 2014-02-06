@@ -12,8 +12,10 @@ AnesthesiologistLauncher::AnesthesiologistLauncher()
 AnesthesiologistLauncher::~AnesthesiologistLauncher()
 {
 	delete launcherMotor;
+	delete launcherSwitch;
 
 	launcherMotor = NULL;
+	launcherSwitch = NULL;
 }
 
 void AnesthesiologistLauncher::launchBall(bool launch)
