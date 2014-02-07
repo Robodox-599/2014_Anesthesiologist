@@ -1,3 +1,4 @@
+/*
 #ifndef VISION_H
 #define VISION_H
 
@@ -44,8 +45,9 @@ public:
 private:
 	static vector<ParticleAnalysisReport> reports;
 	static ColorImage *image;
-	static AxisCamera camera;
+	AxisCamera camera;
 	static bool side; //if hotZone == left{side = false} else side = true
 };
 
 #endif
+*/

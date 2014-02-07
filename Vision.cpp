@@ -1,4 +1,4 @@
-#include "Vision.h
+/*#include "Vision.h"
 
 static BinaryImage* Vision::getFilteredImage()
 {
@@ -80,3 +80,4 @@ static double Vision::getSideMoveDistance()
 	else
 		return -distance;
 }	
+*/

@@ -6,6 +6,7 @@ AnesthesiologistManipulator::AnesthesiologistManipulator()
 	intakeSwitch = new DigitalInput(1, INTAKE_SWITCH_CHANNEL);
 	leftIntakeArm = new DoubleSolenoid(LEFT_INTAKE_ARM_SOLENOID_CHANNEL_A, LEFT_INTAKE_ARM_SOLENOID_CHANNEL_B);
 	rightIntakeArm = new DoubleSolenoid(RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_A, RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_B);
+	stopper = new DoubleSolenoid(STOPPER_SOLENOID_CHANNEL_A, STOPPER_SOLENOID_CHANNEL_B);
 	cameraMotor = new Victor(CAMERA_VICTOR_CHANNEL);
 	pot = new AnalogChannel(1, 1);
 }
@@ -16,6 +17,7 @@ AnesthesiologistManipulator::~AnesthesiologistManipulator()
 	delete intakeSwitch;
 	delete leftIntakeArm;
 	delete rightIntakeArm;
+	delete stopper;
 	delete cameraMotor;
 	delete pot;
 	
@@ -23,6 +25,7 @@ AnesthesiologistManipulator::~AnesthesiologistManipulator()
 	intakeSwitch = NULL;
 	leftIntakeArm = NULL;
 	rightIntakeArm = NULL;
+	stopper = NULL;
 	cameraMotor = NULL;
 	pot = NULL;
 }
@@ -54,6 +57,18 @@ void AnesthesiologistManipulator::moveArm(bool isIntake, bool isStored)
 	{
 		leftIntakeArm->Set(DoubleSolenoid::kReverse);
 		rightIntakeArm->Set(DoubleSolenoid::kReverse);	
+	}
+}
+
+void AnesthesiologistManipulator::moveStopper(bool shortShot, bool longShot)
+{
+	if(shortShot)
+	{
+		stopper->Set(DoubleSolenoid::kForward);
+	}
+	else if(longShot)
+	{
+		stopper->Set(DoubleSolenoid::kReverse);
 	}
 }
 
@@ -106,9 +121,18 @@ double AnesthesiologistManipulator::getVelocity()
 	return targetVelocity;
 }
 
+bool AnesthesiologistManipulator::getStopperPosition()
+{
+	if(stopper->Get() == DoubleSolenoid::kForward)
+	{
+		return true;
+	}
+	return false;
+}
+
 bool AnesthesiologistManipulator::getArmPosition()
 {
-	if(leftIntakeArm->Get())
+	if(leftIntakeArm->Get() == DoubleSolenoid::kForward)
 	{
 		return true;
 	}

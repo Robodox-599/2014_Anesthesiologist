@@ -1,4 +1,4 @@
-#include "WPILib.h"
+/*#include "WPILib.h"
 #include "Vision.h"
 
 class Main
@@ -13,10 +13,11 @@ private:
 	{
 		Vision::setCamera(AxisCamera::GetInstance());
 		Vision::getImage();
-		setParticleAnalysisReport();
+		Vision::setParticleAnalysisReport();
 		Vision::getLinearMoveDistance();
 		Vision::getSideMoveDistance();
 		
 		//shoot
 	}
 };
+*/

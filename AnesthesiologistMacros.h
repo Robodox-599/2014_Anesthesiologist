@@ -20,8 +20,8 @@ Manip Joystick:
 	3 - start rollers, intake ball
 	4 - set arm to intake position
 	5 - set arm to stored position
-	6 - 
-	7 - 
+	6 - toggle shot range to long
+	7 - toggle shot range to short
 	8 - set camera position to back
 	9 - set camera position to forward
 	10 - 
@@ -47,11 +47,12 @@ Manip Joystick:
 	//Pneumatics
 #define SHIFTER_SOLENOID_CHANNEL_A				(1)//TODO: dummy number
 #define SHIFTER_SOLENOID_CHANNEL_B				(2)//TODO: dummy number
-#define LAUNCHER_SOLENOID_CHANNEL				(3)//TODO: dummy number
-#define LEFT_INTAKE_ARM_SOLENOID_CHANNEL_A		(4)//TODO: dummy number
-#define LEFT_INTAKE_ARM_SOLENOID_CHANNEL_B		(5)//TODO: dummy number
-#define RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_A		(6)//TODO: dummy number
-#define RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_B		(7)//TODO: dummy number
+#define LEFT_INTAKE_ARM_SOLENOID_CHANNEL_A		(3)//TODO: dummy number
+#define LEFT_INTAKE_ARM_SOLENOID_CHANNEL_B		(4)//TODO: dummy number
+#define RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_A		(5)//TODO: dummy number
+#define RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_B		(6)//TODO: dummy number
+#define STOPPER_SOLENOID_CHANNEL_A				(7)//TODO: dummy number
+#define STOPPER_SOLENOID_CHANNEL_B				(8)//TODO: dummy number
 
 	//Encoders
 #define LEFT_DRIVE_ENCODER_CHANNEL_A			(4)//TODO: dummy number

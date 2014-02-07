@@ -181,6 +181,7 @@ public:
 		
 		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
 		manipulator->moveArm(oi->getManipJoystickButton(4), oi->getManipJoystickButton(5));
+		manipulator->moveStopper(oi->getManipJoystickButton(7), oi->getManipJoystickButton(6));
 		
 		manipulator->setVelocity((oi->getManipJoystick()->GetThrottle()+1)/2);
 		manipulator->intakeBall(oi->getManipJoystickButton(3));
@@ -364,6 +365,7 @@ public:
 		oi->dashboard->PutNumber("Pot Raw Value: ", manipulator->pot->GetVoltage());
 		oi->dashboard->PutBoolean(" Wait (Motors Disabled)", isWait);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
+		oi->dashboard->PutString("Shot Range: ", manipulator->getStopperPosition() ? "Short" : "Long");
 		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Back" : "Forward") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
