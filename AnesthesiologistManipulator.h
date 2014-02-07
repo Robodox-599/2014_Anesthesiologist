@@ -1,7 +1,7 @@
 #ifndef ANESTHESIOLOGIST_MANIPULATOR_H
 #define ANESTHESIOLOGIST_MANIPULATOR_H
 #include "WPILib.h"
-#include "RobodoxTimer.h"
+#include "Math.h"
 #include "AnesthesiologistMacros.h"
 
 class AnesthesiologistManipulator
@@ -20,7 +20,7 @@ public:
 	double getVelocity();
 	
 	bool getArmPosition();
-	bool getCameraPosition();
+	int getCameraPosition();
 	
 	AnalogChannel *pot;
 	

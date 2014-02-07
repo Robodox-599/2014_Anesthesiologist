@@ -64,6 +64,9 @@ Manip Joystick:
 #define REDUCTION							    (.75)
 #define DEADZONE								(.1)
 #define TICKS_DEADZONE							(10)
+#define POT_DEADZONE							(.2)
+#define POT_UPPER_LIMIT							(5)
+#define POT_LOWER_LIMIT							(0)
 #define INCHES_PER_TICK                			(0.075398)   // circumference of wheel / total 
 
 

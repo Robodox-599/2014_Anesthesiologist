@@ -361,9 +361,11 @@ public:
 		oi->dashboard->PutNumber("Left Encoder Raw Value: ", leftDriveEncoder->GetRaw());
 		oi->dashboard->PutNumber("Right Encoder Raw Value: ", rightDriveEncoder->GetRaw());
 		oi->dashboard->PutNumber("Timer: ", timer->Get());
+		oi->dashboard->PutNumber("Pot Raw Value: ", manipulator->pot->GetVoltage());
 		oi->dashboard->PutBoolean(" Wait (Motors Disabled)", isWait);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
 		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
+		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Back" : "Forward") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
 		oi->dashboard->PutNumber("Step doe", step);		
 	}
