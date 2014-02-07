@@ -1,6 +1,33 @@
 #ifndef ANESTHESIOLOGIST_MACROS_H
 #define ANESTHESIOLOGIST_MACROS_H
 
+/*Joystick button mapping (for reference)
+Drive Joystick:
+	1 - turbo turning
+	2 - 
+	3 - 
+	4 - 
+	5 - 
+	6 - start compressor
+	7 - stop compressor
+	8 - shift up
+	9 - shift down
+	10 - timer wait
+	11 - 
+Manip Joystick:
+	1 - shoot ball
+	2 - shooter safety switch
+	3 - start rollers, intake ball
+	4 - set arm to intake position
+	5 - set arm to stored position
+	6 - 
+	7 - 
+	8 - set camera position to back
+	9 - set camera position to forward
+	10 - 
+	11 - 
+*/
+
 	//Slots
 #define PNEUMATICS_24V_SLOT						(1)//TODO: dummy number
 

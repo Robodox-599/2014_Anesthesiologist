@@ -35,13 +35,16 @@
 
 
 int step = 0;
-
+	//timer
 bool isWait = false;
 bool bTimerInit = true;
-bool bLatch = false;
+bool bTimerLatch = false;
 double initTime = 0;
 double currentTime = 0;
-
+	//camera mount
+bool bCameraForwardLatch = false;
+bool bCameraBackLatch = false;
+	//encoders
 bool bEncoderInit = true;
 bool isAtLeftTarget = false;
 bool isAtRightTarget = false;
@@ -177,7 +180,7 @@ public:
 		}
 		
 		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
-		manipulator->moveArm(oi->getDriveJoystickButton(4), oi->getDriveJoystickButton(5));
+		manipulator->moveArm(oi->getManipJoystickButton(4), oi->getManipJoystickButton(5));
 		
 		manipulator->setVelocity((oi->getManipJoystick()->GetThrottle()+1)/2);
 		manipulator->intakeBall(oi->getManipJoystickButton(3));
@@ -195,17 +198,30 @@ public:
 		} 
 		
 			//launcher
-		if(oi->getDriveJoystickButton(2))
+		if(oi->getManipJoystickButton(2))
 		{
-			launcher->launchBall(oi->getDriveJoystickButton(1));
+			launcher->launchBall(oi->getManipJoystickButton(1));
 		}
+		
+			//camera motor mount
+		if(oi->getManipJoystickButton(8))
+		{
+			bCameraBackLatch = true;
+			bCameraForwardLatch = false;
+		}
+		else if(oi->getManipJoystickButton(9))
+		{
+			bCameraForwardLatch = true;
+			bCameraBackLatch = false;
+		}
+		manipulator->toggleCameraPosition(bCameraForwardLatch, bCameraBackLatch);
 		
 			//timer wait
 		if(oi->getDriveJoystickButton(10))
 		{
-			bLatch = true;
+			bTimerLatch = true;
 		}
-		if(bLatch)
+		if(bTimerLatch)
 		{
 			wait(5.0);
 		}
@@ -369,7 +385,7 @@ public:
 		{
 			isWait = false;
 			bTimerInit = true;
-			bLatch = false;
+			bTimerLatch = false;
 		}
 		currentTime = timer->Get();
 	}
