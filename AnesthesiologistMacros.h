@@ -3,8 +3,8 @@
 
 /*Joystick button mapping (for reference)
 Drive Joystick:
-	1 - turbo turning
-	2 - 
+	1 - shoot ball
+	2 - shooter safety switch
 	3 - 
 	4 - 
 	5 - 
@@ -15,17 +15,17 @@ Drive Joystick:
 	10 - timer wait
 	11 - 
 Manip Joystick:
-	1 - shoot ball
-	2 - shooter safety switch
-	3 - start rollers, intake ball
+	1 - 
+	2 - 
+	3 - 
 	4 - set arm to intake position
 	5 - set arm to stored position
 	6 - toggle shot range to long
 	7 - toggle shot range to short
 	8 - set camera position to back
 	9 - set camera position to forward
-	10 - 
-	11 - 
+	10 - start rollers, intake ball slow 
+	11 - start rollers, intake ball fast
 */
 
 	//Slots
@@ -41,7 +41,7 @@ Manip Joystick:
 #define CAMERA_VICTOR_CHANNEL					(7)//TODO: dummy number
 
 	//Sensor Channels
-#define INTAKE_SWITCH_CHANNEL					(1)//TODO: dummy number
+#define INTAKE_SWITCH_CHANNEL					(3)//TODO: dummy number
 #define LAUNCHER_SWITCH_CHANNEL					(2)//TODO: dummy number
 
 	//Pneumatics
@@ -60,14 +60,18 @@ Manip Joystick:
 #define RIGHT_DRIVE_ENCODER_CHANNEL_A			(6)//TODO: dummy number
 #define RIGHT_DRIVE_ENCODER_CHANNEL_B			(7)//TODO: dummy number
 
+	//Potentiometer
+#define POT_DEADZONE_HIGH						(1)
+#define POT_DEADZONE_LOW						(.5)
+#define POT_UPPER_LIMIT							(5)
+#define POT_LOWER_LIMIT							(.5)
+#define POT_MULTIPLIER							(10)
+
 	//Misc
 #define SYNC_STATE_OFF          		        (0)
 #define REDUCTION							    (.75)
 #define DEADZONE								(.1)
 #define TICKS_DEADZONE							(10)
-#define POT_DEADZONE							(.2)
-#define POT_UPPER_LIMIT							(5)
-#define POT_LOWER_LIMIT							(0)
 #define INCHES_PER_TICK                			(0.075398)   // circumference of wheel / total 
 
 

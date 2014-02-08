@@ -30,19 +30,24 @@ AnesthesiologistManipulator::~AnesthesiologistManipulator()
 	pot = NULL;
 }
 
-void AnesthesiologistManipulator::intakeBall(bool intake)
+void AnesthesiologistManipulator::intakeBall(bool intakeSlow, bool intakeFast)
 {
 	bool lastSwitchHit = false;
 	
-	if(intake && !lastSwitchHit && intakeSwitch->Get() == 1)//TODO: test for 0 or 1
+	if(!lastSwitchHit && intakeSwitch->Get() == 1)//TODO: test for 0 or 1
 	{
-		intakeRoller->Set(0);
+		intakeRoller->Set(0, SYNC_STATE_OFF);
 		//TODO: add a 1 second wait here
 	}
-	else
+	else if(intakeSlow)
 	{
-		setRoller();
+		intakeRoller->Set(.5, SYNC_STATE_OFF);
 	}
+	else if(intakeFast)
+	{
+		intakeRoller->Set(1, SYNC_STATE_OFF);
+	}
+	
 	lastSwitchHit = intakeSwitch->Get();	
 }
 
@@ -77,13 +82,13 @@ void AnesthesiologistManipulator::toggleCameraPosition(bool isForward, bool isBa
 	bool isForwardLimit = false;
 	bool isBackLimit = false;
 	
-	if(pot->GetVoltage() < POT_UPPER_LIMIT && pot->GetVoltage() > POT_UPPER_LIMIT - POT_DEADZONE)
-	{
-		isForwardLimit = true;
-	}
-	else if(pot->GetVoltage() < POT_LOWER_LIMIT + POT_DEADZONE)
+	if(pot->GetVoltage() > POT_UPPER_LIMIT - POT_DEADZONE_HIGH)
 	{
 		isBackLimit = true;
+	}
+	else if(pot->GetVoltage() < POT_LOWER_LIMIT + POT_DEADZONE_LOW)
+	{
+		isForwardLimit = true;
 	}
 	else
 	{
@@ -97,28 +102,13 @@ void AnesthesiologistManipulator::toggleCameraPosition(bool isForward, bool isBa
 	}
 	if(isForward && !isForwardLimit)
 	{
-		cameraMotor->Set(1, SYNC_STATE_OFF);
+		cameraMotor->Set(-1, SYNC_STATE_OFF);
 	}
 	if(isBack && !isBackLimit)
 	{
-		cameraMotor->Set(-1, SYNC_STATE_OFF);
+		cameraMotor->Set(1, SYNC_STATE_OFF);
 	}
 	
-}
-
-void AnesthesiologistManipulator::setRoller()
-{
-	intakeRoller->Set(targetVelocity * REDUCTION); 
-}
-
-void AnesthesiologistManipulator::setVelocity(double input)
-{
-	targetVelocity = input;
-}
-
-double AnesthesiologistManipulator::getVelocity()
-{
-	return targetVelocity;
 }
 
 bool AnesthesiologistManipulator::getStopperPosition()
@@ -141,13 +131,13 @@ bool AnesthesiologistManipulator::getArmPosition()
 
 int AnesthesiologistManipulator::getCameraPosition()
 {
-	if(pot->GetVoltage() < POT_UPPER_LIMIT && pot->GetVoltage() > POT_UPPER_LIMIT - POT_DEADZONE)
-	{
-		return 1;
-	}
-	else if(pot->GetVoltage() < POT_LOWER_LIMIT + POT_DEADZONE)
+	if(pot->GetVoltage() > POT_UPPER_LIMIT - POT_DEADZONE_HIGH)
 	{
 		return 2;
+	}
+	else if(pot->GetVoltage() < POT_LOWER_LIMIT + POT_DEADZONE_LOW)
+	{
+		return 1;
 	}
 	return 0;
 }
