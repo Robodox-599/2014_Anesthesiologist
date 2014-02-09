@@ -10,10 +10,11 @@ public:
 	AnesthesiologistManipulator();
 	~AnesthesiologistManipulator();
 	
-	void intakeBall(bool intakeSlow, bool intakeFast);
+	void intakeBall(bool intake, bool outtake, bool toggleSpeed);
+	
 	void moveArm(bool isIntake, bool isStored);
 	void moveStopper(bool shortShot, bool longShot);
-	void toggleCameraPosition(bool isForward, bool isBack);
+	void toggleCameraPosition(bool isForward);
 	
 	bool getStopperPosition();
 	bool getArmPosition();
@@ -21,14 +22,13 @@ public:
 	
 	AnalogChannel *pot;
 	Victor *cameraMotor;
+	
 private:
 	Victor *intakeRoller;
 	DigitalInput *intakeSwitch;
 	DoubleSolenoid *leftIntakeArm;
 	DoubleSolenoid *rightIntakeArm;
 	DoubleSolenoid *stopper;
-	//Victor *cameraMotor;
-	double targetVelocity;
 	
 };
 #endif

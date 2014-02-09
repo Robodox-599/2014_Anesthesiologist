@@ -38,13 +38,8 @@ int step = 0;
 	//timer
 bool isWait = false;
 bool bTimerInit = true;
-bool bTimerLatch = false;
 double initTime = 0;
 double currentTime = 0;
-	//camera mount
-bool bCameraForwardLatch = false;
-bool bCameraBackLatch = false;
-bool forward = false;
 	//encoders
 bool bEncoderInit = true;
 bool isAtLeftTarget = false;
@@ -52,6 +47,10 @@ bool isAtRightTarget = false;
 bool isAtLinearTarget = false;
 double currentTicksLeft = 0;
 double currentTicksRight = 0;
+	//Latches
+bool bIntakeLatch = false;
+bool bTimerLatch = false;
+bool bCameraLatch = false;
 
 class Anesthesiologist: public IterativeRobot
 {
@@ -160,7 +159,7 @@ public:
 		leftDriveEncoder->Start();
 		rightDriveEncoder->Start();
 		
-		while(IsOperatorControl())
+		while(IsOperatorControl()) //TODO: get rid of while loop, move init to TeleopInit
 		{
 			teleDrive();
 			smartDashboardPrint();
@@ -181,18 +180,27 @@ public:
 			drive->drive();
 		}
 		
-		//drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
-		manipulator->moveArm(oi->getManipJoystickButton(4), oi->getManipJoystickButton(5));
+		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
+		manipulator->moveArm(oi->getManipJoystickButton(11), oi->getManipJoystickButton(10));
 		manipulator->moveStopper(oi->getManipJoystickButton(7), oi->getManipJoystickButton(6));
 		
-		manipulator->intakeBall(oi->getManipJoystickButton(10), oi->getManipJoystickButton(11));
+			//intake speed toggle
+		if(oi->getManipJoystickButton(4))
+		{
+			bIntakeLatch = true;
+		}
+		else if(oi->getManipJoystickButton(5))
+		{
+			bIntakeLatch = false;
+		}
+		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), bIntakeLatch);
 		
 			//compressor
 		if(oi->getDriveJoystickButton(6))
 		{
 			comp599->Start();
 			//relay599->Set(Relay::kForward);
-			step=3;
+			step = 3;
 		}
 		else if(oi->getDriveJoystickButton(7))
 		{
@@ -208,23 +216,15 @@ public:
 		}
 		
 			//camera motor mount
-		if(oi->getDriveJoystickButton(8))
+		if(oi->getManipJoystickButton(8))
 		{
-			bCameraBackLatch = true;
-			bCameraForwardLatch = false;
+			bCameraLatch = true;
 		}
-		else if(oi->getDriveJoystickButton(9))
+		else if(oi->getManipJoystickButton(9))
 		{
-			bCameraForwardLatch = true;
-			bCameraBackLatch = false;
-		}
-		else
-		{
-			bCameraForwardLatch = false;
-			bCameraBackLatch = false;
-		}
-			
-		manipulator->toggleCameraPosition(bCameraForwardLatch, bCameraBackLatch);
+			bCameraLatch = false;
+		}	
+		manipulator->toggleCameraPosition(bCameraLatch);
 		
 			//timer wait
 		if(oi->getDriveJoystickButton(10))
@@ -372,15 +372,14 @@ public:
 		oi->dashboard->PutNumber("Right Encoder Raw Value: ", rightDriveEncoder->GetRaw());
 		oi->dashboard->PutNumber("Timer: ", timer->Get());
 		oi->dashboard->PutNumber("Pot Raw Value: ", manipulator->pot->GetVoltage());
-		oi->dashboard->PutNumber("Pot Adjusted Value: ", manipulator->pot->GetVoltage()*POT_MULTIPLIER);
 		oi->dashboard->PutBoolean(" Wait (Motors Disabled)", isWait);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
-		oi->dashboard->PutBoolean("Motor Test: ", forward);
 		oi->dashboard->PutString("Shot Range: ", manipulator->getStopperPosition() ? "Short" : "Long");
 		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
+		oi->dashboard->PutString("Intake Speed: ", bIntakeLatch ? "Slow" : "Fast");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Back" : "Forward") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
-		oi->dashboard->PutNumber("Step doe", step);		
+		//oi->dashboard->PutNumber("Step doe", step);		
 	}
 	
 	void wait(double secToWait)

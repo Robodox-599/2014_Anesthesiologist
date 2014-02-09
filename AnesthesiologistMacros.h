@@ -16,16 +16,16 @@ Drive Joystick:
 	11 - 
 Manip Joystick:
 	1 - 
-	2 - 
-	3 - 
-	4 - set arm to intake position
-	5 - set arm to stored position
+	2 - outtake ball
+	3 - intake ball
+	4 - toggle speed to slow
+	5 - toggle speed to fast
 	6 - toggle shot range to long
 	7 - toggle shot range to short
 	8 - set camera position to back
 	9 - set camera position to forward
-	10 - start rollers, intake ball slow 
-	11 - start rollers, intake ball fast
+	10 - set arm to stored position
+	11 - set arm to intake position 
 */
 
 	//Slots

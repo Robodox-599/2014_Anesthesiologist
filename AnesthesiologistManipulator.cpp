@@ -30,25 +30,75 @@ AnesthesiologistManipulator::~AnesthesiologistManipulator()
 	pot = NULL;
 }
 
-void AnesthesiologistManipulator::intakeBall(bool intakeSlow, bool intakeFast)
+void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, bool toggleSpeed)
 {
 	bool lastSwitchHit = false;
+	bool lastPressed = true;
+	
+	if(!lastSwitchHit && intakeSwitch->Get() == 0)
+	{
+		if(intake)
+		{
+			if(toggleSpeed)
+			{
+				intakeRoller->Set(.5, SYNC_STATE_OFF);
+			}
+			else
+			{
+				intakeRoller->Set(1, SYNC_STATE_OFF);
+			}
+		}
+		else if(outtake)
+		{
+			if(toggleSpeed)
+			{
+				intakeRoller->Set(-.5, SYNC_STATE_OFF);
+			}
+			else
+			{
+				intakeRoller->Set(-1, SYNC_STATE_OFF);
+			}
+		}
+	}
 	
 	if(!lastSwitchHit && intakeSwitch->Get() == 1)//TODO: test for 0 or 1
 	{
 		intakeRoller->Set(0, SYNC_STATE_OFF);
-		//TODO: add a 1 second wait here
-	}
-	else if(intakeSlow)
-	{
-		intakeRoller->Set(.5, SYNC_STATE_OFF);
-	}
-	else if(intakeFast)
-	{
-		intakeRoller->Set(1, SYNC_STATE_OFF);
+		lastSwitchHit = true;
 	}
 	
-	lastSwitchHit = intakeSwitch->Get();	
+	if(lastSwitchHit && intakeSwitch->Get() == 1)
+	{
+		if(lastPressed && (!intake && !outtake))
+		{
+			lastPressed = false;
+		}
+		if(!lastPressed && ( intake || outtake))
+		{
+			if(intake)
+			{
+				if(toggleSpeed)
+				{
+					intakeRoller->Set(.5, SYNC_STATE_OFF);
+				}
+				else
+				{
+					intakeRoller->Set(1, SYNC_STATE_OFF);
+				}
+			}
+			else if(outtake)
+			{
+				if(toggleSpeed)
+				{
+					intakeRoller->Set(-.5, SYNC_STATE_OFF);
+				}
+				else 
+				{
+					intakeRoller->Set(-1, SYNC_STATE_OFF);
+				}
+			}
+		}
+	}		
 }
 
 void AnesthesiologistManipulator::moveArm(bool isIntake, bool isStored)
@@ -77,7 +127,7 @@ void AnesthesiologistManipulator::moveStopper(bool shortShot, bool longShot)
 	}
 }
 
-void AnesthesiologistManipulator::toggleCameraPosition(bool isForward, bool isBack)
+void AnesthesiologistManipulator::toggleCameraPosition(bool isForward)
 {
 	bool isForwardLimit = false;
 	bool isBackLimit = false;
@@ -104,7 +154,7 @@ void AnesthesiologistManipulator::toggleCameraPosition(bool isForward, bool isBa
 	{
 		cameraMotor->Set(-1, SYNC_STATE_OFF);
 	}
-	if(isBack && !isBackLimit)
+	if(!isForward && !isBackLimit)
 	{
 		cameraMotor->Set(1, SYNC_STATE_OFF);
 	}
