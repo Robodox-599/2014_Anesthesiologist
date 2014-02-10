@@ -43,6 +43,7 @@ Manip Joystick:
 	//Sensor Channels
 #define INTAKE_SWITCH_CHANNEL					(3)//TODO: dummy number
 #define LAUNCHER_SWITCH_CHANNEL					(2)//TODO: dummy number
+#define AUTON_SWITCH_CHANNEL					(4)//TODO: dummy number
 
 	//Pneumatics
 #define SHIFTER_SOLENOID_CHANNEL_A				(1)//TODO: dummy number
@@ -65,7 +66,6 @@ Manip Joystick:
 #define POT_DEADZONE_LOW						(.5)
 #define POT_UPPER_LIMIT							(5)
 #define POT_LOWER_LIMIT							(.5)
-#define POT_MULTIPLIER							(10)
 
 	//Misc
 #define SYNC_STATE_OFF          		        (0)

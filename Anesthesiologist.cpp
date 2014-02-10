@@ -63,6 +63,7 @@ class Anesthesiologist: public IterativeRobot
 	Encoder *leftDriveEncoder;
 	Encoder *rightDriveEncoder;
 	Timer *timer;
+	DigitalInput *autonSwitch;
 	
 	struct itemScores
 	{
@@ -95,6 +96,7 @@ public:
 		leftDriveEncoder = new Encoder(LEFT_DRIVE_ENCODER_CHANNEL_A, LEFT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
 		rightDriveEncoder = new Encoder(RIGHT_DRIVE_ENCODER_CHANNEL_A, RIGHT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
 		timer = new Timer();
+		autonSwitch = new DigitalInput(1, AUTON_SWITCH_CHANNEL);
 		
 		leftDriveEncoder->Start();
 		rightDriveEncoder->Start();
@@ -148,6 +150,26 @@ public:
 	void AutonomousPeriodic()
 	{
 		timer->Start();
+		
+		if(autonSwitch->Get() == 0) //case 0: shooting one ball
+		{
+			//drive up x seconds (~3 feet)
+			//stop
+			//launch
+		}
+		else if(autonSwitch->Get() == 1) //case 1: shooting two balls
+		{
+			//drive up x seconds (~3 feet)
+			//stop
+			//launch
+			//drive back y seconds (~5 feet)
+			//stop
+			//intake
+			//drive up z seconds (~8 feet)
+			//stop
+			//launch
+		}
+		
 		smartDashboardPrint();
 		setEncodersLinear(1,1); //TODO: Dummy Numbers (target, speed)
 		launcher->launchBall(true);
