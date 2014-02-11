@@ -149,6 +149,12 @@ public:
 	{
 		timer->Start();
 		smartDashboardPrint();
+		setEncodersLinear(1,1); //TODO: Dummy Numbers (target, speed)
+		launcher->launchBall(true);
+		setEncodersLinear(-1,-1); //TODO: Dummy Numbers (target, speed) for moving backwards
+		manipulator->intakeBall(true,false,true);
+		setEncodersLinear(2,2); //TODO: Dummy Numbers (target, speed) for moving forwards
+		launcher->launchBall(true);
 	}
 	
 	void TeleopPeriodic()
@@ -594,7 +600,7 @@ public:
 		
 		return isHot;
 	}
-	
-};	
+
+};
 
 START_ROBOT_CLASS(Anesthesiologist);
