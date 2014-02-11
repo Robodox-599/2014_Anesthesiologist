@@ -425,17 +425,17 @@ public:
 		
 		if(init)
 		{
-			timer->Start;
+			timer->Start();
 			init = false;
 		}
 		
 		if(timer->Get() < duration)
 		{
-			drive->SetLinVelocity(velocity);
+			drive->setLinVelocity(velocity);
 		}
 		else
 		{
-			drive->SetLinVelocity(0);
+			drive->setLinVelocity(0);
 			nextStep = true;
 		}
 		drive->drive();
