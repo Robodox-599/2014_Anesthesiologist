@@ -1,83 +1,113 @@
-/*#include "Vision.h"
+#include "Vision.h"
 
-static BinaryImage* Vision::getFilteredImage()
-{
-	return filterImageSmallParticles(filterImageHSV(image));
+Vision::Vision() {
+	threshold = new Threshold(105, 137, 230, 255, 133, 183);//TODO: dummy numbers
+	ParticleFilterCriteria2 criteria1[] = { { IMAQ_MT_AREA, AREA_MINIMUM,
+			65535, false, false } };
+}
+Vision::~Vision() {
+	delete reports;
+	delete report;
+	delete image;
+
+	reports = NULL;
+	report = NULL;
+	image = NULL;
+}
+BinaryImage* Vision::getFilteredImage() {
+	return filterSmallParticles(filterImageHSV(image));
+}
+BinaryImage* Vision::filterImageHSV(HSLImage *image) {
+	return image->ThresholdHSV(threshold->plane1Low, threshold->plane2High,
+			threshold->plane2Low, threshold->plane2High, threshold->plane3Low,
+			threshold->plane3High);
 }
 
-static BinaryImage* Vision::filterImageHSV(ColorImage *image)
-{
-	return image->ThresholdHSV(THRESHOLD);
+void Vision::getImage(HSLImage *img) {
+	image = img;
 }
 
-static BinaryImage* Vision::filterSmallParitcles(BinaryImage *image)
-{
-	return image->ParticleFilter(CRITERA, 1);
+BinaryImage* Vision::filterSmallParticles(BinaryImage *image) {
+	return image->ParticleFilter(criteria1, 1);
 }
 
-static void Vision::setParticleAnalysisReport()
-{
-	reports = getFilteredImage()->GetOrderedParticleAnalysisReports();
+void Vision::setParticleAnalysisReport() {
+	BinaryImage *img = getFilteredImage();
+	reports = img->GetOrderedParticleAnalysisReports();
 }
 
-static void Vision::setCamera(AxisCamera camera)
-{
-	this->camera = camera;
+double Vision::getDistanceFromGoal() {
+	return (REFLECTOR_INCHES_WIDTH * FIELD_OF_VIEW_PIXELS_WIDTH) / (2
+			* report->imageWidth * tan(ANGLE));
 }
 
-static void Vision::getImage()
-{
-	camera.GetImage();
-}
-
-static double Vision::getDistanceFromGoalWall()
-{
-	return (REFLECTOR_INCHES_WIDTH * FIELD_OF_VIEW_PIXELS_WIDTH)/(2 * reports->imageWidth * tan(ANGLE));	
-}
-
-static double Vision::getYPixelOffset()
-{
-	return abs(reports->center_mass_y_normalized * NORMALIZED_TO_PIXEL);
-}
-
-static double Vision::getXPixelOffset()
-{
-	double offset = reports->center_mass_x_normalized * NORMALIZED_TO_PIXEL;
+double Vision::getYPixelOffset() {
+	double offset = report->center_mass_y_normalized
+			* (double) NORMALIZED_TO_PIXEL;
 	if (offset < 0)
-	{
+		offset *= -1;
+	return offset;
+}
+
+double Vision::getXPixelOffset() {
+	double offset = report->center_mass_x_normalized
+			* (double) NORMALIZED_TO_PIXEL;
+	if (offset < 0) {
 		side = false;
-	}
-	else
+		offset *= -1;
+	} else
 		side = true;
-	return abs(offset);
+	return offset;
 }
 
-static double Vision::getDistance()
-{
-	return sqrt(pow(getDistanceFromGoalWall, 2) + pow(getYPixelOffset*getPixelToFeetConversion(), 2) + pow(getPixelXOffset*getPixelToFeetConversion(), 2));
+double Vision::getDistance() {
+	return sqrt(
+			pow(getDistanceFromGoal(), 2) + pow(
+					getYPixelOffset() * getPixelToFeetConversion(), 2) + pow(
+					getXPixelOffset() * getPixelToFeetConversion(), 2));
 }
 
-static double Vision::getPixelToFeetConversion()
-{
-	return REFLECTOR_INCHES_WIDTH/reports->imageWidth;
+double Vision::getPixelToFeetConversion() {
+	return (double) REFLECTOR_INCHES_WIDTH / (double) report->imageWidth;
 }
 
-static double Vision::getDistanceFromSide()
-{
-	return getXPixelOffset() * getPixelToFeetConversion();
+double Vision::getDistanceFromSide() {
+	return getXPixelOffset() * getPixelToFeetConversion() + 8 + 23.5 + 9.12;
 }
 
-static double Vision::getLinearMoveDistance()
-{
-	return WANTED_DISTANCE_FROM_SIDE - getDistanceFromGoal(); 
+double Vision::getLinearMoveDistance() {
+	return WANTED_DISTANCE_FROM_SIDE - getDistanceFromGoal();
 }
 
-static double Vision::getSideMoveDistance()
-{
+double Vision::getSideMoveDistance() {
 	double distance = WANTED_DISTANCE_FROM_SIDE - getDistanceFromSide();
 	if (side)
 		return distance;
 	else
 		return -distance;
-}	
-*/
+}
+
+bool Vision::checkIfVertical(ParticleAnalysisReport *report) {
+	if (report->imageHeight > report->imageWidth) {
+		return true;
+	}
+	return false;
+}
+
+ParticleAnalysisReport* Vision::getParticleAnalysisReport(int index) {
+	return &reports->at(index);
+}
+
+int Vision::setVertical() {
+	for (unsigned int i = 0; i < reports->size(); i++) {
+		report = getParticleAnalysisReport(i);
+		if (checkIfVertical(report))
+			return i;
+	}
+	return 0;
+}
+
+void Vision::setReport(int index) {
+	report = &reports->at(index);
+}
+
