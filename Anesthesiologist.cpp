@@ -35,6 +35,7 @@
 
 
 int step = 0;
+bool nextStep = false;
 	//timer
 bool isWait = false;
 bool bTimerInit = true;
@@ -102,7 +103,7 @@ public:
 		rightDriveEncoder->Start();
 		
 		oi->dashboard->init();
-		//comp599->Start();
+		comp599->Start();
 	}
 	
 	void RobotInit()
@@ -149,25 +150,51 @@ public:
 	
 	void AutonomousPeriodic()
 	{
-		timer->Start();
-		
+		if(nextStep)
+		{
+			step += 1;
+			nextStep = false;
+		}
 		if(autonSwitch->Get() == 0) //case 0: shooting one ball
 		{
-			//drive up x seconds (~3 feet)
-			//stop
-			//launch
+			if(step == 0)
+			{
+				timedMove(1, .5); //TODO: dummy numbers
+			}
+			else if(step == 1)
+			{
+				launcher->launchBall(true);
+			}
 		}
 		else if(autonSwitch->Get() == 1) //case 1: shooting two balls
 		{
-			//drive up x seconds (~3 feet)
-			//stop
-			//launch
-			//drive back y seconds (~5 feet)
-			//stop
-			//intake
-			//drive up z seconds (~8 feet)
-			//stop
-			//launch
+			if(step == 0)
+			{
+				timedMove(1, .5); //TODO: dummy numbers
+			}
+			else if(step == 1)
+			{
+				launcher->launchBall(true);
+				nextStep = true;
+			}
+			else if(step == 2)
+			{
+				timedMove(-1, 1); //TODO: dummy numbers
+			}
+			else if(step == 3)
+			{
+				manipulator->intakeBall(true, false, true);
+				nextStep = true;
+			}
+			else if(step == 4)
+			{
+				timedMove(1, 1.5); //TODO: dummy numbers
+			}
+			else if(step == 5)
+			{
+				launcher->launchBall(true);
+				nextStep = true;
+			}
 		}
 		
 		smartDashboardPrint();
@@ -182,7 +209,7 @@ public:
 	void TeleopPeriodic()
 	{
 		step = 1;
-		//comp599->Start();
+		comp599->Start();
 		timer->Start();
 		leftDriveEncoder->Start();
 		rightDriveEncoder->Start();
@@ -390,6 +417,28 @@ public:
 	void autoRight(double target, double speed)
 	{
 		setEncoderRight(target, speed);
+	}
+	
+	void timedMove(double velocity, double duration)
+	{
+		static bool init = true;
+		
+		if(init)
+		{
+			timer->Start;
+			init = false;
+		}
+		
+		if(timer->Get() < duration)
+		{
+			drive->SetLinVelocity(velocity);
+		}
+		else
+		{
+			drive->SetLinVelocity(0);
+			nextStep = true;
+		}
+		drive->drive();
 	}
 	
 	void smartDashboardPrint()
