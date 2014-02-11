@@ -60,6 +60,8 @@ Manip Joystick:
 #define LEFT_DRIVE_ENCODER_CHANNEL_B			(5)//TODO: dummy number
 #define RIGHT_DRIVE_ENCODER_CHANNEL_A			(6)//TODO: dummy number
 #define RIGHT_DRIVE_ENCODER_CHANNEL_B			(7)//TODO: dummy number
+#define ROLLER_ENCODER_CHANNEL_A				(8)//TODO: dummy number
+#define ROLLER_ENCODER_CHANNEL_B				(8)//TODO: dummy number
 
 	//Potentiometer
 #define POT_DEADZONE_HIGH						(1)
@@ -73,6 +75,10 @@ Manip Joystick:
 #define DEADZONE								(.1)
 #define TICKS_DEADZONE							(10)
 #define INCHES_PER_TICK                			(0.075398)   // circumference of wheel / total 
+	//RPM
+#define TIME_COMPARISON							(.25)
+#define MINUTE_CONVERSION						(240)
+#define TICKS_PER_ROTATION						(250)
 
 
 #endif

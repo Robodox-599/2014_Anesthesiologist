@@ -20,8 +20,12 @@ public:
 	bool getArmPosition();
 	int getCameraPosition();
 	
+	double getRPM();
+	
 	AnalogChannel *pot;
 	Victor *cameraMotor;
+	Encoder *rollerEncoder;
+	Timer *timer;
 	
 private:
 	Victor *intakeRoller;
@@ -29,6 +33,6 @@ private:
 	DoubleSolenoid *leftIntakeArm;
 	DoubleSolenoid *rightIntakeArm;
 	DoubleSolenoid *stopper;
-	
+	double rpm;
 };
 #endif

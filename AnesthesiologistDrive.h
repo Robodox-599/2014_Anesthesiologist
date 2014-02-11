@@ -31,10 +31,13 @@ public:
 	void autoLinear(double target, double speed);
 	void autoLeft(double target, double speed);
 	void autoRight(double target, double speed);
+	
+	double getRPM();
 		
 	DoubleSolenoid *shifter;
 	Encoder *leftDriveEncoder;
 	Encoder *rightDriveEncoder;
+	Timer *timer;
 	
 private:
 	Talon *frontLeftMotor;
@@ -56,5 +59,6 @@ private:
 	double currentTicksLeft;
 	double currentTicksRight;
 	
+	double rpm;
 };
 #endif
