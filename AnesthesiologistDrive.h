@@ -24,8 +24,17 @@ public:
 	
 	void setLeftMotors(double velocity);
 	void setRightMotors(double velocity);
+	
+	void setEncodersLinear(double target, double speed);
+	void setEncoderLeft(double target, double speed);
+	void setEncoderRight(double target, double speed);
+	void autoLinear(double target, double speed);
+	void autoLeft(double target, double speed);
+	void autoRight(double target, double speed);
 		
 	DoubleSolenoid *shifter;
+	Encoder *leftDriveEncoder;
+	Encoder *rightDriveEncoder;
 	
 private:
 	Talon *frontLeftMotor;
@@ -36,9 +45,16 @@ private:
 	AnesthesiologistOperatorInterface *oi;
 	
 	double linearVelocity; 
-	double turnSpeed; 
-	
+	double turnSpeed;
 	double leftCmd;
 	double rightCmd;
+	
+	bool bEncoderInit;
+	bool isAtLeftTarget;
+	bool isAtRightTarget;
+	bool isAtLinearTarget;
+	double currentTicksLeft;
+	double currentTicksRight;
+	
 };
 #endif

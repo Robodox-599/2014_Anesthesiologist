@@ -41,13 +41,6 @@ bool isWait = false;
 bool bTimerInit = true;
 double initTime = 0;
 double currentTime = 0;
-	//encoders
-bool bEncoderInit = true;
-bool isAtLeftTarget = false;
-bool isAtRightTarget = false;
-bool isAtLinearTarget = false;
-double currentTicksLeft = 0;
-double currentTicksRight = 0;
 	//Latches
 bool bIntakeLatch = false;
 bool bTimerLatch = false;
@@ -61,8 +54,7 @@ class Anesthesiologist: public IterativeRobot
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
 	//Relay *relay599;
-	Encoder *leftDriveEncoder;
-	Encoder *rightDriveEncoder;
+	
 	Timer *timer;
 	DigitalInput *autonSwitch;
 	
@@ -94,13 +86,11 @@ public:
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 2); 
 		//relay599 = new Relay(1, 2);
-		leftDriveEncoder = new Encoder(LEFT_DRIVE_ENCODER_CHANNEL_A, LEFT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
-		rightDriveEncoder = new Encoder(RIGHT_DRIVE_ENCODER_CHANNEL_A, RIGHT_DRIVE_ENCODER_CHANNEL_B, true, Encoder::k1X);
 		timer = new Timer();
 		autonSwitch = new DigitalInput(1, AUTON_SWITCH_CHANNEL);
 		
-		leftDriveEncoder->Start();
-		rightDriveEncoder->Start();
+		drive->leftDriveEncoder->Start();
+		drive->rightDriveEncoder->Start();
 		
 		oi->dashboard->init();
 		comp599->Start();
@@ -113,15 +103,15 @@ public:
 	
 	void DisabledInit()
 	{
-		leftDriveEncoder->Start();
-		rightDriveEncoder->Start();
+		drive->leftDriveEncoder->Start();
+		drive->rightDriveEncoder->Start();
 	}
 	
 	void AutonomousInit()
 	{
 		step = 0;
-		leftDriveEncoder->Reset();
-		rightDriveEncoder->Reset();
+		drive->leftDriveEncoder->Reset();
+		drive->rightDriveEncoder->Reset();
 	}
 	
 	void TeleopInit()
@@ -130,8 +120,8 @@ public:
 		drive->setLinVelocity(0);
 		drive->setTurnSpeed(0, false);
 		drive->drive();
-		leftDriveEncoder->Start();
-		rightDriveEncoder->Start();
+		drive->leftDriveEncoder->Start();
+		drive->rightDriveEncoder->Start();
 	}
 	
 	void TestInit()
@@ -142,9 +132,8 @@ public:
 	void DisabledPeriodic()
 	{
 		step = 0;
-		isAtLinearTarget = false;
-		leftDriveEncoder->Reset();
-		rightDriveEncoder->Reset();
+		drive->leftDriveEncoder->Reset();
+		drive->rightDriveEncoder->Reset();
 		smartDashboardPrint();
 	}
 	
@@ -211,8 +200,8 @@ public:
 		step = 1;
 		comp599->Start();
 		timer->Start();
-		leftDriveEncoder->Start();
-		rightDriveEncoder->Start();
+		drive->leftDriveEncoder->Start();
+		drive->rightDriveEncoder->Start();
 		
 		while(IsOperatorControl()) //TODO: get rid of while loop, move init to TeleopInit
 		{
@@ -292,132 +281,6 @@ public:
 		}
 
 	}
-
-	void setEncodersLinear(double target, double speed)
-	{		
-		if(bEncoderInit)
-		{
-			leftDriveEncoder->Reset();
-			rightDriveEncoder->Reset();
-			bEncoderInit = false;
-		}
-		if(isAtLeftTarget && isAtRightTarget)
-		{
-			isAtLinearTarget = true;
-			bEncoderInit = true;
-		}
-		else
-		{
-			isAtLeftTarget = false;
-			isAtRightTarget = false;
-			isAtLinearTarget = false;
-		}
-		
-		currentTicksLeft = leftDriveEncoder->Get();
-		currentTicksRight = rightDriveEncoder->Get();
-		
-		if (currentTicksLeft < (target / INCHES_PER_TICK) - TICKS_DEADZONE)
-		{
-			drive->setLeftMotors(speed);
-		}
-		else if (currentTicksLeft > (target / INCHES_PER_TICK) + TICKS_DEADZONE)
-		{
-			drive->setLeftMotors(-speed);
-		}
-		else
-		{
-			drive->setLeftMotors(0);
-			isAtLeftTarget = true;
-		}
-		
-		if (currentTicksRight < (target / INCHES_PER_TICK) - TICKS_DEADZONE)
-		{
-			drive->setRightMotors(speed);
-		}
-		else if (currentTicksRight > (target / INCHES_PER_TICK) + TICKS_DEADZONE)
-		{
-			drive->setRightMotors(-speed);
-		}
-		else
-		{
-			drive->setRightMotors(0);
-			isAtRightTarget = true;
-		}
-		
-	}
-	
-	void setEncoderLeft(double target, double speed)
-	{
-		if(isAtLeftTarget)
-		{
-			leftDriveEncoder->Reset();
-		}
-		else
-		{
-			isAtLeftTarget = false;
-		}
-		
-		currentTicksLeft = leftDriveEncoder->GetRaw();
-		
-		if (currentTicksLeft < target - TICKS_DEADZONE)
-		{
-			drive->setLeftMotors(speed);
-		}
-		else if (currentTicksLeft > target + TICKS_DEADZONE)
-		{
-			drive->setLeftMotors(-speed);
-		}
-		else
-		{
-			drive->setLeftMotors(0);
-			isAtLeftTarget = true;
-		}
-		
-	}
-	
-	void setEncoderRight(double target, double speed)
-	{
-		if(isAtRightTarget)
-		{
-			rightDriveEncoder->Reset(); 
-		}
-		else
-		{
-			isAtRightTarget = false;	
-		}
-		
-		currentTicksRight = rightDriveEncoder->Get();
-		
-		if (currentTicksRight < target - TICKS_DEADZONE)
-		{
-			drive->setRightMotors(speed);
-		}
-		else if (currentTicksRight > target + TICKS_DEADZONE)
-		{
-			drive->setRightMotors(-speed);
-		}
-		else
-		{
-			drive->setRightMotors(0);
-			isAtRightTarget = true;
-		}
-		
-	}
-	
-	void autoLinear(double target, double speed)
-	{
-		setEncodersLinear(target, speed);
-	}
-	
-	void autoLeft(double target, double speed)
-	{
-		setEncoderLeft(target, speed);
-	}
-	
-	void autoRight(double target, double speed)
-	{
-		setEncoderRight(target, speed);
-	}
 	
 	void timedMove(double velocity, double duration)
 	{
@@ -445,8 +308,8 @@ public:
 	{
 		oi->dashboard->PutNumber("Drive Linear Speed: ", drive->getLinVelocity());
 		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
-		oi->dashboard->PutNumber("Left Encoder Raw Value: ", leftDriveEncoder->GetRaw());
-		oi->dashboard->PutNumber("Right Encoder Raw Value: ", rightDriveEncoder->GetRaw());
+		oi->dashboard->PutNumber("Left Encoder Raw Value: ", drive->leftDriveEncoder->GetRaw());
+		oi->dashboard->PutNumber("Right Encoder Raw Value: ", drive->rightDriveEncoder->GetRaw());
 		oi->dashboard->PutNumber("Timer: ", timer->Get());
 		oi->dashboard->PutNumber("Pot Raw Value: ", manipulator->pot->GetVoltage());
 		oi->dashboard->PutBoolean(" Wait (Motors Disabled)", isWait);
