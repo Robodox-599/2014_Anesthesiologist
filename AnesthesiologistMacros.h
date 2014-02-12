@@ -18,8 +18,8 @@ Manip Joystick:
 	1 - 
 	2 - outtake ball
 	3 - intake ball
-	4 - toggle speed to slow
-	5 - toggle speed to fast
+	4 - 
+	5 - 
 	6 - toggle shot range to long
 	7 - toggle shot range to short
 	8 - set camera position to back
@@ -43,7 +43,6 @@ Manip Joystick:
 	//Sensor Channels
 #define INTAKE_SWITCH_CHANNEL					(3)//TODO: dummy number
 #define LAUNCHER_SWITCH_CHANNEL					(2)//TODO: dummy number
-#define AUTON_SWITCH_CHANNEL					(4)//TODO: dummy number
 
 	//Pneumatics
 #define SHIFTER_SOLENOID_CHANNEL_A				(1)//TODO: dummy number
@@ -60,8 +59,6 @@ Manip Joystick:
 #define LEFT_DRIVE_ENCODER_CHANNEL_B			(5)//TODO: dummy number
 #define RIGHT_DRIVE_ENCODER_CHANNEL_A			(6)//TODO: dummy number
 #define RIGHT_DRIVE_ENCODER_CHANNEL_B			(7)//TODO: dummy number
-#define ROLLER_ENCODER_CHANNEL_A				(8)//TODO: dummy number
-#define ROLLER_ENCODER_CHANNEL_B				(8)//TODO: dummy number
 
 	//Potentiometer
 #define POT_DEADZONE_HIGH						(1)
@@ -75,10 +72,5 @@ Manip Joystick:
 #define DEADZONE								(.1)
 #define TICKS_DEADZONE							(10)
 #define INCHES_PER_TICK                			(0.075398)   // circumference of wheel / total 
-	//RPM
-#define TIME_COMPARISON							(.25)
-#define MINUTE_CONVERSION						(240)
-#define TICKS_PER_ROTATION						(250)
-
 
 #endif

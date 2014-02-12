@@ -9,11 +9,8 @@ AnesthesiologistManipulator::AnesthesiologistManipulator()
 	stopper = new DoubleSolenoid(STOPPER_SOLENOID_CHANNEL_A, STOPPER_SOLENOID_CHANNEL_B);
 	cameraMotor = new Victor(CAMERA_VICTOR_CHANNEL);
 	pot = new AnalogChannel(1, 1);
-	rollerEncoder = new Encoder(ROLLER_ENCODER_CHANNEL_A, ROLLER_ENCODER_CHANNEL_B, false, Encoder::k1X);	
 	timer = new Timer();
-	
 	timer->Start();
-	rpm = 0;
 }
 
 AnesthesiologistManipulator::~AnesthesiologistManipulator()
@@ -25,7 +22,6 @@ AnesthesiologistManipulator::~AnesthesiologistManipulator()
 	delete stopper;
 	delete cameraMotor;
 	delete pot;
-	delete rollerEncoder;
 	
 	intakeRoller = NULL;
 	intakeSwitch = NULL;
@@ -34,10 +30,9 @@ AnesthesiologistManipulator::~AnesthesiologistManipulator()
 	stopper = NULL;
 	cameraMotor = NULL;
 	pot = NULL;
-	rollerEncoder = NULL;
 }
 
-void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, bool toggleSpeed)
+void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, double speed)
 {
 	bool lastSwitchHit = false;
 	bool lastPressed = true;
@@ -46,25 +41,11 @@ void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, bool tog
 	{
 		if(intake)
 		{
-			if(toggleSpeed)
-			{
-				intakeRoller->Set(.5, SYNC_STATE_OFF);
-			}
-			else
-			{
-				intakeRoller->Set(1, SYNC_STATE_OFF);
-			}
+			intakeRoller->Set(abs(speed), SYNC_STATE_OFF);
 		}
 		else if(outtake)
 		{
-			if(toggleSpeed)
-			{
-				intakeRoller->Set(-.5, SYNC_STATE_OFF);
-			}
-			else
-			{
-				intakeRoller->Set(-1, SYNC_STATE_OFF);
-			}
+			intakeRoller->Set(-1, SYNC_STATE_OFF);
 		}
 	}
 	
@@ -84,25 +65,11 @@ void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, bool tog
 		{
 			if(intake)
 			{
-				if(toggleSpeed)
-				{
-					intakeRoller->Set(.5, SYNC_STATE_OFF);
-				}
-				else
-				{
-					intakeRoller->Set(1, SYNC_STATE_OFF);
-				}
+				intakeRoller->Set(abs(speed), SYNC_STATE_OFF);
 			}
 			else if(outtake)
 			{
-				if(toggleSpeed)
-				{
-					intakeRoller->Set(-.5, SYNC_STATE_OFF);
-				}
-				else 
-				{
-					intakeRoller->Set(-1, SYNC_STATE_OFF);
-				}
+				intakeRoller->Set(-1, SYNC_STATE_OFF);
 			}
 		}
 	}		
@@ -197,31 +164,4 @@ int AnesthesiologistManipulator::getCameraPosition()
 		return 1;
 	}
 	return 0;
-}
-
-double AnesthesiologistManipulator::getRPM()
-{
-	static bool init = true;
-	double initTime = 0;
-	double deltaTime = 0;
-	double initTicks = 0;
-	double deltaTicks = 0;
-	double ticksPerMinute = 0;
-	
-	if(init)
-	{
-		initTime = timer->Get();
-		initTicks = rollerEncoder->Get();
-		init = false;
-	}
-	
-	deltaTime = timer->Get() - initTime;
-	deltaTicks = rollerEncoder->Get() - initTicks;
-	
-	if(deltaTime == TIME_COMPARISON)
-	{
-		ticksPerMinute = deltaTicks * TIME_COMPARISON * MINUTE_CONVERSION;
-		rpm = ticksPerMinute / TICKS_PER_ROTATION;
-	}
-	return rpm;
 }

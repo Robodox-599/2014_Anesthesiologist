@@ -31,8 +31,6 @@ public:
 	void autoLinear(double target, double speed);
 	void autoLeft(double target, double speed);
 	void autoRight(double target, double speed);
-	
-	double getRPM();
 		
 	DoubleSolenoid *shifter;
 	Encoder *leftDriveEncoder;
@@ -58,7 +56,5 @@ private:
 	bool isAtLinearTarget;
 	double currentTicksLeft;
 	double currentTicksRight;
-	
-	double rpm;
 };
 #endif

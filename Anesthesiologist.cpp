@@ -42,7 +42,6 @@ bool bTimerInit = true;
 double initTime = 0;
 double currentTime = 0;
 	//Latches
-bool bIntakeLatch = false;
 bool bTimerLatch = false;
 bool bCameraLatch = false;
 
@@ -54,9 +53,7 @@ class Anesthesiologist: public IterativeRobot
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
 	//Relay *relay599;
-	
 	Timer *timer;
-	DigitalInput *autonSwitch;
 	
 	struct itemScores
 	{
@@ -87,7 +84,6 @@ public:
 		comp599 = new Compressor(1, 1, 1, 2); 
 		//relay599 = new Relay(1, 2);
 		timer = new Timer();
-		autonSwitch = new DigitalInput(1, AUTON_SWITCH_CHANNEL);
 		
 		drive->leftDriveEncoder->Start();
 		drive->rightDriveEncoder->Start();
@@ -139,60 +135,14 @@ public:
 	
 	void AutonomousPeriodic()
 	{
-		if(nextStep)
-		{
-			step += 1;
-			nextStep = false;
-		}
-		if(autonSwitch->Get() == 0) //case 0: shooting one ball
-		{
-			if(step == 0)
-			{
-				timedMove(1, .5); //TODO: dummy numbers
-			}
-			else if(step == 1)
-			{
-				launcher->launchBall(true);
-			}
-		}
-		else if(autonSwitch->Get() == 1) //case 1: shooting two balls
-		{
-			if(step == 0)
-			{
-				timedMove(1, .5); //TODO: dummy numbers
-			}
-			else if(step == 1)
-			{
-				launcher->launchBall(true);
-				nextStep = true;
-			}
-			else if(step == 2)
-			{
-				timedMove(-1, 1); //TODO: dummy numbers
-			}
-			else if(step == 3)
-			{
-				manipulator->intakeBall(true, false, true);
-				nextStep = true;
-			}
-			else if(step == 4)
-			{
-				timedMove(1, 1.5); //TODO: dummy numbers
-			}
-			else if(step == 5)
-			{
-				launcher->launchBall(true);
-				nextStep = true;
-			}
-		}
-		
-		smartDashboardPrint();
-		setEncodersLinear(1,1); //TODO: Dummy Numbers (target, speed)
-		launcher->launchBall(true);
-		setEncodersLinear(-1,-1); //TODO: Dummy Numbers (target, speed) for moving backwards
-		manipulator->intakeBall(true,false,true);
-		setEncodersLinear(2,2); //TODO: Dummy Numbers (target, speed) for moving forwards
-		launcher->launchBall(true);
+	
+//		smartDashboardPrint();
+//		setEncodersLinear(1,1); //TODO: Dummy Numbers (target, speed)
+//		launcher->launchBall(true);
+//		setEncodersLinear(-1,-1); //TODO: Dummy Numbers (target, speed) for moving backwards
+//		manipulator->intakeBall(true,false,true);
+//		setEncodersLinear(2,2); //TODO: Dummy Numbers (target, speed) for moving forwards
+//		launcher->launchBall(true);
 	}
 	
 	void TeleopPeriodic()
@@ -226,18 +176,8 @@ public:
 		
 		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
 		manipulator->moveArm(oi->getManipJoystickButton(11), oi->getManipJoystickButton(10));
-		manipulator->moveStopper(oi->getManipJoystickButton(7), oi->getManipJoystickButton(6));
-		
-			//intake speed toggle
-		if(oi->getManipJoystickButton(4))
-		{
-			bIntakeLatch = true;
-		}
-		else if(oi->getManipJoystickButton(5))
-		{
-			bIntakeLatch = false;
-		}
-		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), bIntakeLatch);
+		manipulator->moveStopper(oi->getManipJoystickButton(7), oi->getManipJoystickButton(6));	
+		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getLinVelocity());
 		
 			//compressor
 		if(oi->getDriveJoystickButton(6))
@@ -282,28 +222,6 @@ public:
 
 	}
 	
-	void timedMove(double velocity, double duration)
-	{
-		static bool init = true;
-		
-		if(init)
-		{
-			timer->Start();
-			init = false;
-		}
-		
-		if(timer->Get() < duration)
-		{
-			drive->setLinVelocity(velocity);
-		}
-		else
-		{
-			drive->setLinVelocity(0);
-			nextStep = true;
-		}
-		drive->drive();
-	}
-	
 	void smartDashboardPrint()
 	{
 		oi->dashboard->PutNumber("Drive Linear Speed: ", drive->getLinVelocity());
@@ -316,7 +234,6 @@ public:
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
 		oi->dashboard->PutString("Shot Range: ", manipulator->getStopperPosition() ? "Short" : "Long");
 		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
-		oi->dashboard->PutString("Intake Speed: ", bIntakeLatch ? "Slow" : "Fast");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Back" : "Forward") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
 		//oi->dashboard->PutNumber("Step doe", step);		

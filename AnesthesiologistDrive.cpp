@@ -24,8 +24,6 @@ AnesthesiologistDrive::AnesthesiologistDrive(AnesthesiologistOperatorInterface *
 	currentTicksLeft = 0;
 	currentTicksRight = 0;
 	
-	rpm = 0;
-	
 	timer = new Timer();
 	timer->Start();
 }
@@ -263,31 +261,4 @@ void AnesthesiologistDrive::autoLeft(double target, double speed)
 void AnesthesiologistDrive::autoRight(double target, double speed)
 {
 	setEncoderRight(target, speed);
-}
-
-double AnesthesiologistDrive::getRPM()
-{
-	static bool init = true;
-	double initTime = 0;
-	double deltaTime = 0;
-	double initTicks = 0;
-	double deltaTicks = 0;
-	double ticksPerMinute = 0;
-	
-	if(init)
-	{
-		initTime = timer->Get();
-		initTicks = leftDriveEncoder->Get();
-		init = false;
-	}
-	
-	deltaTime = timer->Get() - initTime;
-	deltaTicks = leftDriveEncoder->Get() - initTicks;
-	
-	if(deltaTime == TIME_COMPARISON)
-	{
-		ticksPerMinute = deltaTicks * TIME_COMPARISON * MINUTE_CONVERSION;
-		rpm = ticksPerMinute / TICKS_PER_ROTATION;
-	}
-	return rpm;
 }
