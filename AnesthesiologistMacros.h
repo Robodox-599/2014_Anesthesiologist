@@ -45,14 +45,12 @@ Manip Joystick:
 #define LAUNCHER_SWITCH_CHANNEL					(2)//TODO: dummy number
 
 	//Pneumatics
-#define SHIFTER_SOLENOID_CHANNEL_A				(1)//TODO: dummy number
-#define SHIFTER_SOLENOID_CHANNEL_B				(2)//TODO: dummy number
-#define LEFT_INTAKE_ARM_SOLENOID_CHANNEL_A		(3)//TODO: dummy number
-#define LEFT_INTAKE_ARM_SOLENOID_CHANNEL_B		(4)//TODO: dummy number
-#define RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_A		(5)//TODO: dummy number
-#define RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_B		(6)//TODO: dummy number
-#define STOPPER_SOLENOID_CHANNEL_A				(7)//TODO: dummy number
-#define STOPPER_SOLENOID_CHANNEL_B				(8)//TODO: dummy number
+#define SHIFTER_SOLENOID_CHANNEL_A				(1)
+#define SHIFTER_SOLENOID_CHANNEL_B				(2)
+#define INTAKE_ARM_SOLENOID_CHANNEL_A			(3)
+#define INTAKE_ARM_SOLENOID_CHANNEL_B			(4)
+#define STOPPER_SOLENOID_CHANNEL_A				(5)
+#define STOPPER_SOLENOID_CHANNEL_B				(6)
 
 	//Encoders
 #define LEFT_DRIVE_ENCODER_CHANNEL_A			(4)//TODO: dummy number

@@ -33,14 +33,17 @@
 //Maximum number of particles to process
 #define MAX_PARTICLES 			(8)
 
-
 int step = 0;
-bool nextStep = false;
-	//timer
+
+	//timed move
+bool bTimedMoveInit = true;
+double initDriveTime = 0;
+double currentDriveTime = 0;
+	//timer wait
 bool isWait = false;
 bool bTimerInit = true;
-double initTime = 0;
-double currentTime = 0;
+double initWaitTime = 0;
+double currentWaitTime = 0;
 	//Latches
 bool bTimerLatch = false;
 bool bCameraLatch = false;
@@ -106,6 +109,7 @@ public:
 	void AutonomousInit()
 	{
 		step = 0;
+		timer->Start();
 		drive->leftDriveEncoder->Reset();
 		drive->rightDriveEncoder->Reset();
 	}
@@ -135,7 +139,7 @@ public:
 	
 	void AutonomousPeriodic()
 	{
-	
+		
 //		smartDashboardPrint();
 //		setEncodersLinear(1,1); //TODO: Dummy Numbers (target, speed)
 //		launcher->launchBall(true);
@@ -222,6 +226,49 @@ public:
 
 	}
 	
+	void timedMove(double velocity, double duration)
+	{		
+		currentDriveTime = timer->Get();
+		
+		if(bTimedMoveInit)
+		{
+			initDriveTime = timer->Get();
+			bTimedMoveInit = false;
+		}
+		
+		if(timer->Get() < duration + initDriveTime)
+		{
+			drive->setLinVelocity(velocity);
+		}
+		else
+		{
+			drive->setLinVelocity(0);
+		}
+		drive->drive();
+	}
+
+	void wait(double secToWait)
+	{
+		currentWaitTime = timer->Get();
+		if(bTimerInit)
+		{
+			initWaitTime = currentWaitTime;
+			bTimerInit = false;
+			isWait = true;
+		}
+		if(currentWaitTime < secToWait + initWaitTime)
+		{
+			isWait = true;
+		}
+		else
+		{
+			isWait = false;
+			bTimerInit = true;
+			bTimerLatch = false;
+		}
+		currentWaitTime = timer->Get();
+	}
+	
 	void smartDashboardPrint()
 	{
 		oi->dashboard->PutNumber("Drive Linear Speed: ", drive->getLinVelocity());
@@ -237,30 +284,7 @@ public:
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Back" : "Forward") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
 		//oi->dashboard->PutNumber("Step doe", step);		
-	}
-	
-	void wait(double secToWait)
-	{
-		currentTime = timer->Get();
-		if(bTimerInit)
-		{
-			initTime = currentTime;
-			bTimerInit = false;
-			isWait = true;
-		}
-		if(currentTime < secToWait+initTime)
-		{
-			isWait = true;
-		}
-		else
-		{
-			isWait = false;
-			bTimerInit = true;
-			bTimerLatch = false;
-		}
-		currentTime = timer->Get();
-	}
-	
+	}	
 	
 	void track()
 	{

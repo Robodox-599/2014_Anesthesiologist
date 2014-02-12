@@ -4,8 +4,7 @@ AnesthesiologistManipulator::AnesthesiologistManipulator()
 {
 	intakeRoller = new Victor(INTAKE_ROLLER_VICTOR_CHANNEL);
 	intakeSwitch = new DigitalInput(1, INTAKE_SWITCH_CHANNEL);
-	leftIntakeArm = new DoubleSolenoid(LEFT_INTAKE_ARM_SOLENOID_CHANNEL_A, LEFT_INTAKE_ARM_SOLENOID_CHANNEL_B);
-	rightIntakeArm = new DoubleSolenoid(RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_A, RIGHT_INTAKE_ARM_SOLENOID_CHANNEL_B);
+	intakeArm = new DoubleSolenoid(INTAKE_ARM_SOLENOID_CHANNEL_A, INTAKE_ARM_SOLENOID_CHANNEL_B);
 	stopper = new DoubleSolenoid(STOPPER_SOLENOID_CHANNEL_A, STOPPER_SOLENOID_CHANNEL_B);
 	cameraMotor = new Victor(CAMERA_VICTOR_CHANNEL);
 	pot = new AnalogChannel(1, 1);
@@ -17,16 +16,14 @@ AnesthesiologistManipulator::~AnesthesiologistManipulator()
 {
 	delete intakeRoller;
 	delete intakeSwitch;
-	delete leftIntakeArm;
-	delete rightIntakeArm;
+	delete intakeArm;
 	delete stopper;
 	delete cameraMotor;
 	delete pot;
 	
 	intakeRoller = NULL;
 	intakeSwitch = NULL;
-	leftIntakeArm = NULL;
-	rightIntakeArm = NULL;
+	intakeArm = NULL;
 	stopper = NULL;
 	cameraMotor = NULL;
 	pot = NULL;
@@ -41,7 +38,7 @@ void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, double s
 	{
 		if(intake)
 		{
-			intakeRoller->Set(abs(speed), SYNC_STATE_OFF);
+			intakeRoller->Set(speed<0?speed*-1.0:speed, SYNC_STATE_OFF);
 		}
 		else if(outtake)
 		{
@@ -65,7 +62,7 @@ void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, double s
 		{
 			if(intake)
 			{
-				intakeRoller->Set(abs(speed), SYNC_STATE_OFF);
+				intakeRoller->Set(1, SYNC_STATE_OFF);
 			}
 			else if(outtake)
 			{
@@ -79,13 +76,11 @@ void AnesthesiologistManipulator::moveArm(bool isIntake, bool isStored)
 {
 	if(isIntake)
 	{
-		leftIntakeArm->Set(DoubleSolenoid::kForward);
-		rightIntakeArm->Set(DoubleSolenoid::kForward);
+		intakeArm->Set(DoubleSolenoid::kForward);
 	}
 	else if(isStored)
 	{
-		leftIntakeArm->Set(DoubleSolenoid::kReverse);
-		rightIntakeArm->Set(DoubleSolenoid::kReverse);	
+		intakeArm->Set(DoubleSolenoid::kReverse);
 	}
 }
 
@@ -146,7 +141,7 @@ bool AnesthesiologistManipulator::getStopperPosition()
 
 bool AnesthesiologistManipulator::getArmPosition()
 {
-	if(leftIntakeArm->Get() == DoubleSolenoid::kForward)
+	if(intakeArm->Get() == DoubleSolenoid::kForward)
 	{
 		return true;
 	}

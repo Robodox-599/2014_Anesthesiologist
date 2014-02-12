@@ -27,8 +27,7 @@ public:
 private:
 	Victor *intakeRoller;
 	DigitalInput *intakeSwitch;
-	DoubleSolenoid *leftIntakeArm;
-	DoubleSolenoid *rightIntakeArm;
+	DoubleSolenoid *intakeArm;
 	DoubleSolenoid *stopper;
 };
 #endif
