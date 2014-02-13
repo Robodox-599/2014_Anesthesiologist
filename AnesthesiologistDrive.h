@@ -10,10 +10,10 @@ public:
 	AnesthesiologistDrive(AnesthesiologistOperatorInterface *opInt = NULL);
 	~AnesthesiologistDrive();
 	
-	bool shift(UINT8 highButton, UINT8 lowButton);
+	void shift(UINT8 highButton, UINT8 lowButton);
+	bool getShiftState();
 	
 	void drive();
-	
 	void setLinVelocity(double linVal);
 	double getLinVelocity();
 	

@@ -49,23 +49,26 @@ AnesthesiologistDrive::~AnesthesiologistDrive()
 	timer = NULL;
 }
 
-bool AnesthesiologistDrive::shift(UINT8 highButton, UINT8 lowButton)
-{
-	//static?
-	bool lastGearWasHi = true;
-	
+void AnesthesiologistDrive::shift(UINT8 highButton, UINT8 lowButton)
+{	
 	if(lowButton)
 	{
 		shifter->Set(DoubleSolenoid::kForward);
-		lastGearWasHi = false;
 	}
 	else if(highButton)
 	{
 		shifter->Set(DoubleSolenoid::kReverse);
-		lastGearWasHi = true;
 	}
-	
-	return lastGearWasHi;	
+}
+
+bool AnesthesiologistDrive::getShiftState()
+{
+	//if in low gear
+	if(shifter->Get() == DoubleSolenoid::kForward)
+	{
+		return true;
+	}
+	return false;
 }
 
 void AnesthesiologistDrive::setLinVelocity(double linVal)

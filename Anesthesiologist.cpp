@@ -34,11 +34,6 @@
 #define MAX_PARTICLES 			(8)
 
 int step = 0;
-
-	//timed move
-bool bTimedMoveInit = true;
-double initDriveTime = 0;
-double currentDriveTime = 0;
 	//timer wait
 bool isWait = false;
 bool bTimerInit = true;
@@ -138,7 +133,40 @@ public:
 	}
 	
 	void AutonomousPeriodic()
-	{
+	{		
+		smartDashboardPrint();
+		
+		//TODO: dummy speeds & times
+		if(timer->Get() > 0 && timer->Get() < 2)
+		{
+			drive->setLinVelocity(1);
+		}
+		else if(timer->Get() > 2 && timer->Get() < 3)
+		{
+			drive->setLinVelocity(0);
+			step = 1;
+			//launcher->launchBall(true);
+		}
+		else if(timer->Get() > 3 && timer->Get() < 6)
+		{
+			drive->setLinVelocity(-1);	
+		}
+		else if(timer->Get() > 6 && timer->Get() < 7)
+		{
+			drive->setLinVelocity(0);
+			step = 2;
+			//manipulator->intakeBall(true, false, 1);
+		}
+		else if(timer->Get() > 7 && timer->Get() < 10)
+		{
+			drive->setLinVelocity(1);
+		}
+		else if(timer->Get() > 10 && timer->Get() < 11)
+		{
+			drive->setLinVelocity(0);
+			launcher->launchBall(true);
+		}
+		drive->drive();
 		
 //		smartDashboardPrint();
 //		setEncodersLinear(1,1); //TODO: Dummy Numbers (target, speed)
@@ -181,20 +209,18 @@ public:
 		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
 		manipulator->moveArm(oi->getManipJoystickButton(11), oi->getManipJoystickButton(10));
 		manipulator->moveStopper(oi->getManipJoystickButton(7), oi->getManipJoystickButton(6));	
-		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getLinVelocity());
+		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
 		
 			//compressor
 		if(oi->getDriveJoystickButton(6))
 		{
 			comp599->Start();
 			//relay599->Set(Relay::kForward);
-			step = 3;
 		}
 		else if(oi->getDriveJoystickButton(7))
 		{
 			comp599->Stop();
 			//relay599->Set(Relay::kOff);
-			step = 4;
 		} 
 		
 			//launcher
@@ -226,27 +252,6 @@ public:
 
 	}
 	
-	void timedMove(double velocity, double duration)
-	{		
-		currentDriveTime = timer->Get();
-		
-		if(bTimedMoveInit)
-		{
-			initDriveTime = timer->Get();
-			bTimedMoveInit = false;
-		}
-		
-		if(timer->Get() < duration + initDriveTime)
-		{
-			drive->setLinVelocity(velocity);
-		}
-		else
-		{
-			drive->setLinVelocity(0);
-		}
-		drive->drive();
-	}
-
 	void wait(double secToWait)
 	{
 		currentWaitTime = timer->Get();
@@ -281,9 +286,10 @@ public:
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
 		oi->dashboard->PutString("Shot Range: ", manipulator->getStopperPosition() ? "Short" : "Long");
 		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
+		oi->dashboard->PutString("Shift State: ", drive->getShiftState() ? "Low" : "High");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Back" : "Forward") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
-		//oi->dashboard->PutNumber("Step doe", step);		
+		oi->dashboard->PutNumber("Step: ", step);		
 	}	
 	
 	void track()
