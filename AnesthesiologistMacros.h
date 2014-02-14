@@ -31,18 +31,20 @@ Manip Joystick:
 	//Slots
 #define PNEUMATICS_24V_SLOT						(1)//TODO: dummy number
 
-	//Motors
-#define DRIVE_FRONT_LEFT_MOTOR_CHANNEL          (1)//TODO: dummy number
-#define DRIVE_REAR_LEFT_MOTOR_CHANNEL           (2)//TODO: dummy number
-#define DRIVE_FRONT_RIGHT_MOTOR_CHANNEL         (3)//TODO: dummy number
-#define DRIVE_REAR_RIGHT_MOTOR_CHANNEL          (4)//TODO: dummy number
-#define LAUNCHER_MOTOR_VICTOR_CHANNEL           (5)//TODO: dummy number
-#define INTAKE_ROLLER_VICTOR_CHANNEL			(6)//TODO: dummy number
-#define CAMERA_VICTOR_CHANNEL					(7)//TODO: dummy number
+	//Talons
+#define DRIVE_FRONT_LEFT_MOTOR_CHANNEL          (1)
+#define DRIVE_REAR_LEFT_MOTOR_CHANNEL           (2)
+#define DRIVE_FRONT_RIGHT_MOTOR_CHANNEL         (3)
+#define DRIVE_REAR_RIGHT_MOTOR_CHANNEL          (4)
+	//Victors
+#define LAUNCHER_MOTOR_VICTOR_CHANNEL           (5)
+#define INTAKE_ROLLER_VICTOR_CHANNEL			(6)
+#define CAMERA_VICTOR_CHANNEL					(7)
 
 	//Sensor Channels
-#define INTAKE_SWITCH_CHANNEL					(3)//TODO: dummy number
-#define LAUNCHER_SWITCH_CHANNEL					(2)//TODO: dummy number
+#define INTAKE_SWITCH_CHANNEL					(2)//TODO: dummy number
+#define PULSE_SWITCH_CHANNEL					(3)//TODO: dummy number
+#define ARM_LAUNCHER_SWITCH_CHANNEL				(4)//TODO: dummy number
 
 	//Pneumatics
 #define SHIFTER_SOLENOID_CHANNEL_A				(1)
@@ -63,6 +65,14 @@ Manip Joystick:
 #define POT_DEADZONE_LOW						(.5)
 #define POT_UPPER_LIMIT							(5)
 #define POT_LOWER_LIMIT							(.5)
+
+	//Choo-Choo Launcher 
+#define STATE_OFF								(0)
+#define STATE_HOLD								(1)
+#define STATE_RESET								(2)
+#define STATE_COCKED							(3)
+#define STATE_FIRE								(4)
+#define LAUNCH_TIME 							(.1)//TODO: dummy number
 
 	//Misc
 #define SYNC_STATE_OFF          		        (0)

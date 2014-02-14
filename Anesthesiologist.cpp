@@ -6,7 +6,6 @@
 
 #include "AnesthesiologistDrive.h"
 #include "AnesthesiologistManipulator.h"
-#include "AnesthesiologistLauncher.h"
 #include "AnesthesiologistPIDOutput.h"
 #include "AnesthesiologistOperatorInterface.h"
 #include "AnesthesiologistMacros.h"
@@ -46,7 +45,6 @@ bool bCameraLatch = false;
 class Anesthesiologist: public IterativeRobot
 {
 	AnesthesiologistDrive *drive;
-	AnesthesiologistLauncher *launcher;
 	AnesthesiologistManipulator *manipulator;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
@@ -75,7 +73,6 @@ class Anesthesiologist: public IterativeRobot
 public:	
 	Anesthesiologist()
 	{
-		launcher = new AnesthesiologistLauncher();
 		manipulator = new AnesthesiologistManipulator();
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
@@ -164,7 +161,7 @@ public:
 		else if(timer->Get() > 10 && timer->Get() < 11)
 		{
 			drive->setLinVelocity(0);
-			launcher->launchBall(true);
+			//launcher->launchBall(true, true);
 		}
 		drive->drive();
 		
@@ -210,6 +207,7 @@ public:
 		manipulator->moveArm(oi->getManipJoystickButton(11), oi->getManipJoystickButton(10));
 		manipulator->moveStopper(oi->getManipJoystickButton(7), oi->getManipJoystickButton(6));	
 		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
+		manipulator->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2));
 		
 			//compressor
 		if(oi->getDriveJoystickButton(6))
@@ -222,12 +220,6 @@ public:
 			comp599->Stop();
 			//relay599->Set(Relay::kOff);
 		} 
-		
-			//launcher
-		if(oi->getDriveJoystickButton(2))
-		{
-			launcher->launchBall(oi->getDriveJoystickButton(1));
-		}
 		
 			//camera motor mount
 		if(oi->getManipJoystickButton(8))
@@ -287,8 +279,9 @@ public:
 		oi->dashboard->PutString("Shot Range: ", manipulator->getStopperPosition() ? "Short" : "Long");
 		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
 		oi->dashboard->PutString("Shift State: ", drive->getShiftState() ? "Low" : "High");
+		oi->dashboard->PutString("Launch State: ", manipulator->launchState > 0 ? (manipulator->launchState == 1 ? "HOLD" : (manipulator->launchState == 2 ? "RESET" : (manipulator->launchState == 3 ? "COCKED" : "FIRE"))) : "OFF");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Back" : "Forward") : "Inbetween");
-		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
+		oi->dashboard->PutBoolean(" Ready to Fire", manipulator->isCocked);
 		oi->dashboard->PutNumber("Step: ", step);		
 	}	
 	
