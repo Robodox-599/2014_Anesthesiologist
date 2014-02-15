@@ -3,8 +3,8 @@
 
 /*Joystick button mapping (for reference)
 Drive Joystick:
-	1 - shoot ball
-	2 - shooter safety switch
+	1 - turbo turning
+	2 - 
 	3 - 
 	4 - 
 	5 - 
@@ -15,10 +15,10 @@ Drive Joystick:
 	10 - timer wait
 	11 - 
 Manip Joystick:
-	1 - 
+	1 - shoot ball
 	2 - outtake ball
 	3 - intake ball
-	4 - 
+	4 - safety switch
 	5 - 
 	6 - toggle shot range to long
 	7 - toggle shot range to short

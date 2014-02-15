@@ -6,6 +6,7 @@
 
 #include "AnesthesiologistDrive.h"
 #include "AnesthesiologistManipulator.h"
+//#include "AnesthesiologistLauncher.h"
 #include "AnesthesiologistPIDOutput.h"
 #include "AnesthesiologistOperatorInterface.h"
 #include "AnesthesiologistMacros.h"
@@ -46,6 +47,7 @@ class Anesthesiologist: public IterativeRobot
 {
 	AnesthesiologistDrive *drive;
 	AnesthesiologistManipulator *manipulator;
+	//AnesthesiologistLauncher *launcher;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
 	//Relay *relay599;
@@ -74,6 +76,7 @@ public:
 	Anesthesiologist()
 	{
 		manipulator = new AnesthesiologistManipulator();
+		//launcher = new AnesthesiologistLauncher();
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 2); 
@@ -207,7 +210,7 @@ public:
 		manipulator->moveArm(oi->getManipJoystickButton(11), oi->getManipJoystickButton(10));
 		manipulator->moveStopper(oi->getManipJoystickButton(7), oi->getManipJoystickButton(6));	
 		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
-		manipulator->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2));
+		manipulator->launchBall(oi->getManipJoystickButton(1), oi->getManipJoystickButton(4));
 		
 			//compressor
 		if(oi->getDriveJoystickButton(6))
