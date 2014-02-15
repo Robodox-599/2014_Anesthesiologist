@@ -145,7 +145,7 @@ public:
 		{
 			drive->setLinVelocity(0);
 			step = 1;
-			//launcher->launchBall(true);
+			//manipulator->autoLaunch(true);
 		}
 		else if(timer->Get() > 3 && timer->Get() < 6)
 		{
@@ -164,7 +164,7 @@ public:
 		else if(timer->Get() > 10 && timer->Get() < 11)
 		{
 			drive->setLinVelocity(0);
-			//launcher->launchBall(true, true);
+			//manipulator->autoLaunch(true);
 		}
 		drive->drive();
 		
@@ -211,18 +211,7 @@ public:
 		manipulator->moveStopper(oi->getManipJoystickButton(7), oi->getManipJoystickButton(6));	
 		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
 		manipulator->launchBall(oi->getManipJoystickButton(1), oi->getManipJoystickButton(4));
-		
-			//compressor
-		if(oi->getDriveJoystickButton(6))
-		{
-			comp599->Start();
-			//relay599->Set(Relay::kForward);
-		}
-		else if(oi->getDriveJoystickButton(7))
-		{
-			comp599->Stop();
-			//relay599->Set(Relay::kOff);
-		} 
+		toggleCompressor(oi->getDriveJoystickButton(6), oi->getDriveJoystickButton(7));
 		
 			//camera motor mount
 		if(oi->getManipJoystickButton(8))
@@ -267,6 +256,20 @@ public:
 			bTimerLatch = false;
 		}
 		currentWaitTime = timer->Get();
+	}
+	
+	void toggleCompressor(bool start, bool stop)
+	{
+		if(start)
+		{
+			comp599->Start();
+			//relay599->Set(Relay::kForward);
+		}
+		else if(stop)
+		{
+			comp599->Stop();
+			//relay599->Set(Relay::kOff);
+		}
 	}
 	
 	void smartDashboardPrint()

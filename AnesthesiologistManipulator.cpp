@@ -12,6 +12,7 @@ AnesthesiologistManipulator::AnesthesiologistManipulator()
 	isCocked = false;
 	lastPulse = false;
 	launchState = STATE_OFF;
+	autoLaunchState = STATE_HOLD;
 	
 	stopper = new DoubleSolenoid(STOPPER_SOLENOID_CHANNEL_A, STOPPER_SOLENOID_CHANNEL_B);
 	cameraMotor = new Victor(CAMERA_VICTOR_CHANNEL);
@@ -179,6 +180,67 @@ void AnesthesiologistManipulator::launchBall(bool launchTrigger, bool safetySwit
 		break;
 	default:
 		launchState = STATE_OFF;
+	}
+}
+
+void AnesthesiologistManipulator::autoLaunch(bool launch)
+{	
+	static bool init = true;
+	
+	switch(autoLaunchState)	
+	{
+	case STATE_HOLD:
+		
+		launcherMotor->Set(0, SYNC_STATE_OFF);
+		
+		if(launch)
+		{
+			autoLaunchState = STATE_RESET;
+		}
+		break;
+	case STATE_RESET:
+		
+		launcherMotor->Set(1, SYNC_STATE_OFF);
+			
+		if(pulseSwitch->Get() == 1)
+		{
+			lastPulse = true;
+		}
+		if(pulseSwitch->Get() == 0 && lastPulse)
+		{
+			lastPulse = false;
+			autoLaunchState = STATE_COCKED;
+		}
+		break;
+	case STATE_COCKED:
+		
+		launcherMotor->Set(0, SYNC_STATE_OFF);
+		
+		if(launch && intakeArm->Get() == DoubleSolenoid::kForward)
+		{
+			autoLaunchState = STATE_FIRE;
+		}
+		break;
+	case STATE_FIRE:
+			
+		if(init)
+		{
+			initTime = timer->Get();
+			init = false;
+		}
+		currentTime = timer->Get();
+		
+		if(currentTime < LAUNCH_TIME + initTime)
+		{
+			launcherMotor->Set(1, SYNC_STATE_OFF);
+		}
+		else
+		{
+			autoLaunchState = STATE_HOLD;
+		}
+		break;
+	default:
+		autoLaunchState = STATE_HOLD;
 	}
 }
 

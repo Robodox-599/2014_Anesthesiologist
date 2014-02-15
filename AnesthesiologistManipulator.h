@@ -12,6 +12,7 @@ public:
 	
 	void intakeBall(bool intake, bool outtake, double speed);
 	void launchBall(bool launchTrigger, bool safetySwitch);
+	void autoLaunch(bool launch);
 	
 	void moveArm(bool isIntake, bool isStored);
 	void moveStopper(bool shortShot, bool longShot);
@@ -23,6 +24,7 @@ public:
 	
 	bool isCocked;
 	int launchState;
+	int autoLaunchState;
 	
 	AnalogChannel *pot;
 	Victor *cameraMotor;
