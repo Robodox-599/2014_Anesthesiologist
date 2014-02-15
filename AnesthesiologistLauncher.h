@@ -11,19 +11,22 @@ public:
 	~AnesthesiologistLauncher();
 	
 	void launchBall(bool launchTrigger, bool safetySwitch);
+	void autoLaunch(bool launch);	
 	
 	bool isCocked;
 	int launchState;
+	int autoLaunchState;
 	Timer *timer;
 	
 private:
 	Victor *launcherMotor;
 	DigitalInput *pulseSwitch;
 	DigitalInput *armLauncherSwitch;
+	AnesthesiologistManipulator *manipulator;
 	
 	bool lastPulse;
 	double initTime; 
-	double currentTime; 
+	double currentTime; 	
 	
 };
 #endif

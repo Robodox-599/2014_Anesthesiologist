@@ -6,7 +6,7 @@
 
 #include "AnesthesiologistDrive.h"
 #include "AnesthesiologistManipulator.h"
-//#include "AnesthesiologistLauncher.h"
+#include "AnesthesiologistLauncher.h"
 #include "AnesthesiologistPIDOutput.h"
 #include "AnesthesiologistOperatorInterface.h"
 #include "AnesthesiologistMacros.h"
@@ -47,7 +47,7 @@ class Anesthesiologist: public IterativeRobot
 {
 	AnesthesiologistDrive *drive;
 	AnesthesiologistManipulator *manipulator;
-	//AnesthesiologistLauncher *launcher;
+	AnesthesiologistLauncher *launcher;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
 	//Relay *relay599;
@@ -76,7 +76,7 @@ public:
 	Anesthesiologist()
 	{
 		manipulator = new AnesthesiologistManipulator();
-		//launcher = new AnesthesiologistLauncher();
+		launcher = new AnesthesiologistLauncher();
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 2); 
@@ -145,7 +145,7 @@ public:
 		{
 			drive->setLinVelocity(0);
 			step = 1;
-			//manipulator->autoLaunch(true);
+			//launcher->autoLaunch(true);
 		}
 		else if(timer->Get() > 3 && timer->Get() < 6)
 		{
@@ -164,7 +164,7 @@ public:
 		else if(timer->Get() > 10 && timer->Get() < 11)
 		{
 			drive->setLinVelocity(0);
-			//manipulator->autoLaunch(true);
+			//launcher->autoLaunch(true);
 		}
 		drive->drive();
 		
@@ -210,7 +210,7 @@ public:
 		manipulator->moveArm(oi->getManipJoystickButton(11), oi->getManipJoystickButton(10));
 		manipulator->moveStopper(oi->getManipJoystickButton(7), oi->getManipJoystickButton(6));	
 		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
-		manipulator->launchBall(oi->getManipJoystickButton(1), oi->getManipJoystickButton(4));
+		launcher->launchBall(oi->getManipJoystickButton(1), oi->getManipJoystickButton(4));
 		toggleCompressor(oi->getDriveJoystickButton(6), oi->getDriveJoystickButton(7));
 		
 			//camera motor mount
@@ -285,9 +285,9 @@ public:
 		oi->dashboard->PutString("Shot Range: ", manipulator->getStopperPosition() ? "Short" : "Long");
 		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
 		oi->dashboard->PutString("Shift State: ", drive->getShiftState() ? "Low" : "High");
-		oi->dashboard->PutString("Launch State: ", manipulator->launchState > 0 ? (manipulator->launchState == 1 ? "HOLD" : (manipulator->launchState == 2 ? "RESET" : (manipulator->launchState == 3 ? "COCKED" : "FIRE"))) : "OFF");
+		oi->dashboard->PutString("Launch State: ", launcher->launchState > 0 ? (launcher->launchState == 1 ? "HOLD" : (launcher->launchState == 2 ? "RESET" : (launcher->launchState == 3 ? "COCKED" : "FIRE"))) : "OFF");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Back" : "Forward") : "Inbetween");
-		oi->dashboard->PutBoolean(" Ready to Fire", manipulator->isCocked);
+		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
 		oi->dashboard->PutNumber("Step: ", step);		
 	}	
 	
