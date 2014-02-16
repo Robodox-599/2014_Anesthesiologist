@@ -56,7 +56,12 @@ ParticleAnalysisReport* AnesthesiologistVision::getParticleAnalysisReport(int in
 	return &reports->at(index);
 }
 
-int AnesthesiologistVision::setVertical() {
+ParticleAnalysisReport* AnesthesiologistVision::getReport()
+{
+	return report;
+}
+
+int AnesthesiologistVision::getVerticalIndex() {
 	for (unsigned int i = 0; i < reports->size(); i++) {
 		report = getParticleAnalysisReport(i);
 		if (checkIfVertical(report))
@@ -69,27 +74,18 @@ void AnesthesiologistVision::setReport(int index) {
 	report = &reports->at(index);
 }
 
-void AnesthesiologistVision::update(HSLImage* image, AnesthesiologistOperatorInterface *oi)
+bool AnesthesiologistVision::update(HSLImage* image)
 {
 	setImage(image);
 	setParticleAnalysisReport();
-	for (int unsigned i = 0; i < reports->size(); i++)
+	setReport(getVerticalIndex());	
+	if (getDistanceFromGoal() > RANGE_MINIMUM && getDistanceFromGoal() < RANGE_MAXIMUM)
 	{
-		print(i, oi);
+		return true;
 	}
-	/*if (getDistanceFromGoal() > RANGE_MINIMUM && getDistanceFromGoal() < RANGE_MAXIMUM)
-	{
-		oi->dashboard->PutString("Range", "Good To Shoot");
-	}
-	else if(getDistanceFromGoal() < RANGE_MINIMUM)
-	{
-		oi->dashboard->PutString("Range", "Don't shoot!");
-	}
-	else if (getDistanceFromGoal() > RANGE_MAXIMUM)
-	{
-		oi->dashboard->PutString("Range", "Dont' Shoot!");
-	}*/
+	return false;
 }
+
 
 std::string AnesthesiologistVision::join(std::string str, int i) {
 	std::ostringstream oss;
@@ -97,7 +93,7 @@ std::string AnesthesiologistVision::join(std::string str, int i) {
 	return oss.str();
 }
 
-void AnesthesiologistVision::print(int i, AnesthesiologistOperatorInterface *oi)
+/*void AnesthesiologistVision::print(int i, AnesthesiologistOperatorInterface *oi)
 {
 	setReport(i);
 	oi->dashboard->PutNumber(join("Distance ", i), getDistanceFromGoal());
@@ -107,4 +103,4 @@ void AnesthesiologistVision::print(int i, AnesthesiologistOperatorInterface *oi)
 	oi->dashboard->PutNumber(join("ANGLE ", i), ANGLE);
 	oi->dashboard->PutNumber(join("TAN (ANGL) ", i), tan(ANGLE));
 }
-
+*/

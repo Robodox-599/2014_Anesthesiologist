@@ -87,5 +87,14 @@ Manip Joystick:
 #define DEADZONE								(.1)
 #define TICKS_DEADZONE							(10)
 #define INCHES_PER_TICK                			(0.075398)   // circumference of wheel / total 
+#define PI										(3.14159265358979323846264338327950288)
+
+	//Camera, in Inches and Degrees
+#define ANGLE									(23.5 *PI/180)	//half of full view angle
+#define FIELD_OF_VIEW_PIXELS_WIDTH				(640) 	//TODO
+#define REFLECTOR_INCHES_WIDTH					(4) 	//TODO
+#define AREA_MINIMUM							(150)
+#define RANGE_MINIMUM							(204)	//TODO
+#define RANGE_MAXIMUM							(240)	//TODO
 
 #endif
