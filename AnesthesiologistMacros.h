@@ -3,29 +3,30 @@
 
 /*Joystick button mapping (for reference)
 Drive Joystick:
-	1 - turbo turning
-	2 - outtake ball
-	3 - intake ball
+	1 - shoot ball
+	2 - safety switch
+	3 - turbo turning
 	4 - 
 	5 - 
 	6 - start compressor
 	7 - stop compressor
 	8 - shift up
 	9 - shift down
-	10 - timer wait
+	10 - 
 	11 - 
 Manip Joystick:
-	1 - shoot ball
-	2 - safety switch
-	3 - 
+	1 - 
+	2 - intake 
+	3 - outtake
 	4 - 
 	5 - 
-	6 - toggle shot range to long
-	7 - toggle shot range to short
+	6 - set arm to intake position
+	7 - set arm to stored position 
 	8 - set camera position to back
 	9 - set camera position to forward
-	10 - set arm to stored position
-	11 - set arm to intake position 
+	10 - toggle shot range to short 
+	11 - toggle shot range to long
+	throttle -  roller speed
 */
 
 	//Slots
