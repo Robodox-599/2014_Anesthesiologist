@@ -36,9 +36,8 @@ Manip Joystick:
 #define DRIVE_REAR_LEFT_MOTOR_CHANNEL           (2)
 #define DRIVE_FRONT_RIGHT_MOTOR_CHANNEL         (3)
 #define DRIVE_REAR_RIGHT_MOTOR_CHANNEL          (4)
-	//Victors
-#define LAUNCHER_MOTOR_VICTOR_CHANNEL           (5)
-#define INTAKE_ROLLER_VICTOR_CHANNEL			(6)
+#define LAUNCHER_MOTOR_CHANNEL          		(5)
+#define INTAKE_ROLLER_CHANNEL					(6)
 #define CAMERA_VICTOR_CHANNEL					(7)
 
 	//Sensor Channels
@@ -84,7 +83,7 @@ Manip Joystick:
 
 	//Misc
 #define SYNC_STATE_OFF          		        (0)
-#define REDUCTION							    (.75)
+#define REDUCTION							    (.5)
 #define DEADZONE								(.1)
 #define TICKS_DEADZONE							(10)
 #define INCHES_PER_TICK                			(0.075398)   // circumference of wheel / total 

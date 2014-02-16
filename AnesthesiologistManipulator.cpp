@@ -2,13 +2,15 @@
 
 AnesthesiologistManipulator::AnesthesiologistManipulator()
 {
-	intakeRoller = new Victor(INTAKE_ROLLER_VICTOR_CHANNEL);
+	intakeRoller = new Talon(1, INTAKE_ROLLER_CHANNEL);
 	intakeSwitch = new DigitalInput(1, INTAKE_SWITCH_CHANNEL);
 	intakeArm = new DoubleSolenoid(INTAKE_ARM_SOLENOID_CHANNEL_A, INTAKE_ARM_SOLENOID_CHANNEL_B);
 	
 	stopper = new DoubleSolenoid(STOPPER_SOLENOID_CHANNEL_A, STOPPER_SOLENOID_CHANNEL_B);
 	cameraMotor = new Victor(CAMERA_VICTOR_CHANNEL);
 	pot = new AnalogChannel(1, POT_CHANNEL);
+	
+	step = 0;
 }
 
 AnesthesiologistManipulator::~AnesthesiologistManipulator()
@@ -31,10 +33,11 @@ AnesthesiologistManipulator::~AnesthesiologistManipulator()
 void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, double speed)
 {
 	bool lastSwitchHit = false;
-	bool lastPressed = true;
-	
-	if(!lastSwitchHit && intakeSwitch->Get() == 0)
+	//bool lastPressed = true;
+
+	if(!lastSwitchHit)// && intakeSwitch->Get() == 0)
 	{
+		step = 1;
 		if(intake)
 		{
 			//intakeRoller->Set(speed<0?speed*-1.0:speed, SYNC_STATE_OFF);
@@ -43,7 +46,7 @@ void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, double s
 		else if(outtake)
 		{
 			//intakeRoller->Set(-1, SYNC_STATE_OFF);
-			intakeRoller->Set(speed*-1, SYNC_STATE_OFF);
+			intakeRoller->Set(-speed, SYNC_STATE_OFF);
 		}
 		else
 		{
@@ -51,14 +54,16 @@ void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, double s
 		}
 	}
 	
-	if(!lastSwitchHit && intakeSwitch->Get() == 1)//TODO: test for 0 or 1
+/*	if(!lastSwitchHit && intakeSwitch->Get() == 1)//TODO: test for 0 or 1
 	{
+		step = 2;
 		intakeRoller->Set(0, SYNC_STATE_OFF);
 		lastSwitchHit = true;
 	}
 	
 	if(lastSwitchHit && intakeSwitch->Get() == 1)
 	{
+		step = 3;
 		if(lastPressed && (!intake && !outtake))
 		{
 			lastPressed = false;
@@ -78,7 +83,7 @@ void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, double s
 				intakeRoller->Set(0, SYNC_STATE_OFF);
 			}
 		}
-	}		
+	}*/		
 }
 
 void AnesthesiologistManipulator::moveArm(bool isIntake, bool isStored)

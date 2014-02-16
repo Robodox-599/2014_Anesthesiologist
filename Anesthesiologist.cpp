@@ -288,8 +288,12 @@ public:
 		oi->dashboard->PutString("Shift State: ", drive->getShiftState() ? "Low" : "High");
 		oi->dashboard->PutString("Launch State: ", launcher->launchState > 0 ? (launcher->launchState == 1 ? "HOLD" : (launcher->launchState == 2 ? "RESET" : (launcher->launchState == 3 ? "COCKED" : "FIRE"))) : "OFF");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Back" : "Forward") : "Inbetween");
-		oi->dashboard->PutBoolean(" Ready to Fire", launcher->isCocked);
-		oi->dashboard->PutNumber("Step: ", step);		
+		oi->dashboard->PutBoolean(" Ready to Fire", launcher->launchState == STATE_COCKED ? true : false);
+		oi->dashboard->PutNumber("Compressor Valve: ", comp599->GetPressureSwitchValue());
+		oi->dashboard->PutNumber("Roller Value: ", manipulator->intakeRoller->Get());
+		oi->dashboard->PutNumber("Throttle: ", (oi->getManipJoystick()->GetThrottle()+1)/2);
+		oi->dashboard->PutNumber("Intake Switch: ", manipulator->intakeSwitch->Get());
+		oi->dashboard->PutNumber("Step: ", manipulator->step);		
 	}	
 	
 	void track()

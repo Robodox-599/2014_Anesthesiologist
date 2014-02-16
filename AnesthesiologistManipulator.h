@@ -20,13 +20,15 @@ public:
 	bool getArmPosition();
 	int getCameraPosition();
 	
+	DigitalInput *intakeSwitch;
+	Talon *intakeRoller;
 	AnalogChannel *pot;
 	Victor *cameraMotor;
 	Timer *timer;
+	int step;
 	
 private:
-	Victor *intakeRoller;
-	DigitalInput *intakeSwitch;
+	
 	DoubleSolenoid *intakeArm;
 	DoubleSolenoid *stopper;
 		

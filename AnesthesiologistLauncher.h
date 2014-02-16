@@ -15,13 +15,13 @@ public:
 	
 	bool isIn();
 	
+	Talon *launcherMotor;
 	bool isCocked;
 	int launchState;
 	int autoLaunchState;
 	Timer *timer;
 	
 private:
-	Victor *launcherMotor;
 	DigitalInput *pulseSwitch;
 	DigitalInput *armLauncherSwitch;
 	AnesthesiologistManipulator *manipulator;
@@ -30,7 +30,10 @@ private:
 	
 	bool lastPulse;
 	double initTime; 
-	double currentTime; 	
+	double currentTime; 
+	bool init; 
+	bool lastPressed; 
+		
 	
 };
 #endif
