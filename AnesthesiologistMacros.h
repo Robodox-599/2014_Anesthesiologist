@@ -63,10 +63,10 @@ Manip Joystick:
 #define RIGHT_DRIVE_ENCODER_CHANNEL_B			(7)//TODO: dummy number
 
 	//Potentiometer
-#define POT_DEADZONE_HIGH						(1)
-#define POT_DEADZONE_LOW						(.5)
-#define POT_UPPER_LIMIT							(5)
-#define POT_LOWER_LIMIT							(.5)
+#define POT_DEADZONE_HIGH						(.3)
+#define POT_DEADZONE_LOW						(.3)
+#define POT_UPPER_LIMIT							(4.3)
+#define POT_LOWER_LIMIT							(.47)
 
 	//Choo-Choo Launcher 
 #define STATE_OFF								(0)
@@ -74,8 +74,10 @@ Manip Joystick:
 #define STATE_RESET								(2)
 #define STATE_COCKED							(3)
 #define STATE_FIRE								(4)
-#define LAUNCH_TIME 							(.1)//TODO: dummy number
-
+#define LAUNCH_TIME 							(.1)
+#define TIME_TO_SLOW_SPEED						(2)//TODO: dummy number
+#define LAUNCHER_MOTOR_SLOW_SPEED				(-.3)	//TODO: dummy number
+														//must be negative
 	//RPM
 #define TIME_COMPARISON							(.25)
 #define MINUTE_CONVERSION						(240)

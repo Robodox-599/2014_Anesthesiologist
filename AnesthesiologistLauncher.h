@@ -30,6 +30,7 @@ private:
 	
 	bool lastPulse;
 	double initTime; 
+	double resetTime;
 	double currentTime; 
 	bool init; 
 	bool lastPressed; 

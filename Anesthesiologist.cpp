@@ -76,6 +76,8 @@ public:
 		drive->setLinVelocity(0);
 		drive->setTurnSpeed(0, false);
 		drive->drive();
+		comp599->Start();
+		timer->Start();		
 		drive->leftDriveEncoder->Start();
 		drive->rightDriveEncoder->Start();
 	}
@@ -140,17 +142,8 @@ public:
 	
 	void TeleopPeriodic()
 	{
-		step = 1;
-		comp599->Start();
-		timer->Start();
-		drive->leftDriveEncoder->Start();
-		drive->rightDriveEncoder->Start();
-		
-		while(IsOperatorControl()) //TODO: get rid of while loop, move init to TeleopInit
-		{
-			teleDrive();
-			smartDashboardPrint();
-		}
+		teleDrive();
+		smartDashboardPrint();
 	}
 	
 	void TestPeriodic()
@@ -255,13 +248,16 @@ public:
 		oi->dashboard->PutNumber("Throttle: ", (oi->getManipJoystick()->GetThrottle()+1)/2);
 		oi->dashboard->PutNumber("Intake Switch: ", manipulator->intakeSwitch->Get());
 		oi->dashboard->PutNumber("Step: ", manipulator->step);		
+
+		//AxisCamera &camera = AxisCamera::GetInstance("10.5.99.11");
 		
+		oi->dashboard->PutBoolean("Can Shoot", vision->update(new HSLImage("2014 Vision Target/Center_18ft_On.jpg")));
+		SendableChooser *sc = new SendableChooser();
+		sc->AddObject("Filtered Image", vision->filterImageHSV(new HSLImage("2014 Vision Target/Center_18ft_on.jpg")));
+		oi->dashboard->PutData("Filtered", sc);
+		sc->AddObject("Filtered Imaeg of Particles", vision->getFilteredImage());
 		oi->dashboard->PutNumber("ImageHeight", vision->getReport()->imageWidth);
 		oi->dashboard->PutNumber("ImageWidth", vision->getReport()->imageHeight);
-		
-		AxisCamera &camera = AxisCamera::GetInstance("10.5.99.2");
-		
-		oi->dashboard->PutBoolean("Can Shoot", vision->update(camera.GetImage()));
 	}	
 };
 

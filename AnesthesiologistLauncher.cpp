@@ -63,12 +63,14 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		{
 			lastPressed = true;
 			launchState = STATE_RESET;
+			resetTime = timer->Get();
 		}
 		break;
 	case STATE_RESET:
-		
-		launcherMotor->Set(-1, SYNC_STATE_OFF);
-		
+		if (resetTime < TIME_TO_SLOW_SPEED)
+			launcherMotor->Set(-1, SYNC_STATE_OFF);
+		else
+			launcherMotor->Set(LAUNCHER_MOTOR_SLOW_SPEED, SYNC_STATE_OFF);
 //		if(armLauncherSwitch->Get() == 0) 
 //		{
 //			launchState = STATE_OFF;
@@ -80,26 +82,10 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		}
 		if(pulseSwitch->Get() == 0 && lastPulse)
 		{
-			lastPulse = false;
-			if(init)
-			{
-				initTime = timer->Get();
-				init = false;
-			}
-			currentTime = timer->Get();
-			
-			if(currentTime < LAUNCH_OFFSET + initTime)
-			{
-				launcherMotor->Set(1, SYNC_STATE_OFF);
-			}
-			else
-			{
-				launchState = STATE_COCKED;
-			}
+			launchState = STATE_COCKED;
 		}
 		break;
 	case STATE_COCKED:
-		init = true;
 		launcherMotor->Set(0, SYNC_STATE_OFF);
 		
 //		if(armLauncherSwitch->Get() == 0) 
