@@ -209,7 +209,8 @@ public:
 		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
 		manipulator->moveArm(oi->getManipJoystickButton(11), oi->getManipJoystickButton(10));
 		manipulator->moveStopper(oi->getManipJoystickButton(7), oi->getManipJoystickButton(6));	
-		manipulator->intakeBall(oi->getDriveJoystickButton(3), oi->getDriveJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
+		//manipulator->intakeBall(oi->getDriveJoystickButton(3), oi->getDriveJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
+		manipulator->intakeBall(oi->getDriveJoystickButton(3), oi->getDriveJoystickButton(2), (oi->getManipJoystick()->GetThrottle()+1)/2);
 		launcher->launchBall(oi->getManipJoystickButton(1), oi->getManipJoystickButton(2));
 		toggleCompressor(oi->getDriveJoystickButton(6), oi->getDriveJoystickButton(7));
 		
@@ -225,14 +226,14 @@ public:
 		manipulator->toggleCameraPosition(bCameraLatch);
 		
 			//timer wait
-		if(oi->getDriveJoystickButton(10))
-		{
-			bTimerLatch = true;
-		}
-		if(bTimerLatch)
-		{
-			wait(5.0);
-		}
+//		if(oi->getDriveJoystickButton(10))
+//		{
+//			bTimerLatch = true;
+//		}
+//		if(bTimerLatch)
+//		{
+//			wait(5.0);
+//		}
 
 	}
 	
