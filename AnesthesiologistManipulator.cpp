@@ -8,7 +8,7 @@ AnesthesiologistManipulator::AnesthesiologistManipulator()
 	
 	stopper = new DoubleSolenoid(STOPPER_SOLENOID_CHANNEL_A, STOPPER_SOLENOID_CHANNEL_B);
 	cameraMotor = new Victor(CAMERA_VICTOR_CHANNEL);
-	pot = new AnalogChannel(1, 1);
+	pot = new AnalogChannel(1, POT_CHANNEL);
 }
 
 AnesthesiologistManipulator::~AnesthesiologistManipulator()

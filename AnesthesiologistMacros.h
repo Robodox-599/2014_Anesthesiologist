@@ -4,8 +4,8 @@
 /*Joystick button mapping (for reference)
 Drive Joystick:
 	1 - turbo turning
-	2 - 
-	3 - 
+	2 - outtake ball
+	3 - intake ball
 	4 - 
 	5 - 
 	6 - start compressor
@@ -16,9 +16,9 @@ Drive Joystick:
 	11 - 
 Manip Joystick:
 	1 - shoot ball
-	2 - outtake ball
-	3 - intake ball
-	4 - safety switch
+	2 - safety switch
+	3 - 
+	4 - 
 	5 - 
 	6 - toggle shot range to long
 	7 - toggle shot range to short
@@ -42,9 +42,12 @@ Manip Joystick:
 #define CAMERA_VICTOR_CHANNEL					(7)
 
 	//Sensor Channels
+#define POT_CHANNEL 							(1)
 #define INTAKE_SWITCH_CHANNEL					(2)//TODO: dummy number
-#define PULSE_SWITCH_CHANNEL					(3)//TODO: dummy number
+#define PULSE_SWITCH_CHANNEL					(3)
 #define ARM_LAUNCHER_SWITCH_CHANNEL				(4)//TODO: dummy number
+#define SONAR_INPUT 							(5)//TODO: dummy number
+#define SONAR_OUTPUT 							(6)//TODO: dummy number
 
 	//Pneumatics
 #define SHIFTER_SOLENOID_CHANNEL_A				(1)
