@@ -6,6 +6,8 @@ AnesthesiologistLauncher::AnesthesiologistLauncher()
 	launcherMotor = new Victor(LAUNCHER_MOTOR_VICTOR_CHANNEL);	
 	pulseSwitch = new DigitalInput(1, PULSE_SWITCH_CHANNEL);
 	armLauncherSwitch = new DigitalInput(1, ARM_LAUNCHER_SWITCH_CHANNEL);
+	ultrasonicSensor = new Ultrasonic(SONAR_INPUT, SONAR_OUTPUT);
+	
 	isCocked = false;
 	lastPulse = false;
 	launchState = STATE_OFF;
@@ -180,5 +182,22 @@ void AnesthesiologistLauncher::autoLaunch(bool launch)
 		break;
 	default:
 		autoLaunchState = STATE_HOLD;
+	}
+}
+
+bool AnesthesiologistLauncher::isIn()
+{
+	if (ultrasonicSensor->GetRangeInches() < 0)
+	{
+		return false;
+	}else 
+	{
+		if (ultrasonicSensor->GetRangeInches() < 6)
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
 	}
 }

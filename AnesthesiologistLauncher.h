@@ -13,6 +13,8 @@ public:
 	void launchBall(bool launchTrigger, bool safetySwitch);
 	void autoLaunch(bool launch);	
 	
+	bool isIn();
+	
 	bool isCocked;
 	int launchState;
 	int autoLaunchState;
@@ -23,6 +25,8 @@ private:
 	DigitalInput *pulseSwitch;
 	DigitalInput *armLauncherSwitch;
 	AnesthesiologistManipulator *manipulator;
+	
+	Ultrasonic *ultrasonicSensor;
 	
 	bool lastPulse;
 	double initTime; 
