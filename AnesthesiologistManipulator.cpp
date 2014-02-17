@@ -135,11 +135,11 @@ void AnesthesiologistManipulator::toggleCameraPosition(bool isForward)
 	}
 	if(isForward && !isForwardLimit)
 	{
-		cameraMotor->Set(-1, SYNC_STATE_OFF);
+		cameraMotor->Set(1, SYNC_STATE_OFF);
 	}
 	if(!isForward && !isBackLimit)
 	{
-		cameraMotor->Set(1, SYNC_STATE_OFF);
+		cameraMotor->Set(-1, SYNC_STATE_OFF);
 	}
 	
 }

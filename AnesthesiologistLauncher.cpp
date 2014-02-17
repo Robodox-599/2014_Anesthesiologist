@@ -6,10 +6,10 @@ AnesthesiologistLauncher::AnesthesiologistLauncher()
 	launcherMotor = new Talon(1, LAUNCHER_MOTOR_CHANNEL);	
 	pulseSwitch = new DigitalInput(1, PULSE_SWITCH_CHANNEL);
 	armLauncherSwitch = new DigitalInput(1, ARM_LAUNCHER_SWITCH_CHANNEL);
-	ultrasonicSensor = new Ultrasonic(SONAR_INPUT, SONAR_OUTPUT);
-	ultrasonicSensor->SetEnabled(true);
+	ultrasonicSensor = new Ultrasonic(SONAR_OUTPUT, SONAR_INPUT, Ultrasonic::kInches);
+	ultrasonicSensor->SetEnabled(1);
+	ultrasonicSensor->SetAutomaticMode(1);
 	
-	isCocked = false;
 	lastPulse = false;
 	launchState = STATE_HOLD;
 	autoLaunchState = STATE_HOLD;	
@@ -20,7 +20,6 @@ AnesthesiologistLauncher::AnesthesiologistLauncher()
 	timer = new Timer();
 	timer->Start();
 	initTime = 0;
-	resetTime = 0;
 	currentTime = 0;
 }
 
@@ -29,16 +28,23 @@ AnesthesiologistLauncher::~AnesthesiologistLauncher()
 	delete launcherMotor;
 	delete pulseSwitch;
 	delete armLauncherSwitch;
+	delete ultrasonicSensor;
 	delete timer;
 	
 	launcherMotor = NULL;
 	pulseSwitch = NULL;
 	armLauncherSwitch = NULL;
+	ultrasonicSensor = NULL;
 	timer = NULL;
 }
 
 void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 {	
+//	if(armLauncherSwitch->Get() == 0) 
+//	{
+//		launchState = STATE_OFF;
+//	}
+
 	switch(launchState)	
 	{
 	case STATE_OFF:	
@@ -51,10 +57,6 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		init = true;
 		launcherMotor->Set(0, SYNC_STATE_OFF);
 		
-//		if(armLauncherSwitch->Get() == 0) 
-//		{
-//			launchState = STATE_OFF;
-//		}
 		if(lastPressed && !launchTrigger && !safetySwitch)
 		{
 			lastPressed = false;
@@ -63,24 +65,25 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		{
 			lastPressed = true;
 			launchState = STATE_RESET;
-			resetTime = timer->Get();
 		}
 		break;
 	case STATE_RESET:
-		launcherMotor->Set(-1, SYNC_STATE_OFF);
 		
-//		if (resetTime < TIME_TO_SLOW_SPEED)
-//		{
-//			launcherMotor->Set(-1, SYNC_STATE_OFF);
-//		}
-//		else
-//		{
-//			launcherMotor->Set(LAUNCHER_MOTOR_SLOW_SPEED, SYNC_STATE_OFF);
-//		}
-//		if(armLauncherSwitch->Get() == 0) 
-//		{
-//			launchState = STATE_OFF;
-//		}
+		if(init)
+		{
+			initTime = timer->Get();
+			init = false;
+		}
+		currentTime = timer->Get();
+		
+		if(currentTime < RESET_TIME + initTime)
+		{
+			launcherMotor->Set(-1, SYNC_STATE_OFF);
+		}
+		else
+		{
+			launcherMotor->Set(SLOW_SPEED, SYNC_STATE_OFF);
+		}
 		
 		if(pulseSwitch->Get() == 1)
 		{
@@ -92,12 +95,9 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		}
 		break;
 	case STATE_COCKED:
+		init = true;
 		launcherMotor->Set(0, SYNC_STATE_OFF);
 		
-//		if(armLauncherSwitch->Get() == 0) 
-//		{
-//			launchState = STATE_OFF;
-//		}
 		if(lastPressed && !launchTrigger && !safetySwitch)
 		{
 			lastPressed = false;
@@ -109,10 +109,6 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		}
 		break;
 	case STATE_FIRE:
-//		if(armLauncherSwitch->Get() == 0) 
-//		{
-//			launchState = STATE_OFF;
-//		}
 		if(init)
 		{
 			initTime = timer->Get();
@@ -196,7 +192,7 @@ void AnesthesiologistLauncher::autoLaunch(bool launch)
 
 bool AnesthesiologistLauncher::isIn()
 {
-	if (ultrasonicSensor->GetRangeInches() < 0 || ultrasonicSensor->GetRangeInches() > 6)
+	if (ultrasonicSensor->GetRangeInches() <= 0 || ultrasonicSensor->GetRangeInches() > 6)
 	{
 		return false;
 	}

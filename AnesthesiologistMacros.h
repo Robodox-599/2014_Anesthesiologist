@@ -45,9 +45,9 @@ Manip Joystick:
 #define POT_CHANNEL 							(1)
 #define INTAKE_SWITCH_CHANNEL					(2)
 #define PULSE_SWITCH_CHANNEL					(3)
-#define ARM_LAUNCHER_SWITCH_CHANNEL				(4)//TODO: dummy number
-#define SONAR_OUTPUT 							(5)
-#define SONAR_INPUT 							(6)
+#define SONAR_INPUT 							(5)
+#define SONAR_OUTPUT 							(6)
+#define ARM_LAUNCHER_SWITCH_CHANNEL				(10)//TODO: dummy number (on OI, not robot)
 
 	//Pneumatics
 #define SHIFTER_SOLENOID_CHANNEL_A				(1)
@@ -65,9 +65,9 @@ Manip Joystick:
 
 	//Potentiometer
 #define POT_DEADZONE_HIGH						(.3)
-#define POT_DEADZONE_LOW						(.3)
-#define POT_UPPER_LIMIT							(4.3)
-#define POT_LOWER_LIMIT							(.47)
+#define POT_DEADZONE_LOW						(.4)
+#define POT_UPPER_LIMIT							(4.4)
+#define POT_LOWER_LIMIT							(.5)
 
 	//Choo-Choo Launcher 
 #define STATE_OFF								(0)
@@ -76,8 +76,8 @@ Manip Joystick:
 #define STATE_COCKED							(3)
 #define STATE_FIRE								(4)
 #define LAUNCH_TIME 							(.1)
-#define TIME_TO_SLOW_SPEED						(2)//TODO: dummy number
-#define LAUNCHER_MOTOR_SLOW_SPEED				(-.5)//TODO: dummy number (must be negative)
+#define RESET_TIME								(1)
+#define SLOW_SPEED								(-.68)
 														
 	//RPM
 #define TIME_COMPARISON							(.25)

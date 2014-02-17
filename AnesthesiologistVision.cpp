@@ -1,5 +1,5 @@
 #include "AnesthesiologistVision.h"
-
+/*
 AnesthesiologistVision::AnesthesiologistVision()
 {
 	threshold = new Threshold(61, 255, 50, 255, 69, 255);//TODO: dummy numbers
@@ -80,6 +80,13 @@ bool AnesthesiologistVision::update(HSLImage* image)
 {
 	setImage(image);
 	setParticleAnalysisReport();
+	print(0, oi);
+	/*if (getDistanceFromGoal() > RANGE_MINIMUM && getDistanceFromGoal() < RANGE_MAXIMUM)
+	{
+		oi->dashboard->PutString("Range", "Good To Shoot");
+	}
+	else if(getDistanceFromGoal() < RANGE_MINIMUM)
+=======
 	setReport(getVerticalIndex());	
 	if (getDistanceFromGoal() > RANGE_MINIMUM && getDistanceFromGoal() < RANGE_MAXIMUM)
 	{
@@ -95,14 +102,17 @@ std::string AnesthesiologistVision::join(std::string str, int i) {
 	return oss.str();
 }
 
-/*void AnesthesiologistVision::print(int i, AnesthesiologistOperatorInterface *oi)
+void AnesthesiologistVision::print(int i, AnesthesiologistOperatorInterface *oi)
 {
+	oi->dashboard->PutString("Test", "Yellow");
+	
 	setReport(i);
-	oi->dashboard->PutNumber(join("Distance ", i), getDistanceFromGoal());
+	oi->dashboard->PutNumber("Distance ", getDistanceFromGoal());
 	oi->dashboard->PutNumber(join("Pixel Of Target Width ", i), report->imageWidth);
 	oi->dashboard->PutNumber(join("Pixel Of Target Height ", i), report->imageHeight);
 	oi->dashboard->PutNumber(join("Field Of View Pixel ", i), FIELD_OF_VIEW_PIXELS_WIDTH);
 	oi->dashboard->PutNumber(join("ANGLE ", i), ANGLE);
 	oi->dashboard->PutNumber(join("TAN (ANGL) ", i), tan(ANGLE));
+	
 }
 */

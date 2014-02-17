@@ -30,8 +30,28 @@ class Anesthesiologist: public IterativeRobot
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
 	//Relay *relay599;
-	Timer *timer;
+	Timer *timer;	
 	//AnesthesiologistVision *vision;
+	
+	struct itemScores
+	{
+		double rectangularity;
+		double aspectRatioVertical;
+		double aspectRatioHorizontal;
+	};
+	
+	struct reportOnTarget
+	{
+		int verticalIndex;
+		int horizontalIndex;
+		bool isHot;
+		double totalScore;
+		double leftScore;
+		double rightScore;
+		double tapeWidthScore;
+		double verticalScore;
+	};
+
 public:	
 	Anesthesiologist()
 	{
@@ -46,7 +66,7 @@ public:
 		
 		drive->leftDriveEncoder->Start();
 		drive->rightDriveEncoder->Start();
-		
+				
 		oi->dashboard->init();
 		comp599->Start();
 	}
@@ -131,13 +151,6 @@ public:
 		}
 		drive->drive();
 		
-//		smartDashboardPrint();
-//		setEncodersLinear(1,1); //TODO: Dummy Numbers (target, speed)
-//		launcher->launchBall(true);
-//		setEncodersLinear(-1,-1); //TODO: Dummy Numbers (target, speed) for moving backwards
-//		manipulator->intakeBall(true,false,true);
-//		setEncodersLinear(2,2); //TODO: Dummy Numbers (target, speed) for moving forwards
-//		launcher->launchBall(true);
 	}
 	
 	void TeleopPeriodic()
@@ -191,7 +204,6 @@ public:
 //		{
 //			wait(5.0);
 //		}
-
 	}
 	
 	void wait(double secToWait)
@@ -246,15 +258,29 @@ public:
 		oi->dashboard->PutString("Launch State: ", launcher->launchState > 0 ? (launcher->launchState == 1 ? "HOLD" : (launcher->launchState == 2 ? "RESET" : (launcher->launchState == 3 ? "COCKED" : "FIRE"))) : "OFF");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Forward" : "Back") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->launchState == STATE_COCKED ? true : false);
-		//oi->dashboard->PutBoolean(" Ball is Stored", launcher->isIn());
-		//oi->dashboard->PutNumber("Sonar Raw Value: ", launcher->ultrasonicSensor->GetRangeInches());
+		oi->dashboard->PutBoolean(" Ball is Stored", launcher->isIn());
+		oi->dashboard->PutNumber("Sonar Raw Value(In): ", launcher->ultrasonicSensor->GetRangeInches());
+		oi->dashboard->PutNumber("Sonar Raw Value(MM): ", launcher->ultrasonicSensor->GetRangeMM());
+		oi->dashboard->PutNumber("Sonar Enabled: ", launcher->ultrasonicSensor->IsEnabled());
 		//oi->dashboard->PutNumber("Roller Value: ", manipulator->intakeRoller->Get());
 		//oi->dashboard->PutNumber("Throttle: ", (oi->getManipJoystick()->GetThrottle()+1)/2);
 		//oi->dashboard->PutNumber("Intake Switch: ", manipulator->intakeSwitch->Get());
-		//oi->dashboard->PutNumber("Step: ", manipulator->step);		
-
-		//AxisCamera &camera = AxisCamera::GetInstance("10.5.99.11");
-		
+		//oi->dashboard->PutNumber("Step: ", manipulator->step);	
+		//oi->dashboard->PutNumber("Step: ", step);		
+	}	
+	
+//	void track()
+//	{
+//		Threshold threshold(105, 137, 230, 255, 133, 183);	//HSV threshold criteria, ranges are in that order ie. Hue is 60-100
+//		ParticleFilterCriteria2 criteria[] = {{IMAQ_MT_AREA, AREA_MINIMUM, 65535, false, false}};
+//		
+//		AxisCamera &camera = AxisCamera::GetInstance();
+//		ColorImage *image = camera.GetImage();
+//		BinaryImage *thresholdedImage = image->ThresholdHSV(threshold);
+//		BinaryImage *filteredImage = thresholdedImage->ParticleFilter(criteria, 1);
+//		
+//		AxisCamera &camera = AxisCamera::GetInstance("10.5.99.11");
+//		
 //		oi->dashboard->PutBoolean("Can Shoot", vision->update(new HSLImage("2014 Vision Target/Center_18ft_On.jpg")));
 //		SendableChooser *sc = new SendableChooser();
 //		sc->AddObject("Filtered Image", vision->filterImageHSV(new HSLImage("2014 Vision Target/Center_18ft_on.jpg")));
@@ -262,7 +288,7 @@ public:
 //		sc->AddObject("Filtered Imaeg of Particles", vision->getFilteredImage());
 //		oi->dashboard->PutNumber("ImageHeight", vision->getReport()->imageWidth);
 //		oi->dashboard->PutNumber("ImageWidth", vision->getReport()->imageHeight);
-	}	
+//	}	
 };
 
 START_ROBOT_CLASS(Anesthesiologist);

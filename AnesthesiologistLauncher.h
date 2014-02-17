@@ -17,7 +17,6 @@ public:
 	
 	Ultrasonic *ultrasonicSensor;
 	Talon *launcherMotor;
-	bool isCocked;
 	int launchState;
 	int autoLaunchState;
 	Timer *timer;
@@ -27,13 +26,13 @@ private:
 	DigitalInput *armLauncherSwitch;
 	AnesthesiologistManipulator *manipulator;
 	
-	bool lastPulse;
-	double initTime; 
-	double resetTime;
+	double initTime; 	
 	double currentTime; 
 	bool init; 
+	bool lastPulse;
 	bool lastPressed; 
-		
+	double resetStart;
+	double resetEnd;
 	
 };
 #endif
