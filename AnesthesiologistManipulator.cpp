@@ -41,12 +41,12 @@ void AnesthesiologistManipulator::intakeBall(bool intake, bool outtake, double s
 		if(intake)
 		{
 			//intakeRoller->Set(speed<0?speed*-1.0:speed, SYNC_STATE_OFF);
-			intakeRoller->Set(speed, SYNC_STATE_OFF);
+			intakeRoller->Set(-speed, SYNC_STATE_OFF);
 		}
 		else if(outtake)
 		{
 			//intakeRoller->Set(-1, SYNC_STATE_OFF);
-			intakeRoller->Set(-speed, SYNC_STATE_OFF);
+			intakeRoller->Set(speed, SYNC_STATE_OFF);
 		}
 		else
 		{

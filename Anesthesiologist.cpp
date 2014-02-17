@@ -241,13 +241,13 @@ public:
 		oi->dashboard->PutBoolean(" Wait (Motors Disabled)", isWait);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
 		oi->dashboard->PutString("Shot Range: ", manipulator->getStopperPosition() ? "Short" : "Long");
-		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Stored" : "Intake");
+		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
 		oi->dashboard->PutString("Shift State: ", drive->getShiftState() ? "High" : "Low");
 		oi->dashboard->PutString("Launch State: ", launcher->launchState > 0 ? (launcher->launchState == 1 ? "HOLD" : (launcher->launchState == 2 ? "RESET" : (launcher->launchState == 3 ? "COCKED" : "FIRE"))) : "OFF");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Forward" : "Back") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->launchState == STATE_COCKED ? true : false);
-		oi->dashboard->PutBoolean(" Ball is Stored", launcher->isIn());
-		oi->dashboard->PutNumber("Sonar Raw Value: ", launcher->ultrasonicSensor->GetRangeInches());
+		//oi->dashboard->PutBoolean(" Ball is Stored", launcher->isIn());
+		//oi->dashboard->PutNumber("Sonar Raw Value: ", launcher->ultrasonicSensor->GetRangeInches());
 		//oi->dashboard->PutNumber("Roller Value: ", manipulator->intakeRoller->Get());
 		//oi->dashboard->PutNumber("Throttle: ", (oi->getManipJoystick()->GetThrottle()+1)/2);
 		//oi->dashboard->PutNumber("Intake Switch: ", manipulator->intakeSwitch->Get());
