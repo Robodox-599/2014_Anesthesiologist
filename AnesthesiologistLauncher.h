@@ -15,6 +15,7 @@ public:
 	
 	bool isIn();
 	
+	Ultrasonic *ultrasonicSensor;
 	Talon *launcherMotor;
 	bool isCocked;
 	int launchState;
@@ -25,8 +26,6 @@ private:
 	DigitalInput *pulseSwitch;
 	DigitalInput *armLauncherSwitch;
 	AnesthesiologistManipulator *manipulator;
-	
-	Ultrasonic *ultrasonicSensor;
 	
 	bool lastPulse;
 	double initTime; 

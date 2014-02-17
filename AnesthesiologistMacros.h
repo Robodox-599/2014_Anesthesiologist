@@ -46,8 +46,8 @@ Manip Joystick:
 #define INTAKE_SWITCH_CHANNEL					(2)
 #define PULSE_SWITCH_CHANNEL					(3)
 #define ARM_LAUNCHER_SWITCH_CHANNEL				(4)//TODO: dummy number
-#define SONAR_INPUT 							(5)
-#define SONAR_OUTPUT 							(6)
+#define SONAR_OUTPUT 							(5)
+#define SONAR_INPUT 							(6)
 
 	//Pneumatics
 #define SHIFTER_SOLENOID_CHANNEL_A				(1)
@@ -77,8 +77,8 @@ Manip Joystick:
 #define STATE_FIRE								(4)
 #define LAUNCH_TIME 							(.1)
 #define TIME_TO_SLOW_SPEED						(2)//TODO: dummy number
-#define LAUNCHER_MOTOR_SLOW_SPEED				(-.3)	//TODO: dummy number
-														//must be negative
+#define LAUNCHER_MOTOR_SLOW_SPEED				(-.5)//TODO: dummy number (must be negative)
+														
 	//RPM
 #define TIME_COMPARISON							(.25)
 #define MINUTE_CONVERSION						(240)

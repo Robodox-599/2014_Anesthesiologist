@@ -1,6 +1,7 @@
 #include "AnesthesiologistVision.h"
 
-AnesthesiologistVision::AnesthesiologistVision() {
+AnesthesiologistVision::AnesthesiologistVision()
+{
 	threshold = new Threshold(61, 255, 50, 255, 69, 255);//TODO: dummy numbers
 	criteria->parameter = IMAQ_MT_AREA;
 	criteria->lower = AREA_MINIMUM;
@@ -9,7 +10,8 @@ AnesthesiologistVision::AnesthesiologistVision() {
 	criteria->exclude = false;
 }
 
-AnesthesiologistVision::~AnesthesiologistVision() {
+AnesthesiologistVision::~AnesthesiologistVision()
+{
 	delete reports;
 	delete report;
 	delete image;

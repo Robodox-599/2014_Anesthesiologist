@@ -7,6 +7,7 @@ AnesthesiologistLauncher::AnesthesiologistLauncher()
 	pulseSwitch = new DigitalInput(1, PULSE_SWITCH_CHANNEL);
 	armLauncherSwitch = new DigitalInput(1, ARM_LAUNCHER_SWITCH_CHANNEL);
 	ultrasonicSensor = new Ultrasonic(SONAR_INPUT, SONAR_OUTPUT);
+	ultrasonicSensor->SetEnabled(true);
 	
 	isCocked = false;
 	lastPulse = false;
@@ -19,6 +20,7 @@ AnesthesiologistLauncher::AnesthesiologistLauncher()
 	timer = new Timer();
 	timer->Start();
 	initTime = 0;
+	resetTime = 0;
 	currentTime = 0;
 }
 
@@ -39,8 +41,7 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 {	
 	switch(launchState)	
 	{
-	case STATE_OFF:
-		
+	case STATE_OFF:	
 		if(armLauncherSwitch->Get() == 1) 
 		{
 			launchState = STATE_HOLD;
@@ -48,7 +49,6 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		break;
 	case STATE_HOLD:
 		init = true;
-			
 		launcherMotor->Set(0, SYNC_STATE_OFF);
 		
 //		if(armLauncherSwitch->Get() == 0) 
@@ -67,10 +67,16 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		}
 		break;
 	case STATE_RESET:
-		if (resetTime < TIME_TO_SLOW_SPEED)
-			launcherMotor->Set(-1, SYNC_STATE_OFF);
-		else
-			launcherMotor->Set(LAUNCHER_MOTOR_SLOW_SPEED, SYNC_STATE_OFF);
+		launcherMotor->Set(-1, SYNC_STATE_OFF);
+		
+//		if (resetTime < TIME_TO_SLOW_SPEED)
+//		{
+//			launcherMotor->Set(-1, SYNC_STATE_OFF);
+//		}
+//		else
+//		{
+//			launcherMotor->Set(LAUNCHER_MOTOR_SLOW_SPEED, SYNC_STATE_OFF);
+//		}
 //		if(armLauncherSwitch->Get() == 0) 
 //		{
 //			launchState = STATE_OFF;
@@ -92,7 +98,6 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 //		{
 //			launchState = STATE_OFF;
 //		}
-		
 		if(lastPressed && !launchTrigger && !safetySwitch)
 		{
 			lastPressed = false;
@@ -104,12 +109,10 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		}
 		break;
 	case STATE_FIRE:
-		
 //		if(armLauncherSwitch->Get() == 0) 
 //		{
 //			launchState = STATE_OFF;
 //		}
-		
 		if(init)
 		{
 			initTime = timer->Get();

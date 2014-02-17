@@ -31,7 +31,7 @@ class Anesthesiologist: public IterativeRobot
 	Compressor *comp599;
 	//Relay *relay599;
 	Timer *timer;
-	AnesthesiologistVision *vision;
+	//AnesthesiologistVision *vision;
 public:	
 	Anesthesiologist()
 	{
@@ -42,7 +42,7 @@ public:
 		comp599 = new Compressor(1, 1, 1, 2); 
 		//relay599 = new Relay(1, 2);
 		timer = new Timer();
-		vision = new AnesthesiologistVision();
+		//vision = new AnesthesiologistVision();
 		
 		drive->leftDriveEncoder->Start();
 		drive->rightDriveEncoder->Start();
@@ -142,8 +142,11 @@ public:
 	
 	void TeleopPeriodic()
 	{
-		teleDrive();
-		smartDashboardPrint();
+		//while(IsOperatorControl())
+		//{
+			teleDrive();
+			smartDashboardPrint();
+		//}
 	}
 	
 	void TestPeriodic()
@@ -165,7 +168,7 @@ public:
 		manipulator->moveStopper(oi->getManipJoystickButton(10), oi->getManipJoystickButton(11));	
 		//manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
 		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), (oi->getManipJoystick()->GetThrottle()+1)/2);
-		launcher->launchBall(oi->getDriveJoystickButton(1), oi->getManipJoystickButton(2));
+		launcher->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2));
 		toggleCompressor(oi->getDriveJoystickButton(6), oi->getDriveJoystickButton(7));
 		
 			//camera motor mount
@@ -238,26 +241,27 @@ public:
 		oi->dashboard->PutBoolean(" Wait (Motors Disabled)", isWait);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
 		oi->dashboard->PutString("Shot Range: ", manipulator->getStopperPosition() ? "Short" : "Long");
-		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
-		oi->dashboard->PutString("Shift State: ", drive->getShiftState() ? "Low" : "High");
+		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Stored" : "Intake");
+		oi->dashboard->PutString("Shift State: ", drive->getShiftState() ? "High" : "Low");
 		oi->dashboard->PutString("Launch State: ", launcher->launchState > 0 ? (launcher->launchState == 1 ? "HOLD" : (launcher->launchState == 2 ? "RESET" : (launcher->launchState == 3 ? "COCKED" : "FIRE"))) : "OFF");
-		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Back" : "Forward") : "Inbetween");
+		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Forward" : "Back") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->launchState == STATE_COCKED ? true : false);
 		oi->dashboard->PutBoolean(" Ball is Stored", launcher->isIn());
+		oi->dashboard->PutNumber("Sonar Raw Value: ", launcher->ultrasonicSensor->GetRangeInches());
 		//oi->dashboard->PutNumber("Roller Value: ", manipulator->intakeRoller->Get());
-		oi->dashboard->PutNumber("Throttle: ", (oi->getManipJoystick()->GetThrottle()+1)/2);
+		//oi->dashboard->PutNumber("Throttle: ", (oi->getManipJoystick()->GetThrottle()+1)/2);
 		//oi->dashboard->PutNumber("Intake Switch: ", manipulator->intakeSwitch->Get());
 		//oi->dashboard->PutNumber("Step: ", manipulator->step);		
 
 		//AxisCamera &camera = AxisCamera::GetInstance("10.5.99.11");
 		
-		oi->dashboard->PutBoolean("Can Shoot", vision->update(new HSLImage("2014 Vision Target/Center_18ft_On.jpg")));
-		SendableChooser *sc = new SendableChooser();
-		sc->AddObject("Filtered Image", vision->filterImageHSV(new HSLImage("2014 Vision Target/Center_18ft_on.jpg")));
-		oi->dashboard->PutData("Filtered", sc);
-		sc->AddObject("Filtered Imaeg of Particles", vision->getFilteredImage());
-		oi->dashboard->PutNumber("ImageHeight", vision->getReport()->imageWidth);
-		oi->dashboard->PutNumber("ImageWidth", vision->getReport()->imageHeight);
+//		oi->dashboard->PutBoolean("Can Shoot", vision->update(new HSLImage("2014 Vision Target/Center_18ft_On.jpg")));
+//		SendableChooser *sc = new SendableChooser();
+//		sc->AddObject("Filtered Image", vision->filterImageHSV(new HSLImage("2014 Vision Target/Center_18ft_on.jpg")));
+//		oi->dashboard->PutData("Filtered", sc);
+//		sc->AddObject("Filtered Imaeg of Particles", vision->getFilteredImage());
+//		oi->dashboard->PutNumber("ImageHeight", vision->getReport()->imageWidth);
+//		oi->dashboard->PutNumber("ImageWidth", vision->getReport()->imageHeight);
 	}	
 };
 
