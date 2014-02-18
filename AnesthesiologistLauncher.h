@@ -10,9 +10,9 @@ public:
 	AnesthesiologistLauncher();
 	~AnesthesiologistLauncher();
 	
-	void launchBall(bool launchTrigger, bool safetySwitch);
-	void autoLaunch(bool launch);	
-	
+	void launchBall(bool launchTrigger, bool safetySwitch, bool killSwitchA, bool killSwitchB);
+	void autoLaunch();	
+	void autoReset();
 	bool isIn();
 	
 	Ultrasonic *ultrasonicSensor;
@@ -30,7 +30,8 @@ private:
 	double currentTime; 
 	bool init; 
 	bool lastPulse;
-	bool lastPressed; 
+	bool lastPressed;
+	
 	double resetStart;
 	double resetEnd;
 	

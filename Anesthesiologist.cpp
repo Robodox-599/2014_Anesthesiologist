@@ -120,46 +120,46 @@ public:
 		smartDashboardPrint();
 		
 		//TODO: dummy speeds & times
-		if(timer->Get() > 0 && timer->Get() < 2)
+		if(timer->Get() > 0 && timer->Get() < 1.5)
 		{
-			drive->setLinVelocity(1);
+			drive->setLinVelocity(-1);
 		}
-		else if(timer->Get() > 2 && timer->Get() < 3)
-		{
-			drive->setLinVelocity(0);
-			step = 1;
-			//launcher->autoLaunch(true);
-		}
-		else if(timer->Get() > 3 && timer->Get() < 6)
-		{
-			drive->setLinVelocity(-1);	
-		}
-		else if(timer->Get() > 6 && timer->Get() < 7)
+		else if(timer->Get() > 1.5 && timer->Get() < 2)
 		{
 			drive->setLinVelocity(0);
-			step = 2;
-			//manipulator->intakeBall(true, false, 1);
+			manipulator->moveArm(false, true);
 		}
-		else if(timer->Get() > 7 && timer->Get() < 10)
+		else if(timer->Get() > 2 && timer->Get() < 2.2)
 		{
-			drive->setLinVelocity(1);
+			launcher->autoLaunch();
 		}
-		else if(timer->Get() > 10 && timer->Get() < 11)
-		{
-			drive->setLinVelocity(0);
-			//launcher->autoLaunch(true);
-		}
-		drive->drive();
 		
+//		else if(timer->Get() > 5 && timer->Get() < 7)
+//		{
+//			drive->setLinVelocity(1);	
+//		}
+//		else if(timer->Get() > 7 && timer->Get() < 10)
+//		{
+//			drive->setLinVelocity(0);
+//			step = 2;
+//			manipulator->intakeBall(true, false, 1);
+//		}
+//		else if(timer->Get() > 10 && timer->Get() < 12)
+//		{
+//			drive->setLinVelocity(-1);
+//		}
+//		else if(timer->Get() > 12 && timer->Get() < 17)
+//		{
+//			drive->setLinVelocity(0);
+//			launcher->autoLaunch(true);
+//		}
+		drive->drive();
 	}
 	
 	void TeleopPeriodic()
 	{
-		//while(IsOperatorControl())
-		//{
-			teleDrive();
-			smartDashboardPrint();
-		//}
+		teleDrive();
+		smartDashboardPrint();
 	}
 	
 	void TestPeriodic()
@@ -171,7 +171,7 @@ public:
 	{
 		if(!isWait)
 		{
-			drive->setLinVelocity(-oi->getDriveJoystick()->GetY(Joystick::kRightHand));
+			drive->setLinVelocity(oi->getDriveJoystick()->GetY(Joystick::kRightHand));
 			drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(3));
 			drive->drive();
 		}
@@ -181,7 +181,7 @@ public:
 		manipulator->moveStopper(oi->getManipJoystickButton(10), oi->getManipJoystickButton(11));	
 		//manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
 		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), (oi->getManipJoystick()->GetThrottle()+1)/2);
-		launcher->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2));
+		launcher->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2), oi->getDriveJoystickButton(10), oi->getDriveJoystickButton(11));
 		toggleCompressor(oi->getDriveJoystickButton(6), oi->getDriveJoystickButton(7));
 		
 			//camera motor mount
@@ -194,7 +194,7 @@ public:
 			bCameraLatch = false;
 		}	
 		manipulator->toggleCameraPosition(bCameraLatch);
-		
+				
 			//timer wait
 //		if(oi->getDriveJoystickButton(10))
 //		{
@@ -253,7 +253,7 @@ public:
 		oi->dashboard->PutBoolean(" Wait (Motors Disabled)", isWait);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
 		oi->dashboard->PutString("Shot Range: ", manipulator->getStopperPosition() ? "Short" : "Long");
-		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
+		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Stored" : "Intake");
 		oi->dashboard->PutString("Shift State: ", drive->getShiftState() ? "High" : "Low");
 		oi->dashboard->PutString("Launch State: ", launcher->launchState > 0 ? (launcher->launchState == 1 ? "HOLD" : (launcher->launchState == 2 ? "RESET" : (launcher->launchState == 3 ? "COCKED" : "FIRE"))) : "OFF");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Forward" : "Back") : "Inbetween");

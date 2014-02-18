@@ -12,10 +12,12 @@ AnesthesiologistLauncher::AnesthesiologistLauncher()
 	
 	lastPulse = false;
 	launchState = STATE_HOLD;
-	autoLaunchState = STATE_HOLD;	
+	autoLaunchState = STATE_COCKED;	
 	
 	init = true;
 	lastPressed = true;
+	resetStart = 0;
+	resetEnd = 0;
 	
 	timer = new Timer();
 	timer->Start();
@@ -38,22 +40,30 @@ AnesthesiologistLauncher::~AnesthesiologistLauncher()
 	timer = NULL;
 }
 
-void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
+void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch, bool killSwitchA, bool killSwitchB)
 {	
-//	if(armLauncherSwitch->Get() == 0) 
-//	{
-//		launchState = STATE_OFF;
-//	}
 
 	switch(launchState)	
 	{
 	case STATE_OFF:	
-		if(armLauncherSwitch->Get() == 1) 
+		launcherMotor->Set(0, SYNC_STATE_OFF);
+		if(lastPressed && !killSwitchA && !killSwitchB)
 		{
+			lastPressed = false;
+		}
+		if(killSwitchA && killSwitchB && !lastPressed)
+		{
+			lastPressed = true;
 			launchState = STATE_HOLD;
 		}
 		break;
 	case STATE_HOLD:
+		
+		if(killSwitchA && killSwitchB)
+		{
+			launchState = STATE_OFF;
+		}
+		
 		init = true;
 		launcherMotor->Set(0, SYNC_STATE_OFF);
 		
@@ -69,6 +79,10 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		break;
 	case STATE_RESET:
 		
+		if(killSwitchA && killSwitchB) 
+		{
+			launchState = STATE_OFF;
+		}
 		if(init)
 		{
 			initTime = timer->Get();
@@ -95,6 +109,11 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		}
 		break;
 	case STATE_COCKED:
+		
+		if(killSwitchA && killSwitchB) 
+		{
+			launchState = STATE_OFF;
+		}
 		init = true;
 		launcherMotor->Set(0, SYNC_STATE_OFF);
 		
@@ -102,13 +121,18 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		{
 			lastPressed = false;
 		}
-		if(launchTrigger && safetySwitch && !lastPressed) //&& manipulator->getArmPosition())
+		if(launchTrigger && safetySwitch && !lastPressed && manipulator->getArmPosition() == false)
 		{
 			lastPressed = true;
 			launchState = STATE_FIRE;
 		}
 		break;
 	case STATE_FIRE:
+		if(killSwitchA && killSwitchB) 
+		{
+			launchState = STATE_OFF;
+		}
+		
 		if(init)
 		{
 			initTime = timer->Get();
@@ -129,66 +153,62 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch)
 		launchState = STATE_OFF;
 	}
 }
-void AnesthesiologistLauncher::autoLaunch(bool launch)
+
+
+
+void AnesthesiologistLauncher::autoLaunch()
 {	
-	static bool init = true;
-	
-	switch(autoLaunchState)	
+	if(init)
 	{
-	case STATE_HOLD:
-		
-		launcherMotor->Set(0, SYNC_STATE_OFF);
-		
-		if(launch)
-		{
-			autoLaunchState = STATE_RESET;
-		}
-		break;
-	case STATE_RESET:
-		
-		launcherMotor->Set(1, SYNC_STATE_OFF);
-			
-		if(pulseSwitch->Get() == 1)
-		{
-			lastPulse = true;
-		}
-		if(pulseSwitch->Get() == 0 && lastPulse)
-		{
-			lastPulse = false;
-			autoLaunchState = STATE_COCKED;
-		}
-		break;
-	case STATE_COCKED:
-		
-		launcherMotor->Set(0, SYNC_STATE_OFF);
-		
-		if(launch && manipulator->getArmPosition() == true)
-		{
-			autoLaunchState = STATE_FIRE;
-		}
-		break;
-	case STATE_FIRE:
-			
-		if(init)
-		{
-			initTime = timer->Get();
-			init = false;
-		}
-		currentTime = timer->Get();
-		
-		if(currentTime < LAUNCH_TIME + initTime)
-		{
-			launcherMotor->Set(1, SYNC_STATE_OFF);
-		}
-		else
-		{
-			autoLaunchState = STATE_HOLD;
-		}
-		break;
-	default:
-		autoLaunchState = STATE_HOLD;
+		initTime = timer->Get();
+		init = false;
+	}
+	currentTime = timer->Get();
+	
+	if(currentTime < LAUNCH_TIME + initTime)
+	{
+		launcherMotor->Set(-1, SYNC_STATE_OFF);
+	}
+	else
+	{
+		launcherMotor->Set(0);
 	}
 }
+
+//void AnesthesiologistLauncher::autoReset()
+//{
+//	if(newCycle)
+//	{
+//		if(init)
+//		{
+//			initTime = timer->Get();
+//			init = false;
+//		}
+//		currentTime = timer->Get();
+//		
+//		if(currentTime < RESET_TIME + initTime)
+//		{
+//			launcherMotor->Set(-1, SYNC_STATE_OFF);
+//		}
+//		else
+//		{
+//			launcherMotor->Set(SLOW_SPEED, SYNC_STATE_OFF);
+//		}
+//		
+//		if(pulseSwitch->Get() == 1)
+//		{
+//			lastPulse = true;
+//		}
+//		if(pulseSwitch->Get() == 0 && lastPulse)
+//		{
+//			launcherMotor->Set(0, SYNC_STATE_OFF);
+//		}
+//	}
+//	else
+//	{
+//		launcherMotor->Set(0, SYNC_STATE_OFF);
+//	}
+//}
 
 bool AnesthesiologistLauncher::isIn()
 {

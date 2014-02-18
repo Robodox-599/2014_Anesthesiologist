@@ -12,8 +12,8 @@ Drive Joystick:
 	7 - stop compressor
 	8 - shift up
 	9 - shift down
-	10 - 
-	11 - 
+	10 - kill switch A  
+	11 - kill switch B
 Manip Joystick:
 	1 - 
 	2 - intake 
@@ -77,7 +77,7 @@ Manip Joystick:
 #define STATE_FIRE								(4)
 #define LAUNCH_TIME 							(.1)
 #define RESET_TIME								(1)
-#define SLOW_SPEED								(-.68)
+#define SLOW_SPEED								(-1)
 														
 	//RPM
 #define TIME_COMPARISON							(.25)
