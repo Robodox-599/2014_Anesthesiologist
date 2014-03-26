@@ -12,6 +12,7 @@
 #include "AnesthesiologistVision.h"
 #include "AnesthesiologistMacros.h"
 
+
 int step = 0;
 	//timer wait
 bool isWait = false;
