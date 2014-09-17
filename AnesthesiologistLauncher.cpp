@@ -1,23 +1,20 @@
 #include "AnesthesiologistLauncher.h"
 
-AnesthesiologistLauncher::AnesthesiologistLauncher()
+AnesthesiologistLauncher::AnesthesiologistLauncher(AnesthesiologistManipulator* manip)
 {
-	manipulator = new AnesthesiologistManipulator();
+	manipulator = manip;//new AnesthesiologistManipulator();
 	launcherMotor = new Talon(1, LAUNCHER_MOTOR_CHANNEL);	
 	pulseSwitch = new DigitalInput(1, PULSE_SWITCH_CHANNEL);
-	armLauncherSwitch = new DigitalInput(1, ARM_LAUNCHER_SWITCH_CHANNEL);
-	ultrasonicSensor = new Ultrasonic(SONAR_OUTPUT, SONAR_INPUT, Ultrasonic::kInches);
-	ultrasonicSensor->SetEnabled(1);
-	ultrasonicSensor->SetAutomaticMode(1);
+	//stopper = new DoubleSolenoid(STOPPER_SOLENOID_CHANNEL_A, STOPPER_SOLENOID_CHANNEL_B);
 	
 	lastPulse = false;
 	launchState = STATE_HOLD;
 	autoLaunchState = STATE_COCKED;	
 	
 	init = true;
+	autonInit1 = true;
+	autonInit2 = true;
 	lastPressed = true;
-	resetStart = 0;
-	resetEnd = 0;
 	
 	timer = new Timer();
 	timer->Start();
@@ -29,20 +26,15 @@ AnesthesiologistLauncher::~AnesthesiologistLauncher()
 {
 	delete launcherMotor;
 	delete pulseSwitch;
-	delete armLauncherSwitch;
-	delete ultrasonicSensor;
 	delete timer;
 	
 	launcherMotor = NULL;
 	pulseSwitch = NULL;
-	armLauncherSwitch = NULL;
-	ultrasonicSensor = NULL;
 	timer = NULL;
 }
 
 void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch, bool killSwitchA, bool killSwitchB)
 {	
-
 	switch(launchState)	
 	{
 	case STATE_OFF:	
@@ -121,7 +113,7 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch,
 		{
 			lastPressed = false;
 		}
-		if(launchTrigger && safetySwitch && !lastPressed && manipulator->getArmPosition() == false)
+		if(launchTrigger && safetySwitch && !lastPressed && manipulator->getArmPosition() == true)//true?
 		{
 			lastPressed = true;
 			launchState = STATE_FIRE;
@@ -154,14 +146,12 @@ void AnesthesiologistLauncher::launchBall(bool launchTrigger, bool safetySwitch,
 	}
 }
 
-
-
-void AnesthesiologistLauncher::autoLaunch()
+void AnesthesiologistLauncher::autoFirstLaunch()
 {	
-	if(init)
+	if(autonInit1)
 	{
 		initTime = timer->Get();
-		init = false;
+		autonInit1 = false;
 	}
 	currentTime = timer->Get();
 	
@@ -175,49 +165,70 @@ void AnesthesiologistLauncher::autoLaunch()
 	}
 }
 
-//void AnesthesiologistLauncher::autoReset()
-//{
-//	if(newCycle)
-//	{
-//		if(init)
-//		{
-//			initTime = timer->Get();
-//			init = false;
-//		}
-//		currentTime = timer->Get();
-//		
-//		if(currentTime < RESET_TIME + initTime)
-//		{
-//			launcherMotor->Set(-1, SYNC_STATE_OFF);
-//		}
-//		else
-//		{
-//			launcherMotor->Set(SLOW_SPEED, SYNC_STATE_OFF);
-//		}
-//		
-//		if(pulseSwitch->Get() == 1)
-//		{
-//			lastPulse = true;
-//		}
-//		if(pulseSwitch->Get() == 0 && lastPulse)
-//		{
-//			launcherMotor->Set(0, SYNC_STATE_OFF);
-//		}
-//	}
-//	else
-//	{
-//		launcherMotor->Set(0, SYNC_STATE_OFF);
-//	}
-//}
-
-bool AnesthesiologistLauncher::isIn()
-{
-	if (ultrasonicSensor->GetRangeInches() <= 0 || ultrasonicSensor->GetRangeInches() > 6)
+void AnesthesiologistLauncher::autoSecondLaunch()
+{	
+	if(autonInit2)
 	{
-		return false;
+		initTime = timer->Get();
+		autonInit2 = false;
 	}
-	else 
+	currentTime = timer->Get();
+	
+	if(currentTime < LAUNCH_TIME + initTime)
 	{
-		return true;
+		launcherMotor->Set(-1, SYNC_STATE_OFF);
+	}
+	else
+	{
+		launcherMotor->Set(0);
 	}
 }
+
+void AnesthesiologistLauncher::autoReset()
+{
+	if(init)
+	{
+		initTime = timer->Get();
+		init = false;
+	}
+	currentTime = timer->Get();
+	
+	if(currentTime < RESET_TIME + initTime)
+	{
+		launcherMotor->Set(-1, SYNC_STATE_OFF);
+	}
+	
+	if(pulseSwitch->Get() == 1)
+	{
+		lastPulse = true;
+	}
+	if(pulseSwitch->Get() == 0 && lastPulse)
+	{
+		launcherMotor->Set(0, SYNC_STATE_OFF);
+	}
+}
+
+//void AnesthesiologistLauncher::moveStopper(bool shortShot, bool longShot)
+//{
+//	if(launchState == STATE_COCKED) 
+//	{
+//		if(shortShot)
+//		{
+//			stopper->Set(DoubleSolenoid::kForward);
+//		}
+//		else if(longShot)
+//		{
+//			stopper->Set(DoubleSolenoid::kReverse);
+//		}
+//	}
+//}
+//
+//bool AnesthesiologistLauncher::getStopperPosition()
+//{
+//	if(stopper->Get() == DoubleSolenoid::kForward)
+//	{
+//		return true;
+//	}
+//	return false;
+//}
+

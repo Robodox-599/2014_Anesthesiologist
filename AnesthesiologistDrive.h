@@ -25,18 +25,18 @@ public:
 	void setLeftMotors(double velocity);
 	void setRightMotors(double velocity);
 	
-	void setEncodersLinear(double target, double speed);
-	void setEncoderLeft(double target, double speed);
-	void setEncoderRight(double target, double speed);
-	void autoLinear(double target, double speed);
-	void autoLeft(double target, double speed);
-	void autoRight(double target, double speed);
-	
-	double getRPM();
+//	void setEncodersLinear(double target, double speed);
+//	void setEncoderLeft(double target, double speed);
+//	void setEncoderRight(double target, double speed);
+//	void autoLinear(double target, double speed);
+//	void autoLeft(double target, double speed);
+//	void autoRight(double target, double speed);
+//	
+//	double getRPM();
 
 	DoubleSolenoid *shifter;
-	Encoder *leftDriveEncoder;
-	Encoder *rightDriveEncoder;
+//	Encoder *leftDriveEncoder;
+//	Encoder *rightDriveEncoder;
 	Timer *timer;
 	
 private:
@@ -52,13 +52,13 @@ private:
 	double leftCmd;
 	double rightCmd;
 	
-	bool bEncoderInit;
-	bool isAtLeftTarget;
-	bool isAtRightTarget;
-	bool isAtLinearTarget;
-	double currentTicksLeft;
-	double currentTicksRight;
-	
-	double rpm;
+//	bool bEncoderInit;
+//	bool isAtLeftTarget;
+//	bool isAtRightTarget;
+//	bool isAtLinearTarget;
+//	double currentTicksLeft;
+//	double currentTicksRight;
+//	
+//	double rpm;
 };
 #endif

@@ -7,15 +7,19 @@
 class AnesthesiologistLauncher
 {
 public:
-	AnesthesiologistLauncher();
+	AnesthesiologistLauncher(AnesthesiologistManipulator* manip);
 	~AnesthesiologistLauncher();
 	
 	void launchBall(bool launchTrigger, bool safetySwitch, bool killSwitchA, bool killSwitchB);
-	void autoLaunch();	
-	void autoReset();
-	bool isIn();
 	
-	Ultrasonic *ultrasonicSensor;
+	void autoFirstLaunch();
+	void autoSecondLaunch();
+	void autoReset();
+	
+//	void moveStopper(bool shortShot, bool longShot);
+//	bool getStopperPosition();
+	
+//	AnalogChannel *sonar;
 	Talon *launcherMotor;
 	int launchState;
 	int autoLaunchState;
@@ -23,17 +27,16 @@ public:
 	
 private:
 	DigitalInput *pulseSwitch;
-	DigitalInput *armLauncherSwitch;
 	AnesthesiologistManipulator *manipulator;
+//	DoubleSolenoid *stopper;
 	
-	double initTime; 	
-	double currentTime; 
-	bool init; 
+	double initTime;
+	double currentTime;
+	bool init;
+	bool autonInit1;
+	bool autonInit2;
 	bool lastPulse;
 	bool lastPressed;
-	
-	double resetStart;
-	double resetEnd;
 	
 };
 #endif

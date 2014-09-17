@@ -1,19 +1,16 @@
 #include "WPILib.h"
-//Vision includes
-#include "Vision/RGBImage.h"
-#include "Vision/BinaryImage.h"
-#include "Math.h"
 
 #include "AnesthesiologistDrive.h"
 #include "AnesthesiologistManipulator.h"
 #include "AnesthesiologistLauncher.h"
-#include "AnesthesiologistPIDOutput.h"
 #include "AnesthesiologistOperatorInterface.h"
-#include "AnesthesiologistVision.h"
 #include "AnesthesiologistMacros.h"
 
 
 int step = 0;
+	//autonomous
+bool autonInit = true;
+double autonInitTime = 0;
 	//timer wait
 bool isWait = false;
 bool bTimerInit = true;
@@ -30,43 +27,20 @@ class Anesthesiologist: public IterativeRobot
 	AnesthesiologistLauncher *launcher;
 	AnesthesiologistOperatorInterface *oi;
 	Compressor *comp599;
-	//Relay *relay599;
 	Timer *timer;	
-	//AnesthesiologistVision *vision;
 	
-	struct itemScores
-	{
-		double rectangularity;
-		double aspectRatioVertical;
-		double aspectRatioHorizontal;
-	};
-	
-	struct reportOnTarget
-	{
-		int verticalIndex;
-		int horizontalIndex;
-		bool isHot;
-		double totalScore;
-		double leftScore;
-		double rightScore;
-		double tapeWidthScore;
-		double verticalScore;
-	};
-
 public:	
 	Anesthesiologist()
 	{
 		manipulator = new AnesthesiologistManipulator();
-		launcher = new AnesthesiologistLauncher();
+		launcher = new AnesthesiologistLauncher(manipulator);
 		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
-		comp599 = new Compressor(1, 1, 1, 2); 
-		//relay599 = new Relay(1, 2);
+		comp599 = new Compressor(1, 1, 1, 2); 	
 		timer = new Timer();
-		//vision = new AnesthesiologistVision();
 		
-		drive->leftDriveEncoder->Start();
-		drive->rightDriveEncoder->Start();
+//		drive->leftDriveEncoder->Start();
+//		drive->rightDriveEncoder->Start();
 				
 		oi->dashboard->init();
 		comp599->Start();
@@ -79,16 +53,18 @@ public:
 	
 	void DisabledInit()
 	{
-		drive->leftDriveEncoder->Start();
-		drive->rightDriveEncoder->Start();
+//		drive->leftDriveEncoder->Start();
+//		drive->rightDriveEncoder->Start();
 	}
 	
 	void AutonomousInit()
 	{
 		step = 0;
+		autonInit = true;
+		autonInitTime = 0;
 		timer->Start();
-		drive->leftDriveEncoder->Reset();
-		drive->rightDriveEncoder->Reset();
+//		drive->leftDriveEncoder->Reset();
+//		drive->rightDriveEncoder->Reset();
 	}
 	
 	void TeleopInit()
@@ -99,8 +75,8 @@ public:
 		drive->drive();
 		comp599->Start();
 		timer->Start();		
-		drive->leftDriveEncoder->Start();
-		drive->rightDriveEncoder->Start();
+//		drive->leftDriveEncoder->Start();
+//		drive->rightDriveEncoder->Start();
 	}
 	
 	void TestInit()
@@ -111,50 +87,116 @@ public:
 	void DisabledPeriodic()
 	{
 		step = 0;
-		drive->leftDriveEncoder->Reset();
-		drive->rightDriveEncoder->Reset();
+//		drive->leftDriveEncoder->Reset();
+//		drive->rightDriveEncoder->Reset();
 		smartDashboardPrint();
 	}
 	
 	void AutonomousPeriodic()
 	{		
+		if(autonInit) 
+		{
+			autonInitTime = timer->Get();
+			autonInit = false;
+		}
+		
 		smartDashboardPrint();
 		
-		//TODO: dummy speeds & times
-		if(timer->Get() > 0 && timer->Get() < 1.5)
-		{
-			drive->setLinVelocity(-1);
-		}
-		else if(timer->Get() > 1.5 && timer->Get() < 2)
-		{
-			drive->setLinVelocity(0);
-			manipulator->moveArm(false, true);
-		}
-		else if(timer->Get() > 2 && timer->Get() < 2.2)
-		{
-			launcher->autoLaunch();
-		}
-		
-//		else if(timer->Get() > 5 && timer->Get() < 7)
-//		{
-//			drive->setLinVelocity(1);	
-//		}
-//		else if(timer->Get() > 7 && timer->Get() < 10)
-//		{
-//			drive->setLinVelocity(0);
-//			step = 2;
-//			manipulator->intakeBall(true, false, 1);
-//		}
-//		else if(timer->Get() > 10 && timer->Get() < 12)
+//				//ignores Hot Goal, drive up 1-ball auton
+//		if(timer->Get() > 0 + autonInitTime && timer->Get() < 2 + autonInitTime)
 //		{
 //			drive->setLinVelocity(-1);
 //		}
-//		else if(timer->Get() > 12 && timer->Get() < 17)
+//		if(timer->Get() > 2 + autonInitTime && timer->Get() < 3 + autonInitTime)
 //		{
 //			drive->setLinVelocity(0);
-//			launcher->autoLaunch(true);
+//			manipulator->moveArm(true, false);
 //		}
-		drive->drive();
+//		if(timer->Get() > 3.2 + autonInitTime && timer->Get() < 3.5 + autonInitTime)
+//		{
+//			launcher->autoLaunch();
+//		}
+				
+				//ignores hot goal, 2 ball auton (shoot, shoot, drive)
+//		if(timer->Get() > 0 + autonInitTime && timer->Get() < 1 + autonInitTime)
+//		{
+//			manipulator->moveArm(true, false);
+//		}
+//		if(timer->Get() > 1.2 + autonInitTime && timer->Get() < 1.5 + autonInitTime)
+//		{
+//			launcher->autoFirstLaunch();
+//		}
+//		if(timer->Get() > 1.5 + autonInitTime && timer->Get() < 3.5  + autonInitTime)
+//		{
+//			launcher->autoReset();
+//		}
+//		if(timer->Get() > 3.5 + autonInitTime && timer->Get() < 5 + autonInitTime)
+//		{
+//			manipulator->intakeRoller->Set(1);
+//		}
+//		if(timer->Get() > 5 + autonInitTime && timer->Get() < 6 + autonInitTime)
+//		{
+//			manipulator->intakeRoller->Set(0);
+//			manipulator->moveArm(false, true);
+//		}		
+//		if(timer->Get() > 6.2 + autonInitTime && timer->Get() < 7.2 + autonInitTime)
+//		{
+//			manipulator->intakeRoller->Set(1);
+//			manipulator->moveArm(true, false);
+//		}
+//		if(timer->Get() > 7.4 + autonInitTime && timer->Get() < 7.7 + autonInitTime)
+//		{
+//			manipulator->intakeRoller->Set(0);
+//			launcher->autoSecondLaunch();
+//		}
+//		if(timer->Get() > 7.8 + autonInitTime && timer->Get() < 9.8 + autonInitTime)
+//		{
+//			drive->setLinVelocity(-1);
+//		}
+//		if(timer->Get() > 9.8 + autonInitTime && timer->Get() < 10 + autonInitTime)
+//		{
+//			drive->setLinVelocity(0);
+//		}
+				//ignores hot goal, 2 ball auton (shoot, drive, shoot)
+		if(timer->Get() > 0 + autonInitTime && timer->Get() < 1 + autonInitTime)
+		{
+			manipulator->moveArm(true, false);
+		}
+		if(timer->Get() > 1.2 + autonInitTime && timer->Get() < 1.5 + autonInitTime)
+		{
+			launcher->autoFirstLaunch();
+		}
+		if(timer->Get() > 1.5 + autonInitTime && timer->Get() < 3.5  + autonInitTime)
+		{
+			launcher->autoReset();
+		}
+		if(timer->Get() > 3.5 + autonInitTime && timer->Get() < 5 + autonInitTime)
+		{
+			manipulator->intakeRoller->Set(1);
+		}
+		if(timer->Get() > 5 + autonInitTime && timer->Get() < 6 + autonInitTime)
+		{
+			manipulator->intakeRoller->Set(0);
+			manipulator->moveArm(false, true);
+		}		
+		if(timer->Get() > 6 + autonInitTime && timer->Get() < 7 + autonInitTime)
+		{
+			drive->setLinVelocity(-1);
+		}
+		if(timer->Get() > 7.2 + autonInitTime && timer->Get() < 8.2 + autonInitTime)
+		{
+			drive->setLinVelocity(0);
+			manipulator->intakeRoller->Set(1);
+			manipulator->moveArm(true, false);
+		}
+		if(timer->Get() > 8.4 + autonInitTime && timer->Get() < 8.7 + autonInitTime)
+		{
+			manipulator->intakeRoller->Set(0);
+			launcher->autoSecondLaunch();
+		}	
+	
+		
+		drive->drive();	
 	}
 	
 	void TeleopPeriodic()
@@ -167,7 +209,7 @@ public:
 	{
 	
 	}
-	
+
 	void teleDrive()
 	{
 		if(!isWait)
@@ -175,26 +217,26 @@ public:
 			drive->setLinVelocity(oi->getDriveJoystick()->GetY(Joystick::kRightHand));
 			drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(3));
 			drive->drive();
-		}
 		
-		drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
-		manipulator->moveArm(oi->getManipJoystickButton(6), oi->getManipJoystickButton(7));
-		manipulator->moveStopper(oi->getManipJoystickButton(10), oi->getManipJoystickButton(11));	
-		//manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
-		manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), (oi->getManipJoystick()->GetThrottle()+1)/2);
-		launcher->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2), oi->getDriveJoystickButton(10), oi->getDriveJoystickButton(11));
-		toggleCompressor(oi->getDriveJoystickButton(6), oi->getDriveJoystickButton(7));
+			drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
+			manipulator->moveArm(oi->getManipJoystickButton(6), oi->getManipJoystickButton(7));
+//			launcher->moveStopper(oi->getManipJoystickButton(10), oi->getManipJoystickButton(11));	
+//			manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
+			manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), (oi->getManipJoystick()->GetThrottle()+1)/2);
+			launcher->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2), oi->getDriveJoystickButton(10), oi->getDriveJoystickButton(11));
+			toggleCompressor(oi->getDriveJoystickButton(6), oi->getDriveJoystickButton(7));
+		}
 		
 			//camera motor mount
-		if(oi->getManipJoystickButton(8))
-		{
-			bCameraLatch = true;
-		}
-		else if(oi->getManipJoystickButton(9))
-		{
-			bCameraLatch = false;
-		}	
-		manipulator->toggleCameraPosition(bCameraLatch);
+//		if(oi->getManipJoystickButton(8))
+//		{
+//			bCameraLatch = true;
+//		}
+//		else if(oi->getManipJoystickButton(9))
+//		{
+//			bCameraLatch = false;
+//		}	
+//		manipulator->toggleCameraPosition(bCameraLatch);
 				
 			//timer wait
 //		if(oi->getDriveJoystickButton(10))
@@ -233,63 +275,37 @@ public:
 	{
 		if(start)
 		{
-			comp599->Start();
-			//relay599->Set(Relay::kForward);
+			comp599->Start();		
 		}
 		else if(stop)
 		{
 			comp599->Stop();
-			//relay599->Set(Relay::kOff);
 		}
 	}
 	
 	void smartDashboardPrint()
-	{
+	{ 
 		oi->dashboard->PutNumber("Drive Linear Speed: ", drive->getLinVelocity());
 		oi->dashboard->PutNumber("Drive Turn Speed: ", drive->getTurnSpeed());
-		oi->dashboard->PutNumber("Left Encoder Raw Value: ", drive->leftDriveEncoder->GetRaw());
-		oi->dashboard->PutNumber("Right Encoder Raw Value: ", drive->rightDriveEncoder->GetRaw());
+//		oi->dashboard->PutNumber("Left Encoder Raw Value: ", drive->leftDriveEncoder->GetRaw());
+//		oi->dashboard->PutNumber("Right Encoder Raw Value: ", drive->rightDriveEncoder->GetRaw());
 		oi->dashboard->PutNumber("Timer: ", timer->Get());
-		oi->dashboard->PutNumber("Pot Raw Value: ", manipulator->pot->GetVoltage());
+//		oi->dashboard->PutNumber("Pot Raw Value: ", manipulator->pot->GetVoltage());
 		oi->dashboard->PutBoolean(" Wait (Motors Disabled)", isWait);
 		oi->dashboard->PutBoolean(" Compressor", comp599->Enabled());
-		oi->dashboard->PutString("Shot Range: ", manipulator->getStopperPosition() ? "Short" : "Long");
-		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Stored" : "Intake");
+//		oi->dashboard->PutString("Shot Range: ", launcher->getStopperPosition() ? "Short" : "Long");
+		oi->dashboard->PutString("Arm Position: ", manipulator->getArmPosition() ? "Intake" : "Stored");
 		oi->dashboard->PutString("Shift State: ", drive->getShiftState() ? "High" : "Low");
 		oi->dashboard->PutString("Launch State: ", launcher->launchState > 0 ? (launcher->launchState == 1 ? "HOLD" : (launcher->launchState == 2 ? "RESET" : (launcher->launchState == 3 ? "COCKED" : "FIRE"))) : "OFF");
-		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Forward" : "Back") : "Inbetween");
+//		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Forward" : "Back") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->launchState == STATE_COCKED ? true : false);
-		oi->dashboard->PutBoolean(" Ball is Stored", launcher->isIn());
-		oi->dashboard->PutNumber("Sonar Raw Value(In): ", launcher->ultrasonicSensor->GetRangeInches());
-		oi->dashboard->PutNumber("Sonar Raw Value(MM): ", launcher->ultrasonicSensor->GetRangeMM());
-		oi->dashboard->PutNumber("Sonar Enabled: ", launcher->ultrasonicSensor->IsEnabled());
-		//oi->dashboard->PutNumber("Roller Value: ", manipulator->intakeRoller->Get());
-		//oi->dashboard->PutNumber("Throttle: ", (oi->getManipJoystick()->GetThrottle()+1)/2);
-		//oi->dashboard->PutNumber("Intake Switch: ", manipulator->intakeSwitch->Get());
-		//oi->dashboard->PutNumber("Step: ", manipulator->step);	
-		//oi->dashboard->PutNumber("Step: ", step);		
+		
+//		oi->dashboard->PutNumber("Roller Value: ", manipulator->intakeRoller->Get());
+//		oi->dashboard->PutNumber("Throttle: ", (oi->getManipJoystick()->GetThrottle()+1)/2);
+//		oi->dashboard->PutNumber("Intake Switch: ", manipulator->intakeSwitch->Get());
+//		oi->dashboard->PutNumber("Step: ", manipulator->step);	
+//		oi->dashboard->PutNumber("Step: ", step);		
 	}	
-	
-//	void track()
-//	{
-//		Threshold threshold(105, 137, 230, 255, 133, 183);	//HSV threshold criteria, ranges are in that order ie. Hue is 60-100
-//		ParticleFilterCriteria2 criteria[] = {{IMAQ_MT_AREA, AREA_MINIMUM, 65535, false, false}};
-//		
-//		AxisCamera &camera = AxisCamera::GetInstance();
-//		ColorImage *image = camera.GetImage();
-//		BinaryImage *thresholdedImage = image->ThresholdHSV(threshold);
-//		BinaryImage *filteredImage = thresholdedImage->ParticleFilter(criteria, 1);
-//		
-//		AxisCamera &camera = AxisCamera::GetInstance("10.5.99.11");
-//		
-//		oi->dashboard->PutBoolean("Can Shoot", vision->update(new HSLImage("2014 Vision Target/Center_18ft_On.jpg")));
-//		SendableChooser *sc = new SendableChooser();
-//		sc->AddObject("Filtered Image", vision->filterImageHSV(new HSLImage("2014 Vision Target/Center_18ft_on.jpg")));
-//		oi->dashboard->PutData("Filtered", sc);
-//		sc->AddObject("Filtered Imaeg of Particles", vision->getFilteredImage());
-//		oi->dashboard->PutNumber("ImageHeight", vision->getReport()->imageWidth);
-//		oi->dashboard->PutNumber("ImageWidth", vision->getReport()->imageHeight);
-//	}	
 };
 
 START_ROBOT_CLASS(Anesthesiologist);
