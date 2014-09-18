@@ -233,18 +233,18 @@ public:
 		}
 		
 			//camera motor mount
-		if(oi->getManipJoystickButton(8))
+		if(oi->getManipJoystickButton(10))
 		{
 			bCameraLatch = true;
 		}
-		else if(oi->getManipJoystickButton(9))
+		else if(oi->getManipJoystickButton(11))
 		{
 			bCameraLatch = false;
 		}	
 		manipulator->toggleCameraPosition(bCameraLatch);
 				
 			//timer wait
-//		if(oi->getDriveJoystickButton(10))
+//		if(oi->getDriveJoystickButton(8))
 //		{
 //			bTimerLatch = true;
 //		}

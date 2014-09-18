@@ -22,10 +22,10 @@ Manip Joystick:
 	5 - 
 	6 - set arm to intake position
 	7 - set arm to stored position 
-	8 - set camera position to back
-	9 - set camera position to forward
-	10 -  
-	11 - 
+	8 - 
+	9 - 
+	10 - set camera position to back  
+	11 - set camera position to forward 
 	throttle -  roller speed
 */
 
