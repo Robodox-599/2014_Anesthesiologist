@@ -15,10 +15,7 @@ public:
 	void autoFirstLaunch();
 	void autoSecondLaunch();
 	void autoReset();
-	
-//	void moveStopper(bool shortShot, bool longShot);
-//	bool getStopperPosition();
-	
+		
 //	AnalogChannel *sonar;
 	Talon *launcherMotor;
 	int launchState;
@@ -28,7 +25,6 @@ public:
 private:
 	DigitalInput *pulseSwitch;
 	AnesthesiologistManipulator *manipulator;
-//	DoubleSolenoid *stopper;
 	
 	double initTime;
 	double currentTime;

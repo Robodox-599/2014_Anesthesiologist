@@ -24,8 +24,8 @@ Manip Joystick:
 	7 - set arm to stored position 
 	8 - set camera position to back
 	9 - set camera position to forward
-	10 - toggle shot range to short 
-	11 - toggle shot range to long
+	10 -  
+	11 - 
 	throttle -  roller speed
 */
 
@@ -39,7 +39,7 @@ Manip Joystick:
 #define DRIVE_REAR_RIGHT_MOTOR_CHANNEL          (4)
 #define LAUNCHER_MOTOR_CHANNEL          		(5)
 #define INTAKE_ROLLER_CHANNEL					(6)
-//#define CAMERA_VICTOR_CHANNEL					(7)
+#define CAMERA_VICTOR_CHANNEL					(7)
 
 	//Sensor Channels
 #define INTAKE_SWITCH_CHANNEL					(2)
@@ -48,7 +48,7 @@ Manip Joystick:
 //#define SONAR_OUTPUT 							(6)
 
 	//Analog
-//#define POT_CHANNEL 							(1)
+#define POT_CHANNEL 							(1)
 //#define SONAR_CHANNEL							(3)
 
 	//Pneumatics
@@ -56,20 +56,18 @@ Manip Joystick:
 #define SHIFTER_SOLENOID_CHANNEL_B				(2)
 #define INTAKE_ARM_SOLENOID_CHANNEL_A			(3)
 #define INTAKE_ARM_SOLENOID_CHANNEL_B			(4)
-//#define STOPPER_SOLENOID_CHANNEL_A				(5)
-//#define STOPPER_SOLENOID_CHANNEL_B				(6)
 
 	//Encoders
-//#define LEFT_DRIVE_ENCODER_CHANNEL_A			(4)//TODO: dummy number
-//#define LEFT_DRIVE_ENCODER_CHANNEL_B			(5)//TODO: dummy number
-//#define RIGHT_DRIVE_ENCODER_CHANNEL_A			(6)//TODO: dummy number
-//#define RIGHT_DRIVE_ENCODER_CHANNEL_B			(7)//TODO: dummy number
+//#define LEFT_DRIVE_ENCODER_CHANNEL_A			(4)
+//#define LEFT_DRIVE_ENCODER_CHANNEL_B			(5)
+//#define RIGHT_DRIVE_ENCODER_CHANNEL_A			(6)
+//#define RIGHT_DRIVE_ENCODER_CHANNEL_B			(7)
 
 	//Potentiometer
-//#define POT_DEADZONE_HIGH						(.3)
-//#define POT_DEADZONE_LOW						(.4)
-//#define POT_UPPER_LIMIT							(4.4)
-//#define POT_LOWER_LIMIT							(.5)
+#define POT_DEADZONE_HIGH						(.3)
+#define POT_DEADZONE_LOW						(.4)
+#define POT_UPPER_LIMIT							(4.4)
+#define POT_LOWER_LIMIT							(.5)
 
 	//Choo-Choo Launcher 
 #define STATE_OFF								(0)
@@ -87,10 +85,10 @@ Manip Joystick:
 #define TICKS_PER_ROTATION						(250)
 
 	//Sonar
-//#define LONG_SHOT_RANGE 						(100)//TODO: dummy number
-//#define LONG_SHOT_DEADZONE						(10)//TODO: dummy number
-//#define SHORT_SHOT_RANGE 						(50)//TODO: dummy number
-//#define SHORT_SHOT_DEADZONE						(5)//TODO: dummy number
+//#define LONG_SHOT_RANGE 						(100)
+//#define LONG_SHOT_DEADZONE						(10)
+//#define SHORT_SHOT_RANGE 						(50)
+//#define SHORT_SHOT_DEADZONE						(5)
 
 	//Misc
 #define SYNC_STATE_OFF          		        (0)
@@ -101,12 +99,5 @@ Manip Joystick:
 #define PI										(3.14159265358979323846264338327950288)
 #define INCHES_PER_VOLT							(1/.0098)// 1 / (9.8mV / 1000)
 
-	//Camera, in Inches and Degrees
-//#define ANGLE									(24.5*PI/180)	//half of full view angle
-//#define FIELD_OF_VIEW_PIXELS_WIDTH				(640) 	//TODO
-//#define REFLECTOR_INCHES_WIDTH					(23.5) 	//TODO
-//#define AREA_MINIMUM							(150)
-//#define RANGE_MINIMUM							(204)	//TODO
-//#define RANGE_MAXIMUM							(240)	//TODO
 
 #endif

@@ -13,21 +13,20 @@ public:
 	void intakeBall(bool intake, bool outtake, double speed);
 	
 	void moveArm(bool isIntake, bool isStored);
-//	void toggleCameraPosition(bool isForward);
+	void toggleCameraPosition(bool isForward);
 	
 	bool getArmPosition();
-//	int getCameraPosition();
+	int getCameraPosition();
 	
 	DigitalInput *intakeSwitch;
 	Talon *intakeRoller;
-//	AnalogChannel *pot;
-//	Victor *cameraMotor;
+	AnalogChannel *pot;
+	Victor *cameraMotor;
 	Timer *timer;
 	int step;
 	
 private:
 	DoubleSolenoid *intakeArm;
-//	DoubleSolenoid *stopper;
 		
 };
 #endif

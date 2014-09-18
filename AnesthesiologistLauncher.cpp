@@ -5,7 +5,6 @@ AnesthesiologistLauncher::AnesthesiologistLauncher(AnesthesiologistManipulator* 
 	manipulator = manip;//new AnesthesiologistManipulator();
 	launcherMotor = new Talon(1, LAUNCHER_MOTOR_CHANNEL);	
 	pulseSwitch = new DigitalInput(1, PULSE_SWITCH_CHANNEL);
-	//stopper = new DoubleSolenoid(STOPPER_SOLENOID_CHANNEL_A, STOPPER_SOLENOID_CHANNEL_B);
 	
 	lastPulse = false;
 	launchState = STATE_HOLD;
@@ -207,28 +206,3 @@ void AnesthesiologistLauncher::autoReset()
 		launcherMotor->Set(0, SYNC_STATE_OFF);
 	}
 }
-
-//void AnesthesiologistLauncher::moveStopper(bool shortShot, bool longShot)
-//{
-//	if(launchState == STATE_COCKED) 
-//	{
-//		if(shortShot)
-//		{
-//			stopper->Set(DoubleSolenoid::kForward);
-//		}
-//		else if(longShot)
-//		{
-//			stopper->Set(DoubleSolenoid::kReverse);
-//		}
-//	}
-//}
-//
-//bool AnesthesiologistLauncher::getStopperPosition()
-//{
-//	if(stopper->Get() == DoubleSolenoid::kForward)
-//	{
-//		return true;
-//	}
-//	return false;
-//}
-
