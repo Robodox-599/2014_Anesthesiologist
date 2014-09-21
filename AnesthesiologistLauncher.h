@@ -16,7 +16,6 @@ public:
 	void autoSecondLaunch();
 	void autoReset();
 		
-//	AnalogChannel *sonar;
 	Talon *launcherMotor;
 	int launchState;
 	int autoLaunchState;

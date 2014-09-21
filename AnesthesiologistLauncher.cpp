@@ -2,7 +2,7 @@
 
 AnesthesiologistLauncher::AnesthesiologistLauncher(AnesthesiologistManipulator* manip)
 {
-	manipulator = manip;//new AnesthesiologistManipulator();
+	manipulator = manip;
 	launcherMotor = new Talon(1, LAUNCHER_MOTOR_CHANNEL);	
 	pulseSwitch = new DigitalInput(1, PULSE_SWITCH_CHANNEL);
 	

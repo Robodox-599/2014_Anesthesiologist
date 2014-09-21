@@ -44,24 +44,15 @@ Manip Joystick:
 	//Sensor Channels
 #define INTAKE_SWITCH_CHANNEL					(2)
 #define PULSE_SWITCH_CHANNEL					(3)
-//#define SONAR_INPUT 							(5)
-//#define SONAR_OUTPUT 							(6)
 
 	//Analog
 #define POT_CHANNEL 							(1)
-//#define SONAR_CHANNEL							(3)
 
 	//Pneumatics
 #define SHIFTER_SOLENOID_CHANNEL_A				(1)
 #define SHIFTER_SOLENOID_CHANNEL_B				(2)
 #define INTAKE_ARM_SOLENOID_CHANNEL_A			(3)
 #define INTAKE_ARM_SOLENOID_CHANNEL_B			(4)
-
-	//Encoders
-//#define LEFT_DRIVE_ENCODER_CHANNEL_A			(4)
-//#define LEFT_DRIVE_ENCODER_CHANNEL_B			(5)
-//#define RIGHT_DRIVE_ENCODER_CHANNEL_A			(6)
-//#define RIGHT_DRIVE_ENCODER_CHANNEL_B			(7)
 
 	//Potentiometer
 #define POT_DEADZONE_HIGH						(.3)
@@ -83,12 +74,6 @@ Manip Joystick:
 #define TIME_COMPARISON							(.25)
 #define MINUTE_CONVERSION						(240)
 #define TICKS_PER_ROTATION						(250)
-
-	//Sonar
-//#define LONG_SHOT_RANGE 						(100)
-//#define LONG_SHOT_DEADZONE						(10)
-//#define SHORT_SHOT_RANGE 						(50)
-//#define SHORT_SHOT_DEADZONE						(5)
 
 	//Misc
 #define SYNC_STATE_OFF          		        (0)

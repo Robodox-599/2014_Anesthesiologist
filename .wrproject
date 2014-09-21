@@ -13,6 +13,7 @@
             <stringAttribute key="BLD::Info|GlobalMacro|PROJECT_TYPE" value="DKM"/>
             <listAttribute key="BLD::Info|Incl|PPC603gnu">
                 <stringAttribute value="-I$(WIND_BASE)/target/h"/>
+                <stringAttribute value="-I$(WIND_BASE)/target/WPILib"/>
                 <stringAttribute value="-I$(WIND_BASE)/target/h/wrn/coreip"/>
             </listAttribute>
             <listAttribute key="BLD::Info|Macros">
@@ -25,7 +26,7 @@
                 <stringAttribute value="LIBPATH"/>
                 <stringAttribute value="LIBS"/>
             </listAttribute>
-            <stringAttribute key="BLD::Info|Macro|CC_ARCH_SPEC|value|PPC603gnu" value="-mcpu=603 -mstrict-align -mno-implicit-fp"/>
+            <stringAttribute key="BLD::Info|Macro|CC_ARCH_SPEC|value|PPC603gnu" value="-mcpu=603 -mstrict-align -mno-implicit-fp -mlongcall"/>
             <stringAttribute key="BLD::Info|Macro|CPU|value|PPC603gnu" value="PPC603"/>
             <stringAttribute key="BLD::Info|Macro|LIBPATH|value|PPC603gnu" value=""/>
             <stringAttribute key="BLD::Info|Macro|LIBS|value|PPC603gnu" value=""/>
@@ -60,7 +61,7 @@
             <stringAttribute key="BLD::Info|Tool|C-Compiler|cmd|PPC603gnu" value="echo &quot;building $@&quot;;%ccompilerprefix% $(TOOL_PATH)ccppc %DebugModeFlags% %ToolFlags% $(ADDED_CFLAGS) %Includes% $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o %OutFile% -c %InFile%"/>
             <stringAttribute key="BLD::Info|Tool|C-Compiler|dbgFlags|PPC603gnu" value="-g"/>
             <stringAttribute key="BLD::Info|Tool|C-Compiler|derivedSigs|PPC603gnu" value="*.o"/>
-            <stringAttribute key="BLD::Info|Tool|C-Compiler|flags|PPC603gnu" value="$(CC_ARCH_SPEC) -ansi  -Wall  -MD -MP"/>
+            <stringAttribute key="BLD::Info|Tool|C-Compiler|flags|PPC603gnu" value="$(CC_ARCH_SPEC) -ansi  -Wall  -MD -MP -mlongcall"/>
             <stringAttribute key="BLD::Info|Tool|C-Compiler|nonDbgFlags|PPC603gnu" value="-O2 -fstrength-reduce -fno-builtin"/>
             <booleanAttribute key="BLD::Info|Tool|C-Compiler|object" value="true"/>
             <booleanAttribute key="BLD::Info|Tool|C-Compiler|passAble" value="false"/>

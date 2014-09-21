@@ -1,5 +1,3 @@
-#include "WPILib.h"
-
 #include "AnesthesiologistDrive.h"
 #include "AnesthesiologistManipulator.h"
 #include "AnesthesiologistLauncher.h"
@@ -38,9 +36,6 @@ public:
 		oi = new AnesthesiologistOperatorInterface();
 		comp599 = new Compressor(1, 1, 1, 2); 	
 		timer = new Timer();
-		
-//		drive->leftDriveEncoder->Start();
-//		drive->rightDriveEncoder->Start();
 				
 		oi->dashboard->init();
 		comp599->Start();
@@ -53,8 +48,7 @@ public:
 	
 	void DisabledInit()
 	{
-//		drive->leftDriveEncoder->Start();
-//		drive->rightDriveEncoder->Start();
+		
 	}
 	
 	void AutonomousInit()
@@ -63,8 +57,6 @@ public:
 		autonInit = true;
 		autonInitTime = 0;
 		timer->Start();
-//		drive->leftDriveEncoder->Reset();
-//		drive->rightDriveEncoder->Reset();
 	}
 	
 	void TeleopInit()
@@ -75,8 +67,6 @@ public:
 		drive->drive();
 		comp599->Start();
 		timer->Start();		
-//		drive->leftDriveEncoder->Start();
-//		drive->rightDriveEncoder->Start();
 	}
 	
 	void TestInit()
@@ -87,8 +77,6 @@ public:
 	void DisabledPeriodic()
 	{
 		step = 0;
-//		drive->leftDriveEncoder->Reset();
-//		drive->rightDriveEncoder->Reset();
 		smartDashboardPrint();
 	}
 	
@@ -226,7 +214,6 @@ public:
 		
 			drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
 			manipulator->moveArm(oi->getManipJoystickButton(6), oi->getManipJoystickButton(7));
-//			manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), drive->getShiftState() ? (drive->getLinVelocity()*1.54) : (drive->getLinVelocity()*6.2)); //dribbling 
 			manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), (oi->getManipJoystick()->GetThrottle()+1)/2);
 			launcher->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2), oi->getDriveJoystickButton(10), oi->getDriveJoystickButton(11));
 			toggleCompressor(oi->getDriveJoystickButton(6), oi->getDriveJoystickButton(7));
@@ -243,15 +230,6 @@ public:
 		}	
 		manipulator->toggleCameraPosition(bCameraLatch);
 				
-			//timer wait
-//		if(oi->getDriveJoystickButton(8))
-//		{
-//			bTimerLatch = true;
-//		}
-//		if(bTimerLatch)
-//		{
-//			wait(5.0);
-//		}
 	}
 	
 	void wait(double secToWait)
@@ -301,14 +279,6 @@ public:
 		oi->dashboard->PutString("Launch State: ", launcher->launchState > 0 ? (launcher->launchState == 1 ? "HOLD" : (launcher->launchState == 2 ? "RESET" : (launcher->launchState == 3 ? "COCKED" : "FIRE"))) : "OFF");
 		oi->dashboard->PutString("Camera Position: ", manipulator->getCameraPosition() > 0 ? ((manipulator->getCameraPosition() == 2) ? "Forward" : "Back") : "Inbetween");
 		oi->dashboard->PutBoolean(" Ready to Fire", launcher->launchState == STATE_COCKED ? true : false);
-
-//		oi->dashboard->PutNumber("Left Encoder Raw Value: ", drive->leftDriveEncoder->GetRaw());
-//		oi->dashboard->PutNumber("Right Encoder Raw Value: ", drive->rightDriveEncoder->GetRaw());
-//		oi->dashboard->PutNumber("Roller Value: ", manipulator->intakeRoller->Get());
-//		oi->dashboard->PutNumber("Throttle: ", (oi->getManipJoystick()->GetThrottle()+1)/2);
-//		oi->dashboard->PutNumber("Intake Switch: ", manipulator->intakeSwitch->Get());
-//		oi->dashboard->PutNumber("Step: ", manipulator->step);	
-//		oi->dashboard->PutNumber("Step: ", step);		
 	}	
 };
 

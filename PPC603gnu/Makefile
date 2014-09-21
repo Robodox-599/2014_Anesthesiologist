@@ -49,11 +49,11 @@ CPU = PPC603
 TOOL_FAMILY = gnu
 TOOL = gnu
 TOOL_PATH = 
-CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp
+CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp -mlongcall
 LIBPATH = 
 LIBS = 
 
-IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/h/wrn/coreip 
+IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
 
 IDE_LIBRARIES = 
 
@@ -102,7 +102,7 @@ FRC_UserProgram/$(MODE_DIR)/% : DEBUGFLAGS_Partial-Image-Linker =
 FRC_UserProgram/$(MODE_DIR)/% : DEBUGFLAGS_Librarian = 
 FRC_UserProgram/$(MODE_DIR)/% : DEBUGFLAGS_Assembler = -O2 -fstrength-reduce -fno-builtin
 endif
-FRC_UserProgram/$(MODE_DIR)/% : IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/h/wrn/coreip 
+FRC_UserProgram/$(MODE_DIR)/% : IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
 FRC_UserProgram/$(MODE_DIR)/% : IDE_LIBRARIES = 
 FRC_UserProgram/$(MODE_DIR)/% : IDE_DEFINES = 
 FRC_UserProgram/$(MODE_DIR)/% : PROJECT_TYPE = DKM
@@ -113,7 +113,7 @@ FRC_UserProgram/$(MODE_DIR)/% : CPU = PPC603
 FRC_UserProgram/$(MODE_DIR)/% : TOOL_FAMILY = gnu
 FRC_UserProgram/$(MODE_DIR)/% : TOOL = gnu
 FRC_UserProgram/$(MODE_DIR)/% : TOOL_PATH = 
-FRC_UserProgram/$(MODE_DIR)/% : CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp
+FRC_UserProgram/$(MODE_DIR)/% : CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp -mlongcall
 FRC_UserProgram/$(MODE_DIR)/% : LIBPATH = 
 FRC_UserProgram/$(MODE_DIR)/% : LIBS = 
 FRC_UserProgram/$(MODE_DIR)/% : OBJ_DIR := FRC_UserProgram/$(MODE_DIR)
@@ -147,7 +147,7 @@ FRC_UserProgram_partialImage/$(MODE_DIR)/% : DEBUGFLAGS_Partial-Image-Linker =
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : DEBUGFLAGS_Librarian = 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : DEBUGFLAGS_Assembler = -O2 -fstrength-reduce -fno-builtin
 endif
-FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/h/wrn/coreip 
+FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_LIBRARIES = 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_DEFINES = 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : PROJECT_TYPE = DKM
@@ -158,7 +158,7 @@ FRC_UserProgram_partialImage/$(MODE_DIR)/% : CPU = PPC603
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : TOOL_FAMILY = gnu
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : TOOL = gnu
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : TOOL_PATH = 
-FRC_UserProgram_partialImage/$(MODE_DIR)/% : CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp
+FRC_UserProgram_partialImage/$(MODE_DIR)/% : CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp -mlongcall
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : LIBPATH = 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : LIBS = 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : OBJ_DIR := FRC_UserProgram_partialImage/$(MODE_DIR)
