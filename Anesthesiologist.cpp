@@ -32,8 +32,8 @@ public:
 	{
 		manipulator = new AnesthesiologistManipulator();
 		launcher = new AnesthesiologistLauncher(manipulator);
-		drive = new AnesthesiologistDrive();
 		oi = new AnesthesiologistOperatorInterface();
+		drive = new AnesthesiologistDrive(oi);
 		comp599 = new Compressor(1, 1, 1, 2); 	
 		timer = new Timer();
 				
