@@ -62,9 +62,9 @@ public:
 	void TeleopInit()
 	{
 		step = 0;
-//		drive->setLinVelocity(0);
-//		drive->setTurnSpeed(0, false);
-//		drive->drive();
+		drive->setLinVelocity(0);
+		drive->setTurnSpeed(0, false);
+		drive->drive();
 		comp599->Start();
 		timer->Start();		
 	}
@@ -185,7 +185,7 @@ public:
 		}	
 
 		
-//		drive->drive();	
+		drive->drive();	
 	}
 	
 	void TeleopPeriodic()
@@ -203,14 +203,14 @@ public:
 	{
 		if(!isWait)
 		{
-//			drive->setLinVelocity(oi->getDriveJoystick()->GetY(Joystick::kRightHand));
-//			drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(3));
-//			drive->drive();
-//		
-//			drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
-//			manipulator->moveArm(oi->getManipJoystickButton(6), oi->getManipJoystickButton(7));
-//			manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), (oi->getManipJoystick()->GetThrottle()+1)/2);
-//			launcher->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2), oi->getDriveJoystickButton(10), oi->getDriveJoystickButton(11));
+			drive->setLinVelocity(oi->getDriveJoystick()->GetY(Joystick::kRightHand));
+			drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(3));
+			drive->drive();
+			
+			drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
+			manipulator->moveArm(oi->getManipJoystickButton(6), oi->getManipJoystickButton(7));
+			manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), (oi->getManipJoystick()->GetThrottle()+1)/2);
+			launcher->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2), oi->getDriveJoystickButton(10), oi->getDriveJoystickButton(11));
 			toggleCompressor(oi->getDriveJoystickButton(6), oi->getDriveJoystickButton(7));
 		}
 		
@@ -223,7 +223,7 @@ public:
 		{
 			bCameraLatch = false;
 		}	
-//		manipulator->toggleCameraPosition(bCameraLatch);
+		manipulator->toggleCameraPosition(bCameraLatch);
 			
 	}
 	
