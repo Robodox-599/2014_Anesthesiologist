@@ -16,6 +16,9 @@
                 <stringAttribute value="-I$(WIND_BASE)/target/WPILib"/>
                 <stringAttribute value="-I$(WIND_BASE)/target/h/wrn/coreip"/>
             </listAttribute>
+            <listAttribute key="BLD::Info|Libs|PPC603gnu">
+                <stringAttribute value="C:/WindRiver/vxworks-6.3/target/lib/WPILib.a"/>
+            </listAttribute>
             <listAttribute key="BLD::Info|Macros">
                 <stringAttribute value="VX_CPU_FAMILY"/>
                 <stringAttribute value="CPU"/>

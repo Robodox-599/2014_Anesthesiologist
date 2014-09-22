@@ -55,7 +55,7 @@ LIBS =
 
 IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
 
-IDE_LIBRARIES = 
+IDE_LIBRARIES = C:/WindRiver/vxworks-6.3/target/lib/WPILib.a 
 
 IDE_DEFINES = 
 
@@ -103,7 +103,7 @@ FRC_UserProgram/$(MODE_DIR)/% : DEBUGFLAGS_Librarian =
 FRC_UserProgram/$(MODE_DIR)/% : DEBUGFLAGS_Assembler = -O2 -fstrength-reduce -fno-builtin
 endif
 FRC_UserProgram/$(MODE_DIR)/% : IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
-FRC_UserProgram/$(MODE_DIR)/% : IDE_LIBRARIES = 
+FRC_UserProgram/$(MODE_DIR)/% : IDE_LIBRARIES = C:/WindRiver/vxworks-6.3/target/lib/WPILib.a 
 FRC_UserProgram/$(MODE_DIR)/% : IDE_DEFINES = 
 FRC_UserProgram/$(MODE_DIR)/% : PROJECT_TYPE = DKM
 FRC_UserProgram/$(MODE_DIR)/% : DEFINES = 
@@ -148,7 +148,7 @@ FRC_UserProgram_partialImage/$(MODE_DIR)/% : DEBUGFLAGS_Librarian =
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : DEBUGFLAGS_Assembler = -O2 -fstrength-reduce -fno-builtin
 endif
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
-FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_LIBRARIES = 
+FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_LIBRARIES = C:/WindRiver/vxworks-6.3/target/lib/WPILib.a 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_DEFINES = 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : PROJECT_TYPE = DKM
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : DEFINES = 
