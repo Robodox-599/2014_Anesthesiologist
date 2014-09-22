@@ -32,8 +32,8 @@ else
 MODE_DIR := NonDebug
 endif
 OBJ_DIR := .
-WS_ROOT_DIR := C:/Users/Admin/Documents/GitHub/master
-PRJ_ROOT_DIR := C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist
+WS_ROOT_DIR := C:/Windriver/workspace
+PRJ_ROOT_DIR := C:/Users/Michael/Documents/GitHub/2014_Anesthesiologist
 
 
 
@@ -53,7 +53,7 @@ CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp -mlongcall
 LIBPATH = 
 LIBS = 
 
-IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
+IDE_INCLUDES = -I$(WIND_BASE)/target/h -IC:/Windriver/WPILib/WPILibC++Source20140325rev3887/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
 
 IDE_LIBRARIES = C:/WindRiver/vxworks-6.3/target/lib/WPILib.a 
 
@@ -102,7 +102,7 @@ FRC_UserProgram/$(MODE_DIR)/% : DEBUGFLAGS_Partial-Image-Linker =
 FRC_UserProgram/$(MODE_DIR)/% : DEBUGFLAGS_Librarian = 
 FRC_UserProgram/$(MODE_DIR)/% : DEBUGFLAGS_Assembler = -O2 -fstrength-reduce -fno-builtin
 endif
-FRC_UserProgram/$(MODE_DIR)/% : IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
+FRC_UserProgram/$(MODE_DIR)/% : IDE_INCLUDES = -I$(WIND_BASE)/target/h -IC:/Windriver/WPILib/WPILibC++Source20140325rev3887/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
 FRC_UserProgram/$(MODE_DIR)/% : IDE_LIBRARIES = C:/WindRiver/vxworks-6.3/target/lib/WPILib.a 
 FRC_UserProgram/$(MODE_DIR)/% : IDE_DEFINES = 
 FRC_UserProgram/$(MODE_DIR)/% : PROJECT_TYPE = DKM
@@ -147,7 +147,7 @@ FRC_UserProgram_partialImage/$(MODE_DIR)/% : DEBUGFLAGS_Partial-Image-Linker =
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : DEBUGFLAGS_Librarian = 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : DEBUGFLAGS_Assembler = -O2 -fstrength-reduce -fno-builtin
 endif
-FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_INCLUDES = -I$(WIND_BASE)/target/h -I$(WIND_BASE)/target/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
+FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_INCLUDES = -I$(WIND_BASE)/target/h -IC:/Windriver/WPILib/WPILibC++Source20140325rev3887/WPILib -I$(WIND_BASE)/target/h/wrn/coreip 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_LIBRARIES = C:/WindRiver/vxworks-6.3/target/lib/WPILib.a 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : IDE_DEFINES = 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : PROJECT_TYPE = DKM
