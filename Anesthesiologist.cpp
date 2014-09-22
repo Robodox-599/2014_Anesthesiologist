@@ -62,9 +62,9 @@ public:
 	void TeleopInit()
 	{
 		step = 0;
-		drive->setLinVelocity(0);
-		drive->setTurnSpeed(0, false);
-		drive->drive();
+//		drive->setLinVelocity(0);
+//		drive->setTurnSpeed(0, false);
+//		drive->drive();
 		comp599->Start();
 		timer->Start();		
 	}
@@ -89,8 +89,7 @@ public:
 		}
 		
 		smartDashboardPrint();
-		
-#if 0		
+				
 				//ignores Hot Goal, drive up 1-ball auton
 		if(timer->Get() > 0 + autonInitTime && timer->Get() < 2 + autonInitTime)
 		{
@@ -105,9 +104,7 @@ public:
 		{
 			launcher->autoLaunch();
 		}
-#endif
-		
-#if 0		
+				
 				//ignores hot goal, 2 ball auton (shoot, shoot, drive)
 		if(timer->Get() > 0 + autonInitTime && timer->Get() < 1 + autonInitTime)
 		{
@@ -147,10 +144,8 @@ public:
 		if(timer->Get() > 9.8 + autonInitTime && timer->Get() < 10 + autonInitTime)
 		{
 			drive->setLinVelocity(0);
-		}
-#endif	
-		
-#if 1		
+		}	
+				
 			//ignores hot goal, 2 ball auton (shoot, drive, shoot)
 		if(timer->Get() > 0 + autonInitTime && timer->Get() < 1 + autonInitTime)
 		{
@@ -188,9 +183,9 @@ public:
 			manipulator->intakeRoller->Set(0);
 			launcher->autoSecondLaunch();
 		}	
-#endif
+
 		
-		drive->drive();	
+//		drive->drive();	
 	}
 	
 	void TeleopPeriodic()
@@ -208,14 +203,14 @@ public:
 	{
 		if(!isWait)
 		{
-			drive->setLinVelocity(oi->getDriveJoystick()->GetY(Joystick::kRightHand));
-			drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(3));
-			drive->drive();
-		
-			drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
-			manipulator->moveArm(oi->getManipJoystickButton(6), oi->getManipJoystickButton(7));
-			manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), (oi->getManipJoystick()->GetThrottle()+1)/2);
-			launcher->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2), oi->getDriveJoystickButton(10), oi->getDriveJoystickButton(11));
+//			drive->setLinVelocity(oi->getDriveJoystick()->GetY(Joystick::kRightHand));
+//			drive->setTurnSpeed(oi->getDriveJoystick()->GetX(Joystick::kRightHand), oi->getDriveJoystickButton(3));
+//			drive->drive();
+//		
+//			drive->shift(oi->getDriveJoystickButton(8), oi->getDriveJoystickButton(9));
+//			manipulator->moveArm(oi->getManipJoystickButton(6), oi->getManipJoystickButton(7));
+//			manipulator->intakeBall(oi->getManipJoystickButton(3), oi->getManipJoystickButton(2), (oi->getManipJoystick()->GetThrottle()+1)/2);
+//			launcher->launchBall(oi->getDriveJoystickButton(1), oi->getDriveJoystickButton(2), oi->getDriveJoystickButton(10), oi->getDriveJoystickButton(11));
 			toggleCompressor(oi->getDriveJoystickButton(6), oi->getDriveJoystickButton(7));
 		}
 		
@@ -228,8 +223,8 @@ public:
 		{
 			bCameraLatch = false;
 		}	
-		manipulator->toggleCameraPosition(bCameraLatch);
-				
+//		manipulator->toggleCameraPosition(bCameraLatch);
+			
 	}
 	
 	void wait(double secToWait)

@@ -1,6 +1,5 @@
 #ifndef ANESTHESIOLOGIST_LAUNCHER_H
 #define ANESTHESIOLOGIST_LAUNCHER_H
-#include "WPILib.h"
 #include "AnesthesiologistManipulator.h"
 #include "AnesthesiologistMacros.h"
 	

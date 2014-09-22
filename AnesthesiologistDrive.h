@@ -1,6 +1,5 @@
 #ifndef ANESTHESIOLOGIST_DRIVE_H
 #define ANESTHESIOLOGIST_DRIVE_H
-#include "WPILib.h"
 #include "AnesthesiologistMacros.h"
 #include "AnesthesiologistOperatorInterface.h"
 

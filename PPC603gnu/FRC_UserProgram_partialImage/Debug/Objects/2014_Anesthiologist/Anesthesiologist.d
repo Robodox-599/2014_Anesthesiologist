@@ -1,7 +1,7 @@
  \
  FRC_UserProgram_partialImage/Debug/Objects/2014_Anesthiologist/Anesthesiologist.o:  \
  C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/Anesthesiologist.cpp \
-  C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistDrive.h \
+  C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistOperatorInterface.h \
   C:/WindRiver/vxworks-6.3/target/WPILib/WPILib.h \
   C:/WindRiver/vxworks-6.3/target/h/string.h \
   C:/WindRiver/vxworks-6.3/target/h/types/vxANSI.h \
@@ -386,16 +386,12 @@
   C:/WindRiver/vxworks-6.3/target/WPILib/Vision/ColorImage.h \
   C:/WindRiver/vxworks-6.3/target/WPILib/WPIErrors.h \
   C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistMacros.h \
-  C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistOperatorInterface.h \
   C:/WindRiver/vxworks-6.3/target/WPILib/SmartDashboard/SmartDashboard.h \
   C:/WindRiver/vxworks-6.3/target/WPILib/SmartDashboard/NamedSendable.h \
   C:/WindRiver/vxworks-6.3/target/WPILib/SmartDashboard/Sendable.h \
-  C:/WindRiver/vxworks-6.3/target/WPILib/SmartDashboard/SendableChooser.h \
-  C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistManipulator.h \
-  C:/WindRiver/vxworks-6.3/target/h/Math.h \
-  C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistLauncher.h
+  C:/WindRiver/vxworks-6.3/target/WPILib/SmartDashboard/SendableChooser.h
 
-C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistDrive.h:
+C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistOperatorInterface.h:
 
 C:/WindRiver/vxworks-6.3/target/WPILib/WPILib.h:
 
@@ -1165,8 +1161,6 @@ C:/WindRiver/vxworks-6.3/target/WPILib/WPIErrors.h:
 
 C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistMacros.h:
 
-C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistOperatorInterface.h:
-
 C:/WindRiver/vxworks-6.3/target/WPILib/SmartDashboard/SmartDashboard.h:
 
 C:/WindRiver/vxworks-6.3/target/WPILib/SmartDashboard/NamedSendable.h:
@@ -1174,9 +1168,3 @@ C:/WindRiver/vxworks-6.3/target/WPILib/SmartDashboard/NamedSendable.h:
 C:/WindRiver/vxworks-6.3/target/WPILib/SmartDashboard/Sendable.h:
 
 C:/WindRiver/vxworks-6.3/target/WPILib/SmartDashboard/SendableChooser.h:
-
-C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistManipulator.h:
-
-C:/WindRiver/vxworks-6.3/target/h/Math.h:
-
-C:/Users/Admin/Documents/GitHub/2014_Anesthesiologist/AnesthesiologistLauncher.h:

@@ -84,5 +84,4 @@ Manip Joystick:
 #define PI										(3.14159265358979323846264338327950288)
 #define INCHES_PER_VOLT							(1/.0098)// 1 / (9.8mV / 1000)
 
-
 #endif
