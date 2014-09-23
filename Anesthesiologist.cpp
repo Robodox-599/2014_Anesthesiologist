@@ -89,7 +89,7 @@ public:
 		}
 		
 		smartDashboardPrint();
-
+#if 0
 			//ignores Hot Goal, drive up 1-ball auton
 		if(timer->Get() > 0 + autonInitTime && timer->Get() < 2 + autonInitTime)
 		{
@@ -104,7 +104,8 @@ public:
 		{
 			launcher->autoFirstLaunch();
 		}
-
+#endif 
+#if 0
 				//ignores hot goal, 2 ball auton (shoot, shoot, drive)
 		if(timer->Get() > 0 + autonInitTime && timer->Get() < 1 + autonInitTime)
 		{
@@ -145,7 +146,7 @@ public:
 		{
 			drive->setLinVelocity(0);
 		}	
-				
+#endif			
 			//ignores hot goal, 2 ball auton (shoot, drive, shoot)
 		if(timer->Get() > 0 + autonInitTime && timer->Get() < 1 + autonInitTime)
 		{
