@@ -15,7 +15,7 @@ public:
 	void autoSecondLaunch();
 	void autoReset();
 		
-	Talon *launcherMotor;
+	Victor *launcherMotor;
 	int launchState;
 	int autoLaunchState;
 	Timer *timer;
