@@ -66,7 +66,7 @@ Manip Joystick:
 #define STATE_RESET								(2)
 #define STATE_COCKED							(3)
 #define STATE_FIRE								(4)
-#define LAUNCH_TIME 							(.2)
+#define LAUNCH_TIME 							(.17)
 #define RESET_TIME								(1)
 #define SLOW_SPEED								(-1)
 														

@@ -98,10 +98,12 @@ public:
 		if(timer->Get() > 2 + autonInitTime && timer->Get() < 3 + autonInitTime)
 		{
 			drive->setLinVelocity(0);
+			manipulator->intakeRoller->Set(1);
 			manipulator->moveArm(true, false);
 		}
-		if(timer->Get() > 3.2 + autonInitTime && timer->Get() < 3.5 + autonInitTime)
+		if(timer->Get() > 6 + autonInitTime && timer->Get() < 6.3 + autonInitTime)
 		{
+			manipulator->intakeRoller->Set(0);
 			launcher->autoFirstLaunch();
 		}
 #endif 
