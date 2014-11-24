@@ -49,7 +49,7 @@ CPU = PPC603
 TOOL_FAMILY = gnu
 TOOL = gnu
 TOOL_PATH = 
-CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp -mlongcall
+CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp
 LIBPATH = 
 LIBS = 
 
@@ -113,7 +113,7 @@ FRC_UserProgram/$(MODE_DIR)/% : CPU = PPC603
 FRC_UserProgram/$(MODE_DIR)/% : TOOL_FAMILY = gnu
 FRC_UserProgram/$(MODE_DIR)/% : TOOL = gnu
 FRC_UserProgram/$(MODE_DIR)/% : TOOL_PATH = 
-FRC_UserProgram/$(MODE_DIR)/% : CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp -mlongcall
+FRC_UserProgram/$(MODE_DIR)/% : CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp
 FRC_UserProgram/$(MODE_DIR)/% : LIBPATH = 
 FRC_UserProgram/$(MODE_DIR)/% : LIBS = 
 FRC_UserProgram/$(MODE_DIR)/% : OBJ_DIR := FRC_UserProgram/$(MODE_DIR)
@@ -158,36 +158,36 @@ FRC_UserProgram_partialImage/$(MODE_DIR)/% : CPU = PPC603
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : TOOL_FAMILY = gnu
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : TOOL = gnu
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : TOOL_PATH = 
-FRC_UserProgram_partialImage/$(MODE_DIR)/% : CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp -mlongcall
+FRC_UserProgram_partialImage/$(MODE_DIR)/% : CC_ARCH_SPEC = -mcpu=603 -mstrict-align -mno-implicit-fp
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : LIBPATH = 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : LIBS = 
 FRC_UserProgram_partialImage/$(MODE_DIR)/% : OBJ_DIR := FRC_UserProgram_partialImage/$(MODE_DIR)
 
-FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/Anesthesiologist.o : $(PRJ_ROOT_DIR)/Anesthesiologist.cpp $(FORCE_FILE_BUILD)
+FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/Anesthesiologist.o : $(PRJ_ROOT_DIR)/Anesthesiologist.cpp $(FORCE_FILE_BUILD)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
-FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistDrive.o : $(PRJ_ROOT_DIR)/AnesthesiologistDrive.cpp $(FORCE_FILE_BUILD)
+FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistDrive.o : $(PRJ_ROOT_DIR)/AnesthesiologistDrive.cpp $(FORCE_FILE_BUILD)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
-FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistLauncher.o : $(PRJ_ROOT_DIR)/AnesthesiologistLauncher.cpp $(FORCE_FILE_BUILD)
+FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistLauncher.o : $(PRJ_ROOT_DIR)/AnesthesiologistLauncher.cpp $(FORCE_FILE_BUILD)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
-FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistManipulator.o : $(PRJ_ROOT_DIR)/AnesthesiologistManipulator.cpp $(FORCE_FILE_BUILD)
+FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistManipulator.o : $(PRJ_ROOT_DIR)/AnesthesiologistManipulator.cpp $(FORCE_FILE_BUILD)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
-FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistOperatorInterface.o : $(PRJ_ROOT_DIR)/AnesthesiologistOperatorInterface.cpp $(FORCE_FILE_BUILD)
+FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistOperatorInterface.o : $(PRJ_ROOT_DIR)/AnesthesiologistOperatorInterface.cpp $(FORCE_FILE_BUILD)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc $(DEBUGFLAGS_C++-Compiler) $(CC_ARCH_SPEC) -ansi -Wall  -MD -MP $(ADDED_C++FLAGS) $(IDE_INCLUDES) $(ADDED_INCLUDES) -DCPU=$(CPU) -DTOOL_FAMILY=$(TOOL_FAMILY) -DTOOL=$(TOOL) -D_WRS_KERNEL   $(DEFINES) -o "$@" -c "$<"
 
 
-OBJECTS_FRC_UserProgram_partialImage = FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/Anesthesiologist.o \
-	 FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistDrive.o \
-	 FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistLauncher.o \
-	 FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistManipulator.o \
-	 FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistOperatorInterface.o
+OBJECTS_FRC_UserProgram_partialImage = FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/Anesthesiologist.o \
+	 FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistDrive.o \
+	 FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistLauncher.o \
+	 FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistManipulator.o \
+	 FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistOperatorInterface.o
 
 FRC_UserProgram_partialImage/$(MODE_DIR)/FRC_UserProgram_partialImage.o : $(OBJECTS_FRC_UserProgram_partialImage)
 	$(TRACE_FLAG)if [ ! -d "`dirname "$@"`" ]; then mkdir -p "`dirname "$@"`"; fi;echo "building $@"; $(TOOL_PATH)ccppc -r -nostdlib -Wl,-X  -o "$@" $(OBJECTS_FRC_UserProgram_partialImage) $(LIBPATH) $(LIBS) $(ADDED_LIBPATH) $(ADDED_LIBS)  && if [ "$(EXPAND_DBG)" = "1" ]; then plink "$@";fi
@@ -201,8 +201,8 @@ FRC_UserProgram_partialImage/$(MODE_DIR)/FRC_UserProgram_partialImage_clean :
 
 force : 
 
-DEP_FILES := FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/Anesthesiologist.d FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistDrive.d FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistLauncher.d \
-	 FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistManipulator.d FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthiologist/AnesthesiologistOperatorInterface.d
+DEP_FILES := FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/Anesthesiologist.d FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistDrive.d FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistLauncher.d \
+	 FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistManipulator.d FRC_UserProgram_partialImage/$(MODE_DIR)/Objects/2014_Anesthesiologist/AnesthesiologistOperatorInterface.d
 -include $(DEP_FILES)
 
 
